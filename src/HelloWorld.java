@@ -8,6 +8,7 @@ public class HelloWorld {
 		// TODO Auto-generated method stub
 		
 		System.out.println("Hello World from test2 branch.");
+		System.out.println("Pushing as normal");
 
 	}
 
