@@ -15,3 +15,5 @@ public class HelloWorld {
 	}
 
 }
+
+// new line but no conflict
