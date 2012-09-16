@@ -10,6 +10,7 @@ public class HelloWorld {
 		System.out.println("Hello World from test2 branch.");
 		System.out.println("Pushing as normal");
 		System.out.println("Resolving conflict.");
+		System.out.println("New line but no conflict.");
 
 	}
 
