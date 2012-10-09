@@ -11,6 +11,7 @@ public class HelloWorld {
 		System.out.println("Pushing as normal");
 		System.out.println("Resolving conflict.");
 		System.out.println("New line but no conflict.");
+		System.out.println("Po says hi");
 
 	}
 
