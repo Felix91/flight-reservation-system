@@ -15,9 +15,10 @@
 
   <!--
     HTTP Sessions are disabled by default. To enable HTTP sessions specify:
-
+    JDV: I did this
+-->
       <sessions-enabled>true</sessions-enabled>
-
+<!--
     It's possible to reduce request latency by configuring your application to
     asynchronously write HTTP session data to the datastore:
 
