@@ -15,23 +15,44 @@ public class User {
 	}
 	
 	// Class methods
+	/**
+	 * Make the user logged in.
+	 * @return void
+	 * @param user :user to make logged in
+	 *
+	 */
 	public static void login(User user)
 	{
+	
+		
 		user.loggedIn = true;
 	}
 	
+	/**
+	 * Make the user logged out
+	 * @return void
+	 * @param user :user to log out
+	 */
 	public static void logout(User user)
 	{
 		user.loggedIn = false;
 	}
 	
 	// Modifiers
+	/**
+	 * change the password to newPw
+	 * @param newPw :string to make the new password
+	 */
 	public void changePw(String newPw)
 	{
 		this.password = newPw;
 	}
 	
 	// Accessors
+	/**
+	 * Ask this if it is logged in
+	 * @return true if user is logged in
+	 */
 	public boolean loginStatus()
 	{
 		return this.loggedIn;
