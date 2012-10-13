@@ -1,4 +1,4 @@
-package entities;
+package ufly.entities;
 
 import javax.jdo.annotations.PersistenceCapable;
 import javax.jdo.annotations.Persistent;
