@@ -14,11 +14,4 @@
 	<natures>
 		<nature>org.eclipse.jdt.core.javanature</nature>
 	</natures>
-	<linkedResources>
-		<link>
-			<name>ufly/war/img/Background2.jpg</name>
-			<type>1</type>
-			<location>/Users/EdwardB/Documents/UBC/EECE 419/Website/Background2.jpg</location>
-		</link>
-	</linkedResources>
 </projectDescription>
