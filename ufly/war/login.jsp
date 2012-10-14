@@ -1,11 +1,13 @@
 <%@ page import="java.util.*" %>
 
 <html>
-	<head>	
-	</head>
-	<body>
+<head>	
+	<title>uFly Login Page</title>
+	<link href="logincss.css" type="text/css" rel="stylesheet" />
+</head>
+<body>
 	
-<div id="container">
+	<div id="container">
 	<div id="header">
     	<div id="logo">
         	<p>CANADA AIRLINES</p>
@@ -59,7 +61,7 @@
                For calls outside of North America call us at 800-111-2233</p>
         </div> 
     </div>
-</div>
+	</div>
 		page generated at: <% out.print(request.getAttribute("date")); %>
 	</body>
 </html>

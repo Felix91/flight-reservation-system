@@ -1,0 +1,116 @@
+@CHARSET "UTF-8";
+
+/* CSS Document */
+body {
+	line-height:1.5;
+	font-family:"Helvetica Neue", Arial, Helvetica, sans-serif;
+	color:#000;
+	//background:none #00aff0;
+	background-image:url('Background2.jpg');
+	font-size:10pt;
+}
+
+#container {
+	background:none;
+	position: relative;
+	width: 960px;
+	margin: 0 auto;
+	
+}
+	
+#logo{
+	margin-left: 30px; 
+	color: #ffffff;
+}
+
+#logo p{
+	font-size: 40px;
+	margin: 0px;
+	padding: 0px;
+}
+#subheader ul{
+	border-bottom: thin solid #ffffff;
+	border-top: thin solid #ffffff;
+	list-style: none;
+	height: 30px;
+	font-size: 20px;
+	text-transform: uppercase;
+	color: #ffffff;
+}
+
+#subheader li{
+	float: left;
+	margin: auto 70px;
+}
+
+#subheader a:visited{
+	color:#ffffff;
+}
+
+#content{
+	background-color:#ffffff;
+	opacity:1;
+	position: relative;
+	min-height: 400px;
+	padding-left: 10px;
+	padding-top: 1px;
+}
+
+#signin{
+	position:relative;
+	float:left;
+	width:40%;
+	margin-right: 20px;
+	margin-left: 20px;  
+}
+
+#signin text{
+	background: #fffff;
+	width: 200px;
+	position: relative;
+}
+
+#signup{
+	position:relative;
+	float:left;
+	width:40%;
+	margin-right: 20px;
+	margin-left: 20px;  
+}
+
+#signup textarea{
+	background: #fffff;
+}
+
+#footer{
+	clear:both;
+	color: #0188ba;
+	min-height:50px;
+	margin-top: 0px;
+}
+
+#uflylogo{
+	float:right;
+}
+
+#contactus{
+	float:left;
+}
+	
+
+
+hr {background:#ccc;color:#ccc;width:100%;height:2px;margin:2em 0;padding:0;border:none;}
+hr.space {background:#fff;color:#fff;visibility:hidden;}
+h1, h2, h3, h4, h5, h6 {font-family:"Helvetica Neue", Arial, "Lucida Grande", sans-serif; padding: 0px; margin: 0x;}
+code {font:.9em "Courier New", Monaco, Courier, monospace;}
+a img {border:none;}
+p img.top {margin-top:0;}
+blockquote {margin:1.5em;padding:1em;font-style:italic;font-size:.9em;}
+.small {font-size:.9em;}
+.large {font-size:1.1em;}
+.quiet {color:#999;}
+.hide {display:none;}
+
+
+//a:link, a:visited {background:transparent;font-weight:700;text-decoration:underline;}
+//a:link:after, a:visited:after {content:" (" attr(href) ")";font-size:90%;}
