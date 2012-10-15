@@ -1,5 +1,8 @@
 package ufly.entities;
 
+import java.util.List;
+
+import javax.jdo.PersistenceManager;
 import javax.jdo.annotations.PersistenceCapable;
 import javax.jdo.annotations.Persistent;
 import javax.jdo.annotations.PrimaryKey;
@@ -30,23 +33,38 @@ public class User {
 	 * @param password :password to attempt to login with
 	 * @return true if successful, false otherwise
 	 */
-	public User login(String emailAddr,String password)
+	public static User login(String emailAddr,String password,HttpSession session)
 	{
-		
+		User localUser=null;
 		//DataStore Stuff
-		//this.session.setAttribute("loggedInUser", /*User from Datastore*/);
+		javax.jdo.Query q = User.pm.newQuery(User.class);
+		q.setFilter("emailAddr == "+emailAddr);
+		q.declareParameters("String emailAddr");
+		@SuppressWarnings("unchecked")
+		List<User> result = (List<User>) q.execute();
+		if (result.size()  == 1 )
+		{	
+			localUser= result.get(0);
+			if (localUser.password.Matches(password))
+				localUser.login(session);		
+		}
 		
-		//this return is just to suppress errors
-		return new User("","");
+		return localUser;
 	}
-	
+	public User login(HttpSession session)
+	{
+		this.session=session;
+		session.setAttribute("loggedInUser", this);
+		return this;
+	}
 	/**
 	 * Make the user logged out
 	 * @return void
 	 */
-	public void logout()
+	public User logout()
 	{
 		this.session.setAttribute("loggedInUser",null);
+		return this;
 	}
 	
 	// Modifiers
@@ -58,6 +76,7 @@ public class User {
 	{
 		this.setPassword(newPw);
 	}
+
 	
 	// Accessors
 	/**
@@ -71,7 +90,7 @@ public class User {
 	
 	/**
 	 * Ask this if it is logged in
-	 * @return true if user is logged in
+	 * @return return null if no user is logged in, return User if there is a user logged in.
 	 */
 	public static User getLoggedInUser(HttpSession session)
 	{
@@ -93,7 +112,7 @@ public class User {
 	public void setPassword(String password) {
 		this.password = new UflyPassword(password);
 	}
-	
+	private static PersistenceManager pm = PMF.get().getPersistenceManager();
 	// Variables
 	@PrimaryKey
 	@Persistent

@@ -26,7 +26,7 @@ public class UflySignedUp extends HttpServlet {
 		String emailAddr = req.getParameter("email");
 		String newPw = req.getParameter("newpassword");
 		String confirmPw = req.getParameter("confirmnewpass"); // TO-DO: verify that newPw == confirmPw
-		if(newPw != confirmPw)
+		if(!newPw.equals(confirmPw))
 		{
 			req.setAttribute("defFName", firstName);
 			req.setAttribute("defLName", lastName);
@@ -39,8 +39,8 @@ public class UflySignedUp extends HttpServlet {
 		
 		PersistenceManager pm = PMF.get().getPersistenceManager();
 		
-		User newUser = new User(emailAddr, newPw); // TO-DO: create Customer once User has proven to work
-		
+		User newUser = new User(emailAddr, newPw); // TODO: create Customer once User has proven to work
+		newUser.login(req.getSession());
 		try {
             pm.makePersistent(newUser);
             
