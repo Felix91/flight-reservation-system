@@ -10,6 +10,8 @@ public class User {
 	
 	// Constructor
 	/**
+	 * @author felix, joel
+	 * 
 	 * create a user object, it will be automatically be
 	 * logged in if it is in the session variable
 	 * @param emailAddr : email address of the User
@@ -59,6 +61,15 @@ public class User {
 	
 	// Accessors
 	/**
+	 * Get email address of User
+	 * @return emailAddr
+	 */
+	public String getEmailAddr()
+	{
+		return this.emailAddr;
+	}
+	
+	/**
 	 * Ask this if it is logged in
 	 * @return true if user is logged in
 	 */
@@ -78,17 +89,19 @@ public class User {
 		return this.emailAddr == otherUser.emailAddr;
 	}
 	
+	// Helpers
 	public void setPassword(String password) {
 		this.password = new UflyPassword(password);
 	}
+	
 	// Variables
 	@PrimaryKey
 	@Persistent
 	private String emailAddr;
 	
 	@SuppressWarnings("unused")
-	@Persistent
+	@Persistent(serialized = "true")
 	private UflyPassword password; // Store unencrypted for now.
-	//not persistant
+	//not persistent
 	private HttpSession session;
 }

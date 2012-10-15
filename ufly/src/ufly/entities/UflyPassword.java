@@ -1,8 +1,10 @@
 package ufly.entities;
 
+import java.io.Serializable;
+
 /**
  * 
- * @author joel
+ * @author joel, felix
  *
  * This class will be used to store passwords, it has two fields,
  * the stored password, and the security version,
@@ -11,8 +13,11 @@ package ufly.entities;
  * how the old passwords were stored, and upgrade them on login.
  * It is impossible to convert because we don't necessarily know the password
  * that we have stored. We will probably only know the hashed value
+ * 
+ * This class is a serializable class and not a JDO data class. This class will not be indexed and
+ * cannot be used in query filters or sort orders
  */
-public class UflyPassword
+public class UflyPassword implements Serializable
 {
 	/**
 	 * Create a new password object
@@ -22,12 +27,12 @@ public class UflyPassword
 	{
 		this.securityVersion=0;
 		this.storedPassword = password;
-		
 	}
 	
 	public String getStoredPassword() {
 		return storedPassword;
 	}
+	
 	/**
 	 * Check if password check is a matching password
 	 * @param check :possible matching password

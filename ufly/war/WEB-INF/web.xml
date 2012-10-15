@@ -31,6 +31,15 @@
 		<servlet-name>loginPage</servlet-name>
 		<url-pattern>/login</url-pattern>
 	</servlet-mapping>
+	<!-- SIGNED UP PAGE -->
+	<servlet>
+		<servlet-name>signedUpPage</servlet-name>
+		<servlet-class>ufly.frs.UflySignedUp</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>signedUpPage</servlet-name>
+		<url-pattern>/signedup</url-pattern>
+	</servlet-mapping>
 	<!-- SESSION TEST -->
 	<servlet>
 		<servlet-name>test</servlet-name>

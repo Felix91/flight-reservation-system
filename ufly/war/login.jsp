@@ -25,7 +25,7 @@
     	<h2>CUSTOMER LOGIN</h2>
        	<div id="signin">
         	<h3>SIGN IN</h3>
-            <form action="" method="post">
+            <form action="/login" method="post">
             	<label for="username">Username:</label> <br />   
             	<input type="textfield" name="username" /> <br />
                 <label for="password">Password:</label> <br />
@@ -36,7 +36,7 @@
  		</div>
         <div id="signup">
         	<h3>SIGN UP</h3>
-            <form action="" method="Post">
+            <form action="/signedup" method="post">
             	<label for="firstname">First Name:</label>  <br />  
             	<input type="textfield" name="fname" /> <br />
                 <label for="lastname">Last Name:</label> <br />   
