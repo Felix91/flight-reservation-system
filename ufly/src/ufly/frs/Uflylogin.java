@@ -5,11 +5,20 @@ import java.io.IOException;
 import javax.servlet.ServletException;
 import javax.servlet.http.*;
 
+import ufly.entities.User;
+
 @SuppressWarnings("serial")
 public class Uflylogin extends HttpServlet {
 	public void doGet(HttpServletRequest req, HttpServletResponse resp)
 		throws IOException
 	{	
+		if(req.getParameter("logout")!= null)
+		{
+			HttpSession session = req.getSession();
+			User loggedInUser = (User) session.getAttribute("loggedInUser");
+			loggedInUser.logout();
+			resp.sendRedirect("/");
+		}
 		try {
 			req.setAttribute("date", new java.util.Date());
 			req.getRequestDispatcher("login.jsp")
