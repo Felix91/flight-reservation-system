@@ -3,7 +3,7 @@
 <html>
 <head>	
 	<title>uFly Login Page</title>
-	<link href="logincss.css" type="text/css" rel="stylesheet" />
+	<link href="/stylesheets/logincss.css" type="text/css" rel="stylesheet" />
 </head>
 <body>
 	
@@ -25,7 +25,7 @@
     	<h2>CUSTOMER LOGIN</h2>
        	<div id="signin">
         	<h3>SIGN IN</h3>
-            <form action="">
+            <form action="" method="post">
             	<label for="username">Username:</label> <br />   
             	<input type="textfield" name="username" /> <br />
                 <label for="password">Password:</label> <br />
@@ -36,7 +36,7 @@
  		</div>
         <div id="signup">
         	<h3>SIGN UP</h3>
-            <form action="">
+            <form action="" method="Post">
             	<label for="firstname">First Name:</label>  <br />  
             	<input type="textfield" name="fname" /> <br />
                 <label for="lastname">Last Name:</label> <br />   
@@ -62,6 +62,6 @@
         </div> 
     </div>
 	</div>
-		page generated at: <% out.print(request.getAttribute("date")); %>
+		<!-- page generated at: <% //out.print(request.getAttribute("date")); %>-->
 	</body>
 </html>

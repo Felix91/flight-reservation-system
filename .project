@@ -10,8 +10,36 @@
 			<arguments>
 			</arguments>
 		</buildCommand>
+		<buildCommand>
+			<name>com.google.gdt.eclipse.core.webAppProjectValidator</name>
+			<arguments>
+			</arguments>
+		</buildCommand>
+		<buildCommand>
+			<name>com.google.appengine.eclipse.core.enhancerbuilder</name>
+			<arguments>
+			</arguments>
+		</buildCommand>
+		<buildCommand>
+			<name>com.google.appengine.eclipse.core.gaeProjectChangeNotifier</name>
+			<arguments>
+			</arguments>
+		</buildCommand>
+		<buildCommand>
+			<name>com.google.appengine.eclipse.core.projectValidator</name>
+			<arguments>
+			</arguments>
+		</buildCommand>
 	</buildSpec>
 	<natures>
 		<nature>org.eclipse.jdt.core.javanature</nature>
+		<nature>com.google.appengine.eclipse.core.gaeNature</nature>
 	</natures>
+	<linkedResources>
+		<link>
+			<name>ufly/war/img/Background2.jpg</name>
+			<type>1</type>
+			<location>C:/Users/Purge/workspace/flight-reservation-system/ufly/war/img/Background2.jpg</location>
+		</link>
+	</linkedResources>
 </projectDescription>

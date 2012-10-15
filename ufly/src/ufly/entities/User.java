@@ -3,39 +3,48 @@ package ufly.entities;
 import javax.jdo.annotations.PersistenceCapable;
 import javax.jdo.annotations.Persistent;
 import javax.jdo.annotations.PrimaryKey;
+import javax.servlet.http.HttpSession;
 
 @PersistenceCapable
 public class User {
 	
 	// Constructor
+	/**
+	 * create a user object, it will be automatically be
+	 * logged in if it is in the session variable
+	 * @param emailAddr : email address of the User
+	 * @param password  : password of the user
+	 * @param session	: current session
+	 */
 	public User(String emailAddr, String password)
 	{
 		this.emailAddr = emailAddr;
-		this.password = password;
-	}
-	
+		this.setPassword(password);
+		//TODO: probably need some datastore stuff here
+	}	
 	// Class methods
 	/**
 	 * Make the user logged in.
-	 * @return void
-	 * @param user :user to make logged in
-	 *
+	 * @param password :password to attempt to login with
+	 * @return true if successful, false otherwise
 	 */
-	public static void login(User user)
+	public User login(String emailAddr,String password)
 	{
-	
 		
-		user.loggedIn = true;
+		//DataStore Stuff
+		//this.session.setAttribute("loggedInUser", /*User from Datastore*/);
+		
+		//this return is just to suppress errors
+		return new User("","");
 	}
 	
 	/**
 	 * Make the user logged out
 	 * @return void
-	 * @param user :user to log out
 	 */
-	public static void logout(User user)
+	public void logout()
 	{
-		user.loggedIn = false;
+		this.session.setAttribute("loggedInUser",null);
 	}
 	
 	// Modifiers
@@ -45,7 +54,7 @@ public class User {
 	 */
 	public void changePw(String newPw)
 	{
-		this.password = newPw;
+		this.setPassword(newPw);
 	}
 	
 	// Accessors
@@ -53,20 +62,33 @@ public class User {
 	 * Ask this if it is logged in
 	 * @return true if user is logged in
 	 */
-	public boolean loginStatus()
+	public static User getLoggedInUser(HttpSession session)
 	{
-		return this.loggedIn;
+		User loggedInUser = (User) session.getAttribute("loggedInUser"); 
+		loggedInUser.session = session;
+		return loggedInUser;
+	}
+	/**
+	 * 
+	 * @param otherUser :other user to compare against
+	 * @return true if both users are the same
+	 */
+	public boolean equals(User otherUser)
+	{
+		return this.emailAddr == otherUser.emailAddr;
 	}
 	
+	public void setPassword(String password) {
+		this.password = new UflyPassword(password);
+	}
 	// Variables
 	@PrimaryKey
 	@Persistent
 	private String emailAddr;
 	
+	@SuppressWarnings("unused")
 	@Persistent
-	private String password; // Store unencrypted for now.
-	
-	@Persistent
-	private boolean loggedIn; // Use a simple loggedIn flag for now. Will make use of Google Accounts later.
-
+	private UflyPassword password; // Store unencrypted for now.
+	//not persistant
+	private HttpSession session;
 }
