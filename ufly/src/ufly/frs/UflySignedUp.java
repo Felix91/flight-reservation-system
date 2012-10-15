@@ -46,7 +46,13 @@ public class UflySignedUp extends HttpServlet {
             
             // Test query
             Query q = pm.newQuery(User.class);
-            List<User> results = (List<User>) q.execute();
+            /**
+             * in order to check this we need to check every element to see if it 
+             * is of type User, too much work, plus we should not get any
+             * other type. We just suppress the warning
+             */
+            @SuppressWarnings("unchecked")
+			List<User> results = (List<User>) q.execute();
             Iterator<User> it = results.iterator();
             // Print all Users in the datastore
             resp.getWriter().println("Users registered: ");
