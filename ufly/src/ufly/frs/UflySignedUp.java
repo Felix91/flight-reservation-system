@@ -18,7 +18,7 @@ import ufly.entities.User;
 public class UflySignedUp extends HttpServlet {
 
 	public void doPost(HttpServletRequest req, HttpServletResponse resp)
-		throws IOException
+		throws IOException,ServletException
 	{
 		resp.setContentType("text/plain");
 		String firstName = req.getParameter("fname");
@@ -26,6 +26,15 @@ public class UflySignedUp extends HttpServlet {
 		String emailAddr = req.getParameter("email");
 		String newPw = req.getParameter("newpassword");
 		String confirmPw = req.getParameter("confirmnewpass"); // TO-DO: verify that newPw == confirmPw
+		if(newPw != confirmPw)
+		{
+			req.setAttribute("defFName", firstName);
+			req.setAttribute("defLName", lastName);
+			req.setAttribute("defEmail", emailAddr);
+			req.setAttribute("errorMsg", "passwordMismatch");
+			req.getRequestDispatcher("login.jsp")
+			.forward(req,resp);
+		}
 		resp.getWriter().println("Hello "+firstName+" your password is "+ newPw);
 		
 		PersistenceManager pm = PMF.get().getPersistenceManager();

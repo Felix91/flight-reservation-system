@@ -38,17 +38,20 @@
         	<h3>SIGN UP</h3>
             <form action="/signedup" method="post">
             	<label for="firstname">First Name:</label>  <br />  
-            	<input type="textfield" name="fname" /> <br />
+            	<input type="textfield" name="fname"  
+            	<% String a = (String)request.getAttribute("defFName"); 
+            	 if (a!= null) out.print("value="+(String)request.getAttribute("defFName")); %> /> <br />
                 <label for="lastname">Last Name:</label> <br />   
-            	<input type="textfield" name="lname" /> <br />
+            	<input type="textfield" name="lname" <%=request.getAttribute("defLName")!=null ? "value="+(String)request.getAttribute("defLName") :""%> /> <br />
                 <label for="email">E-mail:</label> <br />
-                <input type="textfield" name="email" /> <br />
+                <input type="textfield" name="email" <%=request.getAttribute("defEmail")!=null ? "value="+(String)request.getAttribute("defEmail") :"" %> /> <br />
                 <label for="newpassword">Password</label> <br />
                 <input type="password" name="newpassword" /> <br />
                 <label for="confirmnewpass">Confirm Password</label> <br />
                 <input type="password" name="confirmnewpass" /> <br />
                 <input type="submit" value="Sign Up" /> <br />
             </form>
+            <div id="signupError"><%=(String)request.getAttribute("errorMsg") =="passwordMismatch" ? "<font color=\"red\">Passwords Do Not Match</font>" :"" %></div>
         </div>       
     </div>
     <div id="footer">
