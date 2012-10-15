@@ -6,7 +6,12 @@ body {
 	color:#000;
 	//background:none #00aff0;
 	background-image:url('/img/Background.jpg');
+	-webkit-background-size: cover;
+	-moz-background-size: cover;
+	-o-bakcground-size: cover;
+	background-size: cover;
 	font-size:10pt;
+	height: auto;
 }
 
 #container {
