@@ -118,9 +118,8 @@ public class User {
 	@Persistent
 	private String emailAddr;
 	
-	@SuppressWarnings("unused")
 	@Persistent(serialized = "true")
-	private UflyPassword password; // Store unencrypted for now.
+	private UflyPassword password; 
 	//not persistent
 	private HttpSession session;
 }
