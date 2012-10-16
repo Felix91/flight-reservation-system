@@ -20,6 +20,10 @@ import java.io.Serializable;
 public class UflyPassword implements Serializable
 {
 	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 4981756966545899133L;
+	/**
 	 * Create a new password object
 	 * @param password
 	 */

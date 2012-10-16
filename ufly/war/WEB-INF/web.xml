@@ -40,6 +40,14 @@
 		<servlet-name>signedUpPage</servlet-name>
 		<url-pattern>/signedup</url-pattern>
 	</servlet-mapping>
+	<servlet>
+	   <servlet-name>flightSearch</servlet-name>
+	   <servlet-class>ufly.frs.Search</servlet-class>
+	</servlet>
+	<servlet-mapping>
+	   <servlet-name>flightSearch</servlet-name>
+	   <url-pattern>/search</url-pattern>
+	</servlet-mapping>
 	<!-- SESSION TEST -->
 	<servlet>
 		<servlet-name>test</servlet-name>

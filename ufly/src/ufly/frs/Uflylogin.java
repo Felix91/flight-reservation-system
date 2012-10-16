@@ -19,6 +19,10 @@ public class Uflylogin extends HttpServlet {
 			loggedInUser.logout();
 			resp.sendRedirect("/");
 		}
+		else if (User.getLoggedInUser(req.getSession())!=null)
+		{
+			resp.sendRedirect("/search");
+		}
 		try {
 			req.setAttribute("date", new java.util.Date());
 			req.getRequestDispatcher("login.jsp")

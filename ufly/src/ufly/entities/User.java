@@ -19,7 +19,7 @@ public class User {
 	 * logged in if it is in the session variable
 	 * @param emailAddr : email address of the User
 	 * @param password  : password of the user
-	 * @param session	: current session
+	 * 
 	 */
 	public User(String emailAddr, String password)
 	{
@@ -95,7 +95,10 @@ public class User {
 	public static User getLoggedInUser(HttpSession session)
 	{
 		User loggedInUser = (User) session.getAttribute("loggedInUser"); 
-		loggedInUser.session = session;
+		if (loggedInUser != null)
+		{
+			loggedInUser.session = session;
+		}
 		return loggedInUser;
 	}
 	/**
