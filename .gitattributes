@@ -1,3 +1,4 @@
+*     text=auto
 *.java text
 *.jsp text
 *.xml text
