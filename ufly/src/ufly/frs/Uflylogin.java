@@ -15,7 +15,7 @@ public class Uflylogin extends HttpServlet {
 		if(req.getParameter("logout")!= null)
 		{
 			HttpSession session = req.getSession();
-			User loggedInUser = (User) session.getAttribute("loggedInUser");
+			User loggedInUser = User.getLoggedInUser(session);
 			loggedInUser.logout();
 			resp.sendRedirect("/");
 		}

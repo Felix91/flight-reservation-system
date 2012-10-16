@@ -63,5 +63,6 @@ public class UflySignedUp extends HttpServlet {
         } finally {
             pm.close();
         }
+		resp.sendRedirect("/search");
 	}
 }
