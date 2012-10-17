@@ -8,7 +8,7 @@ import javax.servlet.http.*;
 import ufly.entities.User;
 
 @SuppressWarnings("serial")
-public class Uflylogin extends HttpServlet {
+public class Login extends HttpServlet {
 	public void doGet(HttpServletRequest req, HttpServletResponse resp)
 		throws IOException
 	{	

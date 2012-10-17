@@ -15,7 +15,7 @@ import ufly.entities.PMF;
 import ufly.entities.User;
 
 @SuppressWarnings("serial")
-public class UflySignedUp extends HttpServlet {
+public class SignedUp extends HttpServlet {
 
 	public void doPost(HttpServletRequest req, HttpServletResponse resp)
 		throws IOException,ServletException
