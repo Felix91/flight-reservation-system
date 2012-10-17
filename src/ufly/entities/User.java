@@ -57,24 +57,16 @@ public class User {
 	 * @param emailAddr : email address to attempt to login
 	 * @param password :password to attempt to login with
 	 * @param session :session to make user logged into, usually request.getSession()
-	 * @return true if successful, false otherwise
+	 * @return Appropriate User if successful, null otherwise
 	 */
 	public static User login(String emailAddr,String password,HttpSession session)
 	{
 		User localUser=null;
-		//DataStore Stuff
-		javax.jdo.Query q = User.pm.newQuery(User.class);
-		q.setFilter("emailAddr == "+emailAddr);
-		q.declareParameters("String emailAddr");
-		@SuppressWarnings("unchecked")
-		List<User> result = (List<User>) q.execute();
-		if (result.size()  == 1 )
-		{	
-			localUser= result.get(0);
-			if (localUser.password.Matches(password))
-				localUser.login(session);		
+		localUser=User.getUser(emailAddr);
+		if(localUser!=null && localUser.password.Matches(password))
+		{
+			localUser.login(session);
 		}
-		
 		return localUser;
 	}
 	
@@ -83,7 +75,10 @@ public class User {
 	@Persistent
 	private String emailAddr;
 
-	
+	@Persistent
+	private String firstName;
+	@Persistent
+	private String lastName;
 	@Persistent(serialized = "true")
 	private UflyPassword password;
 	
@@ -103,18 +98,39 @@ public class User {
 	{
 		this.emailAddr = emailAddr;
 		this.setPassword(password);
+		this.firstName=" ";
+		this.lastName=" ";
 		//TODO: probably need some datastore stuff here
 	}
 	// Modifiers
 	/**
 	 * change the password to newPw
 	 * @param newPw :string to make the new password
+	 * @return this
 	 */
-	public void changePw(String newPw)
+	public User changePw(String newPw)
 	{
 		this.setPassword(newPw);
+		return this;
 	}
-	
+	public User setFirstName(String name)
+	{
+		this.firstName=name;
+		return this;
+	}
+	public User setLastName(String name)
+	{
+		this.lastName=name;
+		return this;
+	}
+	public String getFirstName()
+	{
+		return this.firstName;
+	}
+	public String getLastName()
+	{
+		return this.lastName;
+	}
 	/**
 	 * 
 	 * @param otherUser :other user to compare against

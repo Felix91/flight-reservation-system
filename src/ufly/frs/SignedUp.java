@@ -20,7 +20,6 @@ public class SignedUp extends HttpServlet {
 	public void doPost(HttpServletRequest req, HttpServletResponse resp)
 		throws IOException,ServletException
 	{
-		resp.setContentType("text/plain");
 		String firstName = req.getParameter("fname");
 		String lastName = req.getParameter("lname");
 		String emailAddr = req.getParameter("email");
@@ -34,12 +33,15 @@ public class SignedUp extends HttpServlet {
 			req.setAttribute("errorMsg", "passwordMismatch");
 			req.getRequestDispatcher("login.jsp")
 			.forward(req,resp);
+			return;
 		}
+		resp.setContentType("text/plain");
 		resp.getWriter().println("Hello "+firstName+" your password is "+ newPw);
 		
 		PersistenceManager pm = PMF.get().getPersistenceManager();
 		
 		User newUser = new User(emailAddr, newPw); // TODO: create Customer once User has proven to work
+		newUser.setFirstName(firstName).setLastName(lastName);
 		newUser.login(req.getSession());
 		try {
             pm.makePersistent(newUser);
