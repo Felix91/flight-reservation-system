@@ -39,7 +39,8 @@ public class Login extends HttpServlet {
 		resp.setContentType("text/plain");
 		String UserName= req.getParameter("username");
 		String Password= req.getParameter("password");
-		resp.getWriter().println("Hello "+UserName+" your password is "+ Password);
+		User localUser=User.login(UserName, Password, req.getSession());
+		resp.getWriter().println("Hello "+localUser.getFirstName()+" "+localUser.getLastName()+" your password is "+ Password);
 
 	}
 }

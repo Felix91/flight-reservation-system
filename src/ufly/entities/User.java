@@ -62,17 +62,10 @@ public class User {
 	public static User login(String emailAddr,String password,HttpSession session)
 	{
 		User localUser=null;
-		//DataStore Stuff
-		javax.jdo.Query q = User.pm.newQuery(User.class);
-		q.setFilter("emailAddr == "+emailAddr);
-		q.declareParameters("String emailAddr");
-		@SuppressWarnings("unchecked")
-		List<User> result = (List<User>) q.execute();
-		if (result.size()  == 1 )
-		{	
-			localUser= result.get(0);
-			if (localUser.password.Matches(password))
-				localUser.login(session);		
+		localUser=User.getUser(emailAddr);
+		if(localUser!=null && localUser.password.Matches(password))
+		{
+			localUser.login(session);
 		}
 		
 		return localUser;
@@ -83,7 +76,10 @@ public class User {
 	@Persistent
 	private String emailAddr;
 
-	
+	@Persistent
+	private String firstName;
+	@Persistent
+	private String lastName;
 	@Persistent(serialized = "true")
 	private UflyPassword password;
 	
@@ -114,7 +110,24 @@ public class User {
 	{
 		this.setPassword(newPw);
 	}
-	
+	public User setFirstName(String name)
+	{
+		this.firstName=name;
+		return this;
+	}
+	public User setLastName(String name)
+	{
+		this.lastName=name;
+		return this;
+	}
+	public String getFirstName()
+	{
+		return this.firstName;
+	}
+	public String getLastName()
+	{
+		return this.lastName;
+	}
 	/**
 	 * 
 	 * @param otherUser :other user to compare against
