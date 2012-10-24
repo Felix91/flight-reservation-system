@@ -1,7 +1,6 @@
 package ufly.frs;
 
 import java.io.IOException;
-
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -14,14 +13,12 @@ public class Search extends HttpServlet {
 	public void doGet(HttpServletRequest req, HttpServletResponse resp)
 			throws IOException ,ServletException
 	{
+		req.setAttribute("User", User.getLoggedInUser(req.getSession()));
+		resp.setContentType("text/plain");
+		req.getRequestDispatcher("flightSearch.jsp")
+		.forward(req,resp);
 		
-		if (User.getLoggedInUser(req.getSession()) != null)
-		{
-			req.getRequestDispatcher("search.jsp").forward(req,resp);
-		}else
-		{
-			resp.sendRedirect("/");
-		}
+		
 	}
 	public void doPost(HttpServletRequest req, HttpServletResponse resp)
 			throws IOException {

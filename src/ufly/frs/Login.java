@@ -10,7 +10,7 @@ import ufly.entities.User;
 @SuppressWarnings("serial")
 public class Login extends HttpServlet {
 	public void doGet(HttpServletRequest req, HttpServletResponse resp)
-		throws IOException
+		throws IOException,ServletException
 	{	
 		if(req.getParameter("logout")!= null)
 		{
@@ -23,14 +23,9 @@ public class Login extends HttpServlet {
 		{
 			resp.sendRedirect("/search");
 		}
-		try {
 			req.setAttribute("date", new java.util.Date());
 			req.getRequestDispatcher("login.jsp")
 				.forward(req,resp);
-		} catch (ServletException e) {
-			resp.setContentType("text/plain");
-			resp.getWriter().println("page does not exist:login.jsp");
-		}
 	}
 
 	public void doPost(HttpServletRequest req, HttpServletResponse resp)

@@ -48,6 +48,32 @@
 	   <servlet-name>flightSearch</servlet-name>
 	   <url-pattern>/search</url-pattern>
 	</servlet-mapping>
+	<!-- HEADER -->
+	<servlet>
+		<servlet-name>_header</servlet-name>
+		<servlet-class>ufly.frs.Includer</servlet-class>
+		<init-param>
+	            <param-name>page</param-name>
+	            <param-value>header</param-value>
+	    </init-param>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>_header</servlet-name>
+		<url-pattern>/_header</url-pattern>
+	</servlet-mapping>
+	<!-- FOOTER -->
+	<servlet>
+		<servlet-name>_footer</servlet-name>
+		<servlet-class>ufly.frs.Includer</servlet-class>
+		<init-param>
+            <param-name>page</param-name>
+            <param-value>footer</param-value>
+        </init-param>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>_footer</servlet-name>
+		<url-pattern>/_footer</url-pattern>
+	</servlet-mapping>
 	<!-- SESSION TEST -->
 	<servlet>
 		<servlet-name>test</servlet-name>
