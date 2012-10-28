@@ -12,7 +12,7 @@ import com.google.appengine.api.datastore.Key;
 @PersistenceCapable
 public class SeatingArrangement {
 	
-	public enum aircraftModel
+	public enum AircraftModel
 	{
 		BOEING_737, BOEING_777, AIRBUS_A320, AIRBUS_A340
 	}
@@ -22,7 +22,7 @@ public class SeatingArrangement {
 	 * Create a SeatingArrangment
 	 * @param aircraftModel	: The SeatingArrangment's aircraft model which will determine the object's numRows, numColumns, numRowsFirstClass, numRowsBusinessClass, and numRowsEconomyClass
 	 */
-	public SeatingArrangement(aircraftModel aircraftModel)
+	public SeatingArrangement(AircraftModel aircraftModel)
 	{
 		switch (aircraftModel)
 		{
