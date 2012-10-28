@@ -23,6 +23,7 @@ public class Airport {
 	
 	/*------------MODIFIERS--------------*/
 	
+	
 	/*------------ACCESSORS--------------*/
 	/**
 	 * @return the callsign
