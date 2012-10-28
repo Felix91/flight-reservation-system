@@ -20,6 +20,40 @@ public class Airport {
 		this.callsign = callsign;
 		this.city = city;
 	}
+	
+	/*------------MODIFIERS--------------*/
+	
+	/*------------ACCESSORS--------------*/
+	/**
+	 * @return the callsign
+	 */
+	public String getCallSign()
+	{
+		return this.callsign;
+	}
+	
+	/**
+	 * @return the city
+	 */
+	public String getCity()
+	{
+		return this.city;
+	}
+	
+	/**
+	 * @return a vector of departure flights from this
+	 */
+	public Vector<Flight> getDepartingFlight()
+	{
+		return this.departures;
+	}
+	/**
+	 * @return a vector of arrival flights from this
+	 */
+	public Vector<Flight> getArrivingFlight()
+	{
+		return this.arrivals;
+	}
 
 	
 	/*------------ VARIABLES ------------*/

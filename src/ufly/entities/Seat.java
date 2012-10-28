@@ -34,6 +34,40 @@ public class Seat {
 		this.flightBooking = flightBooking;
 	}
 	
+	/*------------ACCESSORS------------*/
+	
+	/**
+	 * @return the key
+	 */
+	public Key getKey()
+	{
+		return this.key;
+	}
+	
+	/**
+	 * @return the row number
+	 */
+	public int getRowNumber()
+	{
+		return this.rowNumber;
+	}
+	
+	/**
+	 * @return the column character
+	 */
+	public char getColumn()
+	{
+		return this.columnChar;
+	}
+	
+	/**
+	 * @return the flight booking of seat
+	 */
+	public FlightBooking getFlightBooking()
+	{
+		return this.flightBooking;
+	}
+	
 	/*------------ VARIABLES ------------*/
 	@PrimaryKey
 	@Persistent(valueStrategy = IdGeneratorStrategy.IDENTITY) // automatically generate a numeric ID

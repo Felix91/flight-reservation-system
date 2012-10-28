@@ -16,6 +16,39 @@ public class Customer extends User {
 		this.lastName = lastName;
 		this.loyaltyPoints = 0; // Every Customer starts with 0 loyalty points
 	}
+	/*------------ACCESSORS--------------*/
+	/**
+	 * @return customer first name
+	 */
+	public String getFirstName()
+	{
+		return this.firstName;
+	}
+	
+	/**
+	 * @return customer last name
+	 */
+	public String getLastName()
+	{
+		return this.lastName;
+	}
+	
+	/**
+	 * @return loyalty points
+	 */
+	public int getLoyaltyPoints()
+	{
+		return this.loyaltyPoints;
+	}
+	
+	/**
+	 * @return the flight bookings
+	 */
+	public Vector<FlightBooking> getFlightBookings()
+	{
+		return this.flightBookings;
+	}
+	
 	
 	/*------------ VARIABLES ------------*/
 	@Persistent

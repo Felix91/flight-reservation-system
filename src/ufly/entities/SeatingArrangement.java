@@ -62,6 +62,56 @@ public class SeatingArrangement {
 			}
 		}
 	}
+	/*------------ACCESSORS--------------*/
+	
+	/**
+	 * @return the key of seating arrangement
+	 */
+	public Key getKey()
+	{
+		return this.key;
+	}
+	
+	/**
+	 * @return the total number of rows
+	 */
+	public int getNumRows()
+	{
+		return this.numRows;
+	}
+	
+	/**
+	 * @return the total number of columns
+	 */
+	public int getNumColumns()
+	{
+		return this.numColumns;
+	}
+	
+	/**
+	 * @return the number of first class rows
+	 */
+	public int getNumRowsFirstClass()
+	{
+		return this.numRowsFirstClass;
+	}
+	
+	/**
+	 * @return the number of business class rows
+	 */
+	public int getNumRowsBusinessClass()
+	{
+		return this.numRowsBusinessClass;
+	}
+	
+	/**
+	 * @return the number of economy class rows
+	 */
+	public int getNumRowsEconomyClass()
+	{
+		return this.numRowsEconomyClass;
+	}
+	
 	
 	/*------------ VARIABLES ------------*/
 	@PrimaryKey

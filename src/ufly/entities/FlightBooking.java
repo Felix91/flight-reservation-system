@@ -28,6 +28,55 @@ public class FlightBooking {
 		this.mealChoice = mealChoice; // TODO enum. similar to bookedFlightClass's TODO
 	}
 	
+	/*------------ACCESSORS--------------*/
+	/**
+	 * @return the confirmation number of booking
+	 */
+	public Key getConfirmationNumber()
+	{
+		return this.confirmationNumber;
+	}
+	
+	/**
+	 * @return the customer object
+	 */
+	public Customer getBookedBy()
+	{
+		return this.bookedBy;
+	}
+	
+	/**
+	 * @return the flight booked by customer
+	 */
+	public Flight getBookedFlight()
+	{
+		return this.bookedFlight;
+	}
+	
+	/**
+	 * @return the flight class of booked flight
+	 */
+	public FlightClass getBookedFlightClass()
+	{
+		return this.bookedFlightClass;
+	}
+	
+	/**
+	 * @return the booked seat
+	 */
+	public Seat getBookedSeat()
+	{
+		return this.bookedSeat;
+	}
+	
+	/**
+	 * @return the meal choice
+	 */
+	public Meal getMealChoice()
+	{
+		return this.mealChoice;
+	}
+	
 	/*------------ VARIABLES ------------*/
 	@PrimaryKey
 	@Persistent(valueStrategy = IdGeneratorStrategy.IDENTITY) // automatically generate a numeric ID
