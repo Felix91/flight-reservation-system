@@ -3,9 +3,12 @@ package ufly.entities;
 import java.util.Date;
 import java.util.Vector;
 
+import javax.jdo.annotations.IdGeneratorStrategy;
 import javax.jdo.annotations.PersistenceCapable;
 import javax.jdo.annotations.Persistent;
 import javax.jdo.annotations.PrimaryKey;
+
+import org.datanucleus.api.jpa.annotations.Extension;
 
 @PersistenceCapable
 public class Flight {
@@ -94,6 +97,10 @@ public class Flight {
 
 
 	/*------------ VARIABLES ------------*/
+	@PrimaryKey
+	@Persistent(valueStrategy = IdGeneratorStrategy.IDENTITY)
+	@Extension(vendorName="datanucleus", key="gae.encoded-pk", value="true") // key as encoded string. Note that since Flight is a child class of an entity relationship with Airport, its key must either be a Key or a Key value encoded as a string.
+	private String key;								// Use a flightNumber and departure concatenated string to serve as entity key (to avoid using numeric ID) for now
 	@Persistent
 	private String flightNumber;					// The Flight's flight number e.g. CX838. This and the departure Date determines the Flight.
 	@Persistent
@@ -108,7 +115,6 @@ public class Flight {
 	private Vector<Meal> allowableMealTypes;		// The meals available on this Flight
 	@Persistent
 	private SeatingArrangement seatingArragement;	// Each Flight will have one seating arrangement layout
-	@PrimaryKey
-	@Persistent
-	private String key;								// Use a flightNumber and departure concatenated string to serve as entity key
+	@Persistent(mappedBy = "bookedFlight") // bidirectional relationship
+	private Vector<FlightBooking> flightBookings;	// The bookings made on this Flight
 }

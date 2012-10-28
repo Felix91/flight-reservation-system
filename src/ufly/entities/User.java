@@ -168,20 +168,27 @@ public class User {
 	{
 		//DataStore Stuff
 		//TODO:add datastore filters instead of iterating
+		PersistenceManager pm = PMF.get().getPersistenceManager();
 		javax.jdo.Query q = pm.newQuery(User.class);
-		@SuppressWarnings("unchecked")
-		List<User>result=(List<User>) q.execute();
-		
-		//Our filthy filter
-		Iterator<User> it = result.iterator();
-		while(it.hasNext())
+		try
 		{
-			User u = it.next();
-			if (u.getEmailAddr().equals(email))
-				return u;	
-		}
-		return null;
+			@SuppressWarnings("unchecked")
+			List<User>result=(List<User>) q.execute();
 			
+			//Our filthy filter
+			Iterator<User> it = result.iterator();
+			while(it.hasNext())
+			{
+				User u = it.next();
+				if (u.getEmailAddr().equals(email))
+					return u;	
+			}
+			return null;
+		}
+		finally // Note that this finally block will still run even if try block has return statements.
+		{
+			q.closeAll();
+		}
 	}
 	
 	
@@ -208,6 +215,6 @@ public class User {
 	private UflyPassword password;	// The User's password
 	@NotPersistent
 	private HttpSession session;
-	@NotPersistent
-	private static PersistenceManager pm = PMF.get().getPersistenceManager();
+	//@NotPersistent
+	//private static PersistenceManager pm = PMF.get().getPersistenceManager(); // [Felix] I don't think we should do this. There is only one PersistenceManager and each time we use it we have to close it. We should get the singleton instance and close it only when we need it.
 }
