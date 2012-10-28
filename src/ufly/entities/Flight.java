@@ -3,6 +3,11 @@ package ufly.entities;
 import java.util.Date;
 import java.util.Vector;
 
+import javax.jdo.annotations.PersistenceCapable;
+import javax.jdo.annotations.Persistent;
+import javax.jdo.annotations.PrimaryKey;
+
+@PersistenceCapable
 public class Flight {
 	
 	/*------------ CONSTRUCTORS ------------*/
@@ -16,7 +21,7 @@ public class Flight {
 	 * @param allowableMealTypes		: A vector of Meals available on this Flight
 	 * @param seatingArrangementLayout	: The string which determines the Flight's SeatingArrangment instance
 	 */
-	public Flight(String flightNumber, Airport origin, Airport destination, Date depature, Date arrival, Vector<Meal> allowableMealTypes, String seatingArrangmentLayout)
+	public Flight(String flightNumber, Airport origin, Airport destination, Date departure, Date arrival, Vector<Meal> allowableMealTypes, String seatingArrangmentLayout)
 	{
 		this.flightNumber = flightNumber;
 		this.origin = origin;
@@ -25,6 +30,7 @@ public class Flight {
 		this.arrival = arrival;
 		this.allowableMealTypes = allowableMealTypes; // TO-DO: Will a reference to the original vector suffice?
 		// this.seatingArragement = new SeatingArrangment(seatingArrangmentLayout); TO-DO: seatingArrangement constructor not defined yet
+		this.key = flightNumber+departure;
 	}
 	
 	/*------------ MODIFIERS ------------*/
@@ -88,12 +94,21 @@ public class Flight {
 
 
 	/*------------ VARIABLES ------------*/
+	@Persistent
 	private String flightNumber;					// The Flight's flight number e.g. CX838. This and the departure Date determines the Flight.
+	@Persistent
 	private Airport origin;							// The Flight's place of origin. Note a new Airport entity should not be created.
+	@Persistent
 	private Airport destination;					// The Flight's place of destination. Note a new Airport entity should not be created.
+	@Persistent
 	private Date departure;							// The Flight's departure date (defined with year, month, date, hrs, min)
+	@Persistent
 	private Date arrival;							// The Flight's arrival date (defined with year, month, date, hrs, min)
+	@Persistent
 	private Vector<Meal> allowableMealTypes;		// The meals available on this Flight
+	@Persistent
 	private SeatingArrangement seatingArragement;	// Each Flight will have one seating arrangement layout
-	
+	@PrimaryKey
+	@Persistent
+	private String key;								// Use a flightNumber and departure concatenated string to serve as entity key
 }
