@@ -4,6 +4,8 @@ import java.util.Iterator;
 import java.util.List;
 
 import javax.jdo.PersistenceManager;
+import javax.jdo.annotations.Inheritance;
+import javax.jdo.annotations.InheritanceStrategy;
 import javax.jdo.annotations.NotPersistent;
 import javax.jdo.annotations.PersistenceCapable;
 import javax.jdo.annotations.Persistent;
@@ -11,6 +13,8 @@ import javax.jdo.annotations.PrimaryKey;
 import javax.servlet.http.HttpSession;
 
 @PersistenceCapable
+@Inheritance(strategy = InheritanceStrategy.SUBCLASS_TABLE)
+// TODO make User an abstract class
 public class User {
 	/*------------ CONSTRUCTORS ------------*/
 	/**
@@ -208,9 +212,9 @@ public class User {
 	@Persistent
 	private String emailAddr;		// The User's email address. Uniquely identifies the entity.
 	@Persistent
-	private String firstName;		// The User's first name
+	private String firstName;		// The User's first name TODO remove this
 	@Persistent
-	private String lastName;		// The User's last name
+	private String lastName;		// The User's last name TODO remove this
 	@Persistent(serialized = "true")
 	private UflyPassword password;	// The User's password
 	@NotPersistent
