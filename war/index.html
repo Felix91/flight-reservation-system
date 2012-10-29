@@ -1,27 +1,138 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
-<!-- The HTML 4.01 Transitional DOCTYPE declaration-->
-<!-- above set at the top of the file will set     -->
-<!-- the browser's rendering engine into           -->
-<!-- "Quirks Mode". Replacing this declaration     -->
-<!-- with a "Standards Mode" doctype is supported, -->
-<!-- but may lead to some differences in layout.   -->
+    <!DOCTYPE html>
+    <html>
+    <head>
+    <title>Canada Airlines</title>
+    <!-- Bootstrap -->
+    	<link href="css/bootstrap.min.css" rel="stylesheet">
+	<script src="http://code.jquery.com/jquery-latest.js"></script>
+	<script src="js/bootstrap.min.js"></script>
+    </head>
+ <body>
+    <div class="navbar navbar-inverse">
+      <div class="navbar-inner">
+        <div class="container-fluid">
+          <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </a>
+          <a class="brand" href="#">uFly</a>
+            <div class="navbar-text dropdown pull-right">
+              Logged in as <a href="#" data-toggle="dropdown" class="navbar-link ">Username</a>
+				<ul aria-labelledby="drop5" role="menu" class="dropdown-menu" id="menu2">
+                  <li><a href="#" tabindex="-1">Profile Page</a></li>
+                  <li><a href="#" tabindex="-1">Modify a Booking</a></li>
+                  <li><a href="#" tabindex="-1">Something else here</a></li>
+                  <li class="divider"></li>
+                  <li><a href="#" tabindex="-1">Log out</a></li>
+                </ul>
+			</div>
+            <ul class="nav">
+              <li class="active"><a href="#">Home</a></li>
+			  <li><a href="#">Search</a></li>
+              <li><a href="#about">About</a></li>
+              <li><a href="#contact">Contact</a></li>
+            </ul>
+        </div> <!--containerfluidnavbar-->
+      </div> <!--navbar inner-->
+    </div> <!--navbarinverse-->
 
-<html>
-  <head>
-    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
-    <title>Hello App Engine</title>
-  </head>
+    <div class="container">
+      <div class="row-fluid">
+   		<div class="span12">
+              <div class="hero-unit">
+                <h1>Hello, world!</h1>
+                <p>This is a template for a simple marketing or informational website.</p>
+              </div>
+          <div class="row-fluid">
+                    <div class="span7">
+                            <h2>Searh for Flights</h2>
+                      <form class="form-horizontal">
+                        <div class="control-group">
+                            <label class="control-label" for="in_from">Leaving From</label>
+                            <div class="controls">
+                                <input type="text" id="in_from" placeholder="Enter your Departure City">
+                            </div>
+                        </div>
+                        <div class="control-group">
+                            <label class="control-label" for="in_to">Leaving To</label>
+                            <div class="controls">
+                                <input type="text" id="in_to" placeholder="Enter your Destination City">
+                            </div>
+                        </div>
+                        <div class="control-group">
+                            <label class="control-label" for="in_depart">Date of Departure</label>
+                            <div class="controls">
+                                <input type="text" id="in_depart" placeholder="Enter Date of Departure">
+                            </div>
+                        </div>
+                        <div class="control-group">
+                            <label class="control-label" for="in_return">Date of Return</label>
+                            <div class="controls">
+                                <input type="text" id="in_return" placeholder="Enter Date of Return">
+                            </div>
+                        </div>
+                        <div class="control-group">
+                            <label class="control-label" for="in_psgr">Number of Passangers</label>
+                            <div class="controls">
+                                <input type="text" id="in_psgr" placeholder="Number of Passangers">
+                            </div>
+                        </div>
+                        <div class="control-group">
+                            <div class="controls">
+                                <label class="radio">
+                                    <input type="radio" name="flightOpt" value="opt1"> Direct Flight
+                                </label>
+                                <label class="radio">
+                                    <input type="radio" name="flightOpt" value="opt2"> Connecting Flight
+                                </label>
+                                <button type="submit" class="btn">Search for Flights</button>
+                            </div>
+                        </div>
+                    </form> <!-- Close the form -->
+                    
+                 	</div><!--/span7-->
+                    <div class="span5">
+                    	<h2>Promotions</h2>
+                        <ul class="thumbnails">
+  							<li class="span12">
+                            	<div class="thumbnails">
+                                    <a href="#" class="thumbnail">
+                                      <img src="http://placehold.it/300x200" alt="">
+                                    </a>
+                                    <div class="captions">
+                                    	<h3>Promotions This Month</h3>
+                                        <p>This month fly to Antartica one way trip for free</p>
+                                    </div><!--captions-->
+                                </div> <!--thumbnails-->
+                          </li>
+                        </ul>
+                    </div> <!--span5-->
+                    
+          </div><!--row-fluid2-->
+          
+           <hr>
 
-  <body>
-    <h1>Hello App Engine!</h1>
-	
-    <table>
-      <tr>
-        <td colspan="2" style="font-weight:bold;">Available Servlets:</td>        
-      </tr>
-      <tr>
-        <td><a href="ufly">Ufly</a></td>
-      </tr>
-    </table>
-  </body>
-</html>
+          <div class="row-fluid">
+            <p>Powered by uFly Airline Software Systems</p>
+            <div class="navbar">
+                <div class="navbar-inner">
+                 <a class="brand" href="#">Title</a>
+                    <ul class="nav">
+                      <li class="active"><a href="#">Search</a></li>
+                      <li><a href="#">Contact </a></li>
+                      <li><a href="#">About</a></li>
+                    </ul>
+                </div>
+            </div>
+          </div><!--rowfluidfooter-->
+      
+	    </div><!--span8-->
+         
+         
+     
+	  </div>
+    </div><!--/.fluid-container-->
+    
+    </body>
+    </html>
