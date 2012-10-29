@@ -1,5 +1,6 @@
 package ufly.entities;
 
+import javax.jdo.PersistenceManager;
 import javax.jdo.annotations.IdGeneratorStrategy;
 import javax.jdo.annotations.PersistenceCapable;
 import javax.jdo.annotations.Persistent;
@@ -28,10 +29,16 @@ public class Seat {
 	 * Set the Seat's flightBooking
 	 * @param flightBooking	: The Seat's flightBooking to be set
 	 */
-	// TODO update datastore copy
 	public void setFlightBooking(FlightBooking flightBooking)
 	{
-		this.flightBooking = flightBooking;
+		PersistenceManager pm= PMF.get().getPersistenceManager();
+		try{
+			this.flightBooking = flightBooking;
+			pm.makePersistent(this);
+		}finally
+		{
+			pm.close();
+		}
 	}
 	
 	/*------------ACCESSORS------------*/

@@ -24,17 +24,15 @@ public class Customer extends User {
 	/*------------MODIFIERS---------------*/
 	/**
 	 * @param newFirstName	: new first name to update to
-	 * @param key : key that matches object on datastore
-	 * @return
 	 */
-	public void changeFirstName(Customer c,String newFirstName)
+	public void changeFirstName(String newFirstName)
 	{
 		PersistenceManager pm= PMF.get().getPersistenceManager();
 		//TODO: Implement a check to see this operation is legal
 		try
 		{
-			c.firstName=newFirstName;
-			pm.makePersistent(c);
+			this.firstName=newFirstName;
+			pm.makePersistent(this);
 		
 		}finally
 		{
@@ -44,8 +42,6 @@ public class Customer extends User {
 	
 	/**
 	 * @param newLastName	: new last name to update to
-	 * @param key : key that matches object on datastore
-	 * @return
 	 */
 	public void changeLastName(Customer c,String newLastName)
 	{
@@ -53,8 +49,8 @@ public class Customer extends User {
 		//TODO: Implement a check to see this operation is legal
 		try
 		{
-			c.lastName=newLastName;
-			pm.makePersistent(c);
+			this.lastName=newLastName;
+			pm.makePersistent(this);
 		
 		}finally
 		{
@@ -64,8 +60,6 @@ public class Customer extends User {
 	
 	/**
 	 * @param loyaltypoints	: add loyalty points
-	 * @param key : key that matches object on datastore
-	 * @return
 	 */
 	public void addLoyaltyPoints(Customer c,int loyaltypoints)
 	{
@@ -73,8 +67,8 @@ public class Customer extends User {
 
 		try
 		{
-			c.loyaltyPoints+=loyaltypoints;
-			pm.makePersistent(c);
+			this.loyaltyPoints+=loyaltypoints;
+			pm.makePersistent(this);
 		
 		}finally
 		{
@@ -84,16 +78,14 @@ public class Customer extends User {
 	
 	/**
 	 * @param loyalpoints	: use loyalty points
-	 * @param key : key that matches object on datastore
-	 * @return
 	 */
-	public void useLoyaltyPoints (Customer c,int loyaltypoints){
+	public void useLoyaltyPoints (int loyaltypoints){
 		PersistenceManager pm= PMF.get().getPersistenceManager();
 		try
 		{
 			
-			c.loyaltyPoints-=loyaltypoints;
-			pm.makePersistent(c);
+			this.loyaltyPoints-=loyaltypoints;
+			pm.makePersistent(this);
 		
 		}finally
 		{
@@ -103,16 +95,14 @@ public class Customer extends User {
 	
 	/**
 	 * @param fb	: add fb into flightbooking vector
-	 * @param key : key that matches object on datastore
-	 * @return
 	 */
-	public void addBooking(Customer c,FlightBooking fb)
+	public void addBooking(FlightBooking fb)
 	{
 		PersistenceManager pm= PMF.get().getPersistenceManager();
 		try
 		{
-			c.flightBookings.add(fb);
-			pm.makePersistent(c);
+			this.flightBookings.add(fb);
+			pm.makePersistent(this);
 		}finally
 		{
 			pm.close();
@@ -121,23 +111,24 @@ public class Customer extends User {
 	
 	/**
 	 * @param fb	: remove fb from flightbooking vector
-	 * @param key : key that matches object on datastore
-	 * @return
 	 */
-	public void removeBooking(Customer c,FlightBooking fb)
+	public void removeBooking(FlightBooking fb)
 	{
 		PersistenceManager pm= PMF.get().getPersistenceManager();
 
 		try
 		{	
-			Iterator<FlightBooking> itr=flightBookings.iterator();
+			Iterator<FlightBooking> itr=this.flightBookings.iterator();
 
 			
 			while(itr.hasNext()){
 				FlightBooking cur_fb = itr.next();
 				if(cur_fb.getConfirmationNumber().equals(fb.getConfirmationNumber()))
-					c.flightBookings.remove(cur_fb);//since a flightbooking is unique this works
-					pm.makePersistent(c);
+				{
+					this.flightBookings.remove(cur_fb);//since a flightbooking is unique this works
+					pm.makePersistent(this);
+					break;
+				}
 			}
 		}finally
 		{

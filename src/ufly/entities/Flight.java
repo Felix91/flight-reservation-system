@@ -3,6 +3,7 @@ package ufly.entities;
 import java.util.Date;
 import java.util.Vector;
 
+import javax.jdo.PersistenceManager;
 import javax.jdo.annotations.IdGeneratorStrategy;
 import javax.jdo.annotations.PersistenceCapable;
 import javax.jdo.annotations.Persistent;
@@ -10,7 +11,7 @@ import javax.jdo.annotations.PrimaryKey;
 
 import org.datanucleus.api.jpa.annotations.Extension;
 
-@PersistenceCapable
+@PersistenceCapable (detachable="true")
 public class Flight {
 	
 	/*------------ CONSTRUCTORS ------------*/
@@ -37,6 +38,124 @@ public class Flight {
 	}
 	
 	/*------------ MODIFIERS ------------*/
+	/**
+	 * @param newFlightNumber	: new flight number to update to
+	 */
+	public void changeFlightNumber(String newFlightNumber)
+	{
+		PersistenceManager pm= PMF.get().getPersistenceManager();
+		try
+		{
+			this.flightNumber=newFlightNumber;
+			pm.makePersistent(this);
+		
+		}finally
+		{
+			pm.close();
+		}
+	}
+	
+	/**
+	 * @param orig	: new origin to update to
+	 */
+	public void changeOrigin(Airport orig)
+	{
+		PersistenceManager pm= PMF.get().getPersistenceManager();
+		try
+		{
+			this.origin=orig;
+			pm.makePersistent(this);
+		
+		}finally
+		{
+			pm.close();
+		}
+	}
+	
+	/**
+	 * @param dest	: new destination to update to
+	 */
+	public void changeDestination(Airport dest)
+	{
+		PersistenceManager pm= PMF.get().getPersistenceManager();
+		try
+		{
+			this.destination=dest;
+			pm.makePersistent(this);
+		
+		}finally
+		{
+			pm.close();
+		}
+	}
+	/**
+	 * @param newDeparture	: new departure date to update to
+	 */
+	public void changeDeparture(Date newDeparture)
+	{
+		PersistenceManager pm= PMF.get().getPersistenceManager();
+		try
+		{
+			this.departure=newDeparture;
+			pm.makePersistent(this);
+		
+		}finally
+		{
+			pm.close();
+		}
+	}
+	
+	/**
+	 * @param newArrival	: new arrival date to update to
+	 */
+	public void changeArrival(Date newArrival)
+	{
+		PersistenceManager pm= PMF.get().getPersistenceManager();
+		try
+		{
+			this.arrival=newArrival;
+			pm.makePersistent(this);
+		
+		}finally
+		{
+			pm.close();
+		}
+	}
+	
+	/**
+	 * @param newMeals	: new list of meals to update to
+	 */
+	public void changeAllowableMeals(Vector<Meal> newMeals )
+	{
+		PersistenceManager pm= PMF.get().getPersistenceManager();
+		try
+		{
+			this.allowableMealTypes=newMeals;
+			pm.makePersistent(this);
+		
+		}finally
+		{
+			pm.close();
+		}
+	}
+	
+	/**
+	 * @param newSeatingArrangement	: new seating arrangement to update to
+	 */
+	public void changeSeatingArrangement(SeatingArrangement newSeatingArrangement )
+	{
+		PersistenceManager pm= PMF.get().getPersistenceManager();
+		try
+		{
+			this.seatingArragement=newSeatingArrangement;
+			pm.makePersistent(this);
+		
+		}finally
+		{
+			pm.close();
+		}
+	}
+	
 	
 	/*------------ ACCESSORS ------------*/
 	/**
@@ -78,6 +197,8 @@ public class Flight {
 	{
 		return this.arrival;
 	}
+	
+	
 	
 	/**
 	 * @return the allowableMealTypes

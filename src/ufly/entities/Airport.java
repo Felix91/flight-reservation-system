@@ -2,6 +2,7 @@ package ufly.entities;
 
 import java.util.Vector;
 
+import javax.jdo.PersistenceManager;
 import javax.jdo.annotations.PersistenceCapable;
 import javax.jdo.annotations.Persistent;
 import javax.jdo.annotations.PrimaryKey;
@@ -22,6 +23,107 @@ public class Airport {
 	}
 	
 	/*------------MODIFIERS--------------*/
+	/**
+	 * @param newCallSign	: new CallSign to update to
+	 */
+	public void changeCallSign(String newCallSign)
+	{
+		PersistenceManager pm= PMF.get().getPersistenceManager();
+		try
+		{
+			this.callsign=newCallSign;
+			pm.makePersistent(this);
+			
+		}finally
+		{
+			pm.close();
+		}
+	}
+	
+	/**
+	 * @param newCity	: new City to update to
+	 */
+	public void changeCity(String newCity)
+	{
+		PersistenceManager pm= PMF.get().getPersistenceManager();
+		try
+		{
+			this.city=newCity;
+			pm.makePersistent(this);
+			
+		}finally
+		{
+			pm.close();
+		}
+	}
+	
+	/**
+	 * @param newDepartingFlight	: new Flight to add to list of flights
+	 */
+	public void addDepartingFlight(Flight newDepartingFlight)
+	{
+		PersistenceManager pm= PMF.get().getPersistenceManager();
+		try
+		{
+			this.departures.add(newDepartingFlight);
+			pm.makePersistent(this);
+			
+		}finally
+		{
+			pm.close();
+		}
+	}
+	
+	/**
+	 * @param newDepartingFlight	: new Flight to add to list of flights
+	 */
+	public void addArrivalFlight(Flight newArrivalFlight)
+	{
+		PersistenceManager pm= PMF.get().getPersistenceManager();
+		try
+		{
+			this.arrivals.add(newArrivalFlight);
+			pm.makePersistent(this);
+			
+		}finally
+		{
+			pm.close();
+		}
+	}
+	
+	/**
+	 * @param DepartFlight	: flight to be removed from departures
+	 */
+	public void removeDepartingFlight(Flight DepartFlight)
+	{
+		PersistenceManager pm= PMF.get().getPersistenceManager();
+		try
+		{
+			this.departures.remove(DepartFlight);
+			pm.makePersistent(this);
+			
+		}finally
+		{
+			pm.close();
+		}
+	}
+	
+	/**
+	 * @param ArrivalFlight	: flight to be removed from arrivals
+	 */
+	public void removeArrivalFlight(Flight ArrivalFlight)
+	{
+		PersistenceManager pm= PMF.get().getPersistenceManager();
+		try
+		{
+			this.arrivals.remove(ArrivalFlight);
+			pm.makePersistent(this);
+			
+		}finally
+		{
+			pm.close();
+		}
+	}
 	
 	
 	/*------------ACCESSORS--------------*/

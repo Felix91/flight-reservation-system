@@ -1,5 +1,8 @@
 package ufly.entities;
 
+import java.util.Vector;
+
+import javax.jdo.PersistenceManager;
 import javax.jdo.annotations.IdGeneratorStrategy;
 import javax.jdo.annotations.PersistenceCapable;
 import javax.jdo.annotations.Persistent;
@@ -27,6 +30,108 @@ public class FlightBooking {
 		this.bookedSeat = bookedSeat;
 		this.mealChoice = mealChoice; // TODO enum. similar to bookedFlightClass's TODO
 	}
+	
+	/*------------MODIFIERS--------------*/
+	/**
+	 * @param newConfirmationNumber	: new confirmation number to change to
+	 */
+	public void changeConfirmationNumber(Key newConfirmationNumber)
+	{
+		PersistenceManager pm= PMF.get().getPersistenceManager();
+		try
+		{
+			this.confirmationNumber=newConfirmationNumber;
+			pm.makePersistent(this);
+		
+		}finally
+		{
+			pm.close();
+		}
+	}
+	/**
+	 * @param newCustomer	: new customer to change to
+	 */
+	public void changeCustomer(Customer newCustomer)
+	{
+		PersistenceManager pm= PMF.get().getPersistenceManager();
+		try
+		{
+			this.bookedBy=newCustomer;
+			pm.makePersistent(this);
+		
+		}finally
+		{
+			pm.close();
+		}
+	}
+	/**
+	 * @param newFlight	: new flight booked to change to
+	 */
+	public void changeFlight(Flight newFlight)
+	{
+		PersistenceManager pm= PMF.get().getPersistenceManager();
+		try
+		{
+			this.bookedFlight=newFlight;
+			pm.makePersistent(this);
+		
+		}finally
+		{
+			pm.close();
+		}
+	}
+	
+	/**
+	 * @param newFlightClass	: new fight class to change to
+	 */
+	public void changeFlightClass(FlightClass newFlightClass)
+	{
+		PersistenceManager pm= PMF.get().getPersistenceManager();
+		try
+		{
+			this.bookedFlightClass=newFlightClass;
+			pm.makePersistent(this);
+		
+		}finally
+		{
+			pm.close();
+		}
+	}
+	/**
+	 * @param newSeat	: new seat booking to change to
+	 */
+	public void changeSeat(Seat newSeat)
+	{
+		PersistenceManager pm= PMF.get().getPersistenceManager();
+		try
+		{
+			this.bookedSeat=newSeat;
+			pm.makePersistent(this);
+		
+		}finally
+		{
+			pm.close();
+		}
+	}
+	
+	/**
+	 * @param newMeal	: new meal choice to change to
+	 */
+	public void changeMealChoice(Meal newMeal)
+	{
+		
+		PersistenceManager pm= PMF.get().getPersistenceManager();
+		try
+		{
+			this.mealChoice=newMeal;
+			pm.makePersistent(this);
+		
+		}finally
+		{
+			pm.close();
+		}
+	}
+	
 	
 	/*------------ACCESSORS--------------*/
 	/**
