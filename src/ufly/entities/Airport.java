@@ -1,15 +1,19 @@
 package ufly.entities;
 
+import java.util.List;
 import java.util.Vector;
 
 import javax.jdo.PersistenceManager;
+import javax.jdo.Query;
+import javax.jdo.annotations.Extension;
+import javax.jdo.annotations.IdGeneratorStrategy;
 import javax.jdo.annotations.PersistenceCapable;
 import javax.jdo.annotations.Persistent;
 import javax.jdo.annotations.PrimaryKey;
 
 @PersistenceCapable
 public class Airport {
-	
+
 	/*------------ CONSTRUCTORS ------------*/
 	/**
 	 * Create an Airport object
@@ -20,8 +24,11 @@ public class Airport {
 	{
 		this.callsign = callsign;
 		this.city = city;
+		PersistenceManager pm = PMF.get().getPersistenceManager();
+		pm.makePersistent(this);
 	}
-	
+
+
 	/*------------MODIFIERS--------------*/
 	/**
 	 * @param newCallSign	: new CallSign to update to
@@ -33,13 +40,13 @@ public class Airport {
 		{
 			this.callsign=newCallSign;
 			pm.makePersistent(this);
-			
+
 		}finally
 		{
 			pm.close();
 		}
 	}
-	
+
 	/**
 	 * @param newCity	: new City to update to
 	 */
@@ -50,13 +57,13 @@ public class Airport {
 		{
 			this.city=newCity;
 			pm.makePersistent(this);
-			
+
 		}finally
 		{
 			pm.close();
 		}
 	}
-	
+
 	/**
 	 * @param newDepartingFlight	: new Flight to add to list of flights
 	 */
@@ -67,13 +74,13 @@ public class Airport {
 		{
 			this.departures.add(newDepartingFlight);
 			pm.makePersistent(this);
-			
+
 		}finally
 		{
 			pm.close();
 		}
 	}
-	
+
 	/**
 	 * @param newDepartingFlight	: new Flight to add to list of flights
 	 */
@@ -84,13 +91,13 @@ public class Airport {
 		{
 			this.arrivals.add(newArrivalFlight);
 			pm.makePersistent(this);
-			
+
 		}finally
 		{
 			pm.close();
 		}
 	}
-	
+
 	/**
 	 * @param DepartFlight	: flight to be removed from departures
 	 */
@@ -101,13 +108,13 @@ public class Airport {
 		{
 			this.departures.remove(DepartFlight);
 			pm.makePersistent(this);
-			
+
 		}finally
 		{
 			pm.close();
 		}
 	}
-	
+
 	/**
 	 * @param ArrivalFlight	: flight to be removed from arrivals
 	 */
@@ -118,14 +125,34 @@ public class Airport {
 		{
 			this.arrivals.remove(ArrivalFlight);
 			pm.makePersistent(this);
-			
+
 		}finally
 		{
 			pm.close();
 		}
 	}
-	
-	
+
+
+
+	public static List<Airport> getAllAirports()
+	{
+		PersistenceManager pm = PMF.get().getPersistenceManager();
+		Query q = pm.newQuery(Airport.class);
+        /**
+         * in order to check this we need to check every element to see if it
+         * is of type User, too much work, plus we should not get any
+         * other type. We just suppress the warning
+         */
+        @SuppressWarnings("unchecked")
+		List<Airport> results = (List<Airport>) q.execute();
+        return results;
+	}
+	@Override
+	public String toString() {
+		return "Airport [callsign=" + callsign + ", city=" + city + "]";
+	}
+
+
 	/*------------ACCESSORS--------------*/
 	/**
 	 * @return the callsign
@@ -134,7 +161,7 @@ public class Airport {
 	{
 		return this.callsign;
 	}
-	
+
 	/**
 	 * @return the city
 	 */
@@ -142,7 +169,7 @@ public class Airport {
 	{
 		return this.city;
 	}
-	
+
 	/**
 	 * @return a vector of departure flights from this
 	 */
@@ -158,10 +185,11 @@ public class Airport {
 		return this.arrivals;
 	}
 
-	
+
 	/*------------ VARIABLES ------------*/
 	@PrimaryKey
-	@Persistent
+	@Persistent(valueStrategy = IdGeneratorStrategy.IDENTITY)
+	@Extension(vendorName="datanucleus",key="gae.encoded-pk",value="true")
 	private String callsign;			// The Airport's International Air Transport Association (IATA) airport code. e.g. YVR. Uniquely identifies an Airport.
 	@Persistent
 	private String city;				// The Airport's city e.g. Vancouver

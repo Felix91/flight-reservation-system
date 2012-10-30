@@ -74,13 +74,13 @@
 		<servlet-name>_footer</servlet-name>
 		<url-pattern>/_footer</url-pattern>
 	</servlet-mapping>
-	<!-- SESSION TEST -->
+	<!-- ENTITY TEST -->
 	<servlet>
 		<servlet-name>test</servlet-name>
-		<servlet-class>ufly.frs.SessionCounter</servlet-class>
+		<servlet-class>ufly.frs.Test</servlet-class>
 	</servlet>
 	<servlet-mapping>
 		<servlet-name>test</servlet-name>
-		<url-pattern>/test</url-pattern>
+		<url-pattern>/entityTest</url-pattern>
 	</servlet-mapping>
 </web-app>
