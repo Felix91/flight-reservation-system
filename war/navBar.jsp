@@ -6,11 +6,11 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </a>
-          <a class="brand" href="#">uFly</a>
+          <a class="brand" href="/index.jsp">uFly</a>
             <div class="navbar-text dropdown pull-right">
               Logged in as <a href="#" data-toggle="dropdown" class="navbar-link ">Username</a>
 				<ul aria-labelledby="drop5" role="menu" class="dropdown-menu" id="menu2">
-                  <li><a href="#" tabindex="-1">Profile Page</a></li>
+                  <li><a href="/customerProfile.jsp" tabindex="-1">Profile Page</a></li>
                   <li><a href="#" tabindex="-1">Modify a Booking</a></li>
                   <li><a href="#" tabindex="-1">Something else here</a></li>
                   <li class="divider"></li>
