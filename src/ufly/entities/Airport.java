@@ -11,9 +11,6 @@ import javax.jdo.annotations.PersistenceCapable;
 import javax.jdo.annotations.Persistent;
 import javax.jdo.annotations.PrimaryKey;
 
-import com.google.appengine.api.datastore.Key;
-import com.google.appengine.api.datastore.KeyFactory;
-
 @PersistenceCapable
 public class Airport {
 
@@ -25,8 +22,6 @@ public class Airport {
 	 */
 	public Airport(String callsign, String city)
 	{
-		Key key = KeyFactory.createKey(Airport.class.getSimpleName(), callsign);
-		this.encodedCallsign = KeyFactory.keyToString(key);
 		this.callsign = callsign;
 		this.city = city;
 		PersistenceManager pm = PMF.get().getPersistenceManager();
@@ -40,10 +35,9 @@ public class Airport {
 
 	/*------------MODIFIERS--------------*/
 	/**
-	 * @param newCallSign	: new CallSign to update to
+	 * @param newCallSign	: new  to update to
 	 */
-	// TODO update this with encoded string key
-	/*public void changeCallSign(String newCallSign)
+	public void changeCallSign(String newCallSign)
 	{
 		PersistenceManager pm= PMF.get().getPersistenceManager();
 		try
@@ -55,7 +49,7 @@ public class Airport {
 		{
 			pm.close();
 		}
-	}*/
+	}
 
 	/**
 	 * @param newCity	: new City to update to
@@ -167,11 +161,10 @@ public class Airport {
 	/**
 	 * @return the callsign
 	 */
-	// TODO update this with encoded string key
-	/*public String getCallSign()
+	public String getCallSign()
 	{
 		return this.callsign;
-	}*/
+	}
 
 	/**
 	 * @return the city
@@ -201,7 +194,7 @@ public class Airport {
 	@PrimaryKey
 	@Persistent(valueStrategy = IdGeneratorStrategy.IDENTITY)
 	@Extension(vendorName="datanucleus",key="gae.encoded-pk",value="true")
-	private String encodedCallsign;
+	private String encodedCallsign;		// Note: encodedCallsign is populated automatically
 	@Persistent
     @Extension(vendorName="datanucleus", key="gae.pk-name", value="true")
     private String callsign;			// The Airport's International Air Transport Association (IATA) airport code. e.g. YVR. Uniquely identifies an Airport.
