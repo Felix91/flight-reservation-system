@@ -1,6 +1,3 @@
-
-<div class="container">
-<div class="row">
 <hr/> 
 <p>Powered by uFly Airline Software Systems</p>
               <div class="navbar">
@@ -13,5 +10,3 @@
                       </ul>
                   </div>
               </div>
-</div>              
-</div>             
