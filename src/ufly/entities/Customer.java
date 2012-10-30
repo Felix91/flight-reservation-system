@@ -4,11 +4,9 @@ import java.util.Iterator;
 import java.util.Vector;
 
 import javax.jdo.PersistenceManager;
-import javax.jdo.Transaction;
 import javax.jdo.annotations.PersistenceCapable;
 import javax.jdo.annotations.Persistent;
 
-import com.google.appengine.api.datastore.Key;
 
 @PersistenceCapable (detachable="true")
 public class Customer extends User {

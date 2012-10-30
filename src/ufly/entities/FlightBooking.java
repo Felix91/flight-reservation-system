@@ -1,6 +1,5 @@
 package ufly.entities;
 
-import java.util.Vector;
 
 import javax.jdo.PersistenceManager;
 import javax.jdo.annotations.IdGeneratorStrategy;

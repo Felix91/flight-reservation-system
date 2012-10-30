@@ -9,12 +9,10 @@ import javax.jdo.Query;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 import ufly.entities.Airport;
 import ufly.entities.Customer;
 import ufly.entities.PMF;
-import ufly.entities.User;
 @SuppressWarnings("serial")
 public class Test extends HttpServlet{
 	public void doGet(HttpServletRequest request, HttpServletResponse response)
@@ -63,7 +61,7 @@ public class Test extends HttpServlet{
 				response.getWriter().println("Need both city or callsign");
 				return;
 			}
-			Airport a = new Airport(csign,city);
+			new Airport(csign,city);
 			response.sendRedirect("/entityTest");
 		}
 	}
@@ -110,7 +108,7 @@ public class Test extends HttpServlet{
 				response.getWriter().println("Missing parameters");
 				return;
 			}
-			Customer a = new Customer(emailAddr,password,firstName,lastName);
+			new Customer(emailAddr,password,firstName,lastName);
 			response.sendRedirect("/entityTest?test=Customer");
 		}
 	}
