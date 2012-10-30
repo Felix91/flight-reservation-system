@@ -20,6 +20,13 @@ public class Customer extends User {
 		this.firstName = firstName;
 		this.lastName = lastName;
 		this.loyaltyPoints = 0; // Every Customer starts with 0 loyalty points
+		
+		PersistenceManager pm = PMF.get().getPersistenceManager();
+		try{
+			pm.makePersistent(this);
+		}finally{
+			pm.close();
+		}
 	}
 	/*------------MODIFIERS---------------*/
 	/**
