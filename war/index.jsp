@@ -10,9 +10,9 @@
 		<div id="content">
 			<div class="row-fluid">
    				<div class="span12">
-              		<div class="hero-unit">
-                		<h1>Hello, world!</h1>
-                		<p>This is a template for a simple marketing or informational website.</p>
+              		<div class="hero-unit" style="background-color:#00E5FF">
+                		<h1>Canada Airlines</h1>
+                		<p>Flying at its best</p>
               		</div>
           			<div class="row-fluid">
                     	<div class="span7">
@@ -34,12 +34,22 @@
 	                            	<label class="control-label" for="in_depart">Date of Departure</label>
 	                            	<div class="controls">
 	                               		<input type="text" id="in_depart" placeholder="Enter Date of Departure">
+	                               		<script>
+                                        	$('#in_depart').datepicker({
+       		                                	format: 'mm-dd-yyyy'
+ 	                                    	});     
+                                        </script>
 	                           		</div>
 	                        	</div>
 	                        	<div class="control-group">
 	                            	<label class="control-label" for="in_return">Date of Return</label>
 	                            	<div class="controls">
 	                                	<input type="text" id="in_return" placeholder="Enter Date of Return">
+	                                	<script>
+                                        	$('#in_return').datepicker({
+       		                                	format: 'mm-dd-yyyy'
+ 	                                    	});     
+                                        </script>
 	                            	</div>
 	                        	</div>
 	                        	<div class="control-group">
