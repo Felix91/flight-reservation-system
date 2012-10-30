@@ -20,7 +20,12 @@ public class Test extends HttpServlet{
     {
 		
 		String test=request.getParameter("test");
-		if( test.equalsIgnoreCase("Customer") == true )
+		if( test == null )
+		{
+			response.setContentType("text/plain");
+			response.getWriter().println("<h2>welcome to the test servlet</h2>");
+		}
+		else if( test.equalsIgnoreCase("Customer") == true )
 		{
 			testCustomer(request,response);
 			return;
@@ -29,11 +34,6 @@ public class Test extends HttpServlet{
 		{
 			testAirport(request,response);
 			return;
-		}
-		else
-		{
-			response.setContentType("text/plain");
-			response.getWriter().println("<h2>welcome to the test servlet</h2>");
 		}
 	
     }
