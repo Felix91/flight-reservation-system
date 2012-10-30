@@ -7,13 +7,13 @@
 <body>
 	<jsp:include page="/navBar.jsp" />
 	<div class="container-fluid">
-		<div id="content">
+		<div id="content"><!-- start content -->
 			<!-- Add content here -->
-    	</div>
+    	</div><!-- end content -->
     
-    	<div id="footer">
+    	<div id="footer"><!-- start footer -->
     		<jsp:include page="/_footer.jsp" />
-    	</div>
+    	</div><!-- end footer -->
 	</div>
 	<!-- page generated at: <% //out.print(request.getAttribute("date")); %>-->
 </body>
