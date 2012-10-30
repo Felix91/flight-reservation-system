@@ -1,9 +1,6 @@
 package ufly.entities;
 
-import java.util.Iterator;
-import java.util.List;
 
-import javax.jdo.PersistenceManager;
 import javax.jdo.annotations.Inheritance;
 import javax.jdo.annotations.InheritanceStrategy;
 import javax.jdo.annotations.NotPersistent;
@@ -27,7 +24,7 @@ public class User {
 		this.emailAddr = emailAddr;
 		this.setPassword(password);
 	}
-	
+	public User(){}
 	
 	/*------------ METHODS ------------*/
 	/**
@@ -77,41 +74,11 @@ public class User {
 	 * @param name	: new first name to update to
 	 * @return
 	 */
-	public User setFirstName(String name)
-	{
-		this.firstName=name;
-		return this; // [Felix] Why are we returning the object?
-	}
 	
-	/**
-	 * @param name	: new last name to update to
-	 * @return
-	 */
-	public User setLastName(String name)
-	{
-		this.lastName=name;
-		return this;
-	}
 	
 	
 	/*------------ ACCESSORS ------------*/
-	/**
-	 * Get first name
-	 * @return firstName
-	 */
-	public String getFirstName()
-	{
-		return this.firstName;
-	}
 	
-	/**
-	 * Get last name
-	 * @return lastName
-	 */
-	public String getLastName()
-	{
-		return this.lastName;
-	}
 	
 	/**
 	 * Get email address of User
@@ -121,78 +88,9 @@ public class User {
 	{
 		return this.emailAddr;
 	}
-		
-	
-	/*------------ CLASS METHODS ------------*/
-	/**
-	 * Make the user specified by email logged in if the password is correct
-	 * @param emailAddr : email address to attempt to login
-	 * @param password 	: password to attempt to login with
-	 * @param session 	: session to make user logged into, usually request.getSession()
-	 * @return true if successful, false otherwise
-	 */
-	public static User login(String emailAddr,String password,HttpSession session)
+	public boolean checkPassword( String pwd)
 	{
-		User localUser=null;
-		localUser=User.getUser(emailAddr);
-		if(localUser!=null && localUser.password.Matches(password))
-		{
-			localUser.login(session);
-		}
-		
-		return localUser;
-	}
-	
-	/**
-	 * Get the user that is currently logged in
-	 * @return return null if no user is logged in, return User if there is a user logged in.
-	 */
-	public static User getLoggedInUser(HttpSession session)
-	{
-		User loggedInUser=null; 
-		String email = (String) session.getAttribute("loggedInUser"); 
-		if (email !=null)
-		{
-			loggedInUser=User.getUser(email);
-		}
-		
-		if (loggedInUser != null)
-		{
-			loggedInUser.session = session;
-		}
-		return loggedInUser;
-	}
-	
-	/**
-	 * Get a User from the datastore
-	 * @param email	: search key
-	 * @return the User if found, else, null
-	 */
-	private static User getUser(String email)
-	{
-		//DataStore Stuff
-		//TODO:add datastore filters instead of iterating
-		PersistenceManager pm = PMF.get().getPersistenceManager();
-		javax.jdo.Query q = pm.newQuery(User.class);
-		try
-		{
-			@SuppressWarnings("unchecked")
-			List<User>result=(List<User>) q.execute();
-			
-			//Our filthy filter
-			Iterator<User> it = result.iterator();
-			while(it.hasNext())
-			{
-				User u = it.next();
-				if (u.getEmailAddr().equals(email))
-					return u;	
-			}
-			return null;
-		}
-		finally // Note that this finally block will still run even if try block has return statements.
-		{
-			q.closeAll();
-		}
+		return this.password.Matches(pwd);
 	}
 	
 	
@@ -211,10 +109,7 @@ public class User {
 	@PrimaryKey
 	@Persistent
 	private String emailAddr;		// The User's email address. Uniquely identifies the entity.
-	@Persistent
-	private String firstName;		// The User's first name TODO remove this
-	@Persistent
-	private String lastName;		// The User's last name TODO remove this
+	
 	@Persistent(serialized = "true")
 	private UflyPassword password;	// The User's password
 	@NotPersistent

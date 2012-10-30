@@ -41,7 +41,6 @@ public class SignedUp extends HttpServlet {
 		PersistenceManager pm = PMF.get().getPersistenceManager();
 		
 		User newUser = new User(emailAddr, newPw); // TODO: create Customer once User has proven to work
-		newUser.setFirstName(firstName).setLastName(lastName);
 		newUser.login(req.getSession());
 		try {
             pm.makePersistent(newUser);

@@ -1,9 +1,11 @@
 package ufly.entities;
 
 import java.util.Iterator;
+import java.util.List;
 import java.util.Vector;
 
 import javax.jdo.PersistenceManager;
+import javax.jdo.Query;
 import javax.jdo.annotations.PersistenceCapable;
 import javax.jdo.annotations.Persistent;
 
@@ -25,6 +27,32 @@ public class Customer extends User {
 		}finally{
 			pm.close();
 		}
+	}
+	public static Customer getCustomer(String emailAddr)
+	{
+		PersistenceManager pm = PMF.get().getPersistenceManager();
+		Customer c=null;
+		try{
+			 Query q = pm.newQuery(Customer.class);
+	            /**
+	             * in order to check this we need to check every element to see if it 
+	             * is of type User, too much work, plus we should not get any
+	             * other type. We just suppress the warning
+	             */
+	            @SuppressWarnings("unchecked")
+				List<Customer> results = (List<Customer>) q.execute();
+	            Iterator<Customer> it = results.iterator();
+	            // Print all Users in the datastore
+	            while (it.hasNext())
+				{
+					c = it.next();
+					if (c.getEmailAddr().equals(emailAddr))
+						break;
+				}
+		}finally{
+			pm.close();
+		}
+		return c;
 	}
 	/*------------MODIFIERS---------------*/
 	/**
@@ -113,7 +141,7 @@ public class Customer extends User {
 			pm.close();
 		}
 	}
-	
+
 	/**
 	 * @param fb	: remove fb from flightbooking vector
 	 */
