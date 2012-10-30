@@ -11,6 +11,8 @@ import javax.jdo.annotations.PrimaryKey;
 
 import org.datanucleus.api.jpa.annotations.Extension;
 
+import ufly.entities.SeatingArrangement.AircraftModel;
+
 @PersistenceCapable (detachable="true")
 public class Flight {
 	
@@ -25,16 +27,23 @@ public class Flight {
 	 * @param allowableMealTypes		: A vector of Meals available on this Flight
 	 * @param seatingArrangementLayout	: The string which determines the Flight's SeatingArrangment instance
 	 */
-	public Flight(String flightNumber, Airport origin, Airport destination, Date departure, Date arrival, Vector<Meal> allowableMealTypes, String seatingArrangmentLayout)
+	public Flight(String flightNumber, Airport origin, Airport destination, Date departure, Date arrival, Vector<Meal> allowableMealTypes, AircraftModel aircraftModel)
 	{
 		this.flightNumber = flightNumber;
 		this.origin = origin;
 		this.destination = destination;
 		this.departure = departure;
 		this.arrival = arrival;
-		this.allowableMealTypes = allowableMealTypes; // TO-DO: Will a reference to the original vector suffice?
-		// this.seatingArragement = new SeatingArrangment(seatingArrangmentLayout); TO-DO: seatingArrangement constructor not defined yet
+		this.allowableMealTypes = allowableMealTypes; // TODO: Will a reference to the original vector suffice?
+		this.seatingArragement = new SeatingArrangement(aircraftModel);
 		this.key = flightNumber+departure;
+		
+		PersistenceManager pm = PMF.get().getPersistenceManager();
+		try{
+			pm.makePersistent(this);
+		}finally{
+			pm.close();
+		}
 	}
 	
 	/*------------ MODIFIERS ------------*/
@@ -221,7 +230,10 @@ public class Flight {
 	@PrimaryKey
 	@Persistent(valueStrategy = IdGeneratorStrategy.IDENTITY)
 	@Extension(vendorName="datanucleus", key="gae.encoded-pk", value="true") // key as encoded string. Note that since Flight is a child class of an entity relationship with Airport, its key must either be a Key or a Key value encoded as a string.
-	private String key;								// Use a flightNumber and departure concatenated string to serve as entity key (to avoid using numeric ID) for now
+	private String encodedKey;						// Updated automatically.
+	@Persistent
+    @Extension(vendorName="datanucleus", key="gae.pk-name", value="true")
+    private String key;								// Use a flightNumber and departure concatenated string to serve as entity key (to avoid using numeric ID) for now
 	@Persistent
 	private String flightNumber;					// The Flight's flight number e.g. CX838. This and the departure Date determines the Flight.
 	@Persistent
