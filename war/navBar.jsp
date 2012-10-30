@@ -6,7 +6,7 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </a>
-          <a class="brand" href="/index.jsp">uFly</a>
+          <a class="brand" href="/index.jsp">Canada Airlines</a>
             <div class="navbar-text dropdown pull-right">
               Logged in as <a href="#" data-toggle="dropdown" class="navbar-link ">Username</a>
 				<ul aria-labelledby="drop5" role="menu" class="dropdown-menu" id="menu2">

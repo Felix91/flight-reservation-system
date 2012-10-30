@@ -6,7 +6,7 @@
 </head>
 <body>
 	<jsp:include page="/navBar.jsp" />
-	<div class="container-fluid">
+	<div class="container">
 		<div id="content"><!-- start content -->
 			    	<div class="row-fluid">
         	<h2>Customer Profile</h2>
