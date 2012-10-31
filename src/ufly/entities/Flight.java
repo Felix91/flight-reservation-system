@@ -1,15 +1,19 @@
 package ufly.entities;
 
 import java.util.Date;
+import java.util.List;
 import java.util.Vector;
 
 import javax.jdo.PersistenceManager;
+import javax.jdo.Query;
 import javax.jdo.annotations.IdGeneratorStrategy;
 import javax.jdo.annotations.PersistenceCapable;
 import javax.jdo.annotations.Persistent;
 import javax.jdo.annotations.PrimaryKey;
 
 import org.datanucleus.api.jpa.annotations.Extension;
+
+import com.google.appengine.api.datastore.Key;
 
 import ufly.entities.SeatingArrangement.AircraftModel;
 
@@ -29,14 +33,15 @@ public class Flight {
 	 */
 	public Flight(String flightNumber, Airport origin, Airport destination, Date departure, Date arrival, Vector<Meal> allowableMealTypes, AircraftModel aircraftModel)
 	{
+		this.key1 = flightNumber;
 		this.flightNumber = flightNumber;
 		this.origin = origin;
 		this.destination = destination;
 		this.departure = departure;
 		this.arrival = arrival;
 		this.allowableMealTypes = allowableMealTypes; // TODO: Will a reference to the original vector suffice?
-		this.seatingArragement = new SeatingArrangement(aircraftModel);
-		this.key = flightNumber+departure;
+		//this.seatingArragement = new SeatingArrangement(aircraftModel);
+		
 		
 		PersistenceManager pm = PMF.get().getPersistenceManager();
 		try{
@@ -165,6 +170,19 @@ public class Flight {
 		}
 	}
 	
+	public static List<Flight> getAllFlights()
+	{
+		PersistenceManager pm = PMF.get().getPersistenceManager();
+		Query q = pm.newQuery(Flight.class);
+        /**
+         * in order to check this we need to check every element to see if it
+         * is of type User, too much work, plus we should not get any
+         * other type. We just suppress the warning
+         */
+        @SuppressWarnings("unchecked")
+		List<Flight> results = (List<Flight>) q.execute();
+        return results;
+	}
 	
 	/*------------ ACCESSORS ------------*/
 	/**
@@ -229,11 +247,12 @@ public class Flight {
 	/*------------ VARIABLES ------------*/
 	@PrimaryKey
 	@Persistent(valueStrategy = IdGeneratorStrategy.IDENTITY)
+	//private Key key; //test
 	@Extension(vendorName="datanucleus", key="gae.encoded-pk", value="true") // key as encoded string. Note that since Flight is a child class of an entity relationship with Airport, its key must either be a Key or a Key value encoded as a string.
 	private String encodedKey;						// Updated automatically.
 	@Persistent
     @Extension(vendorName="datanucleus", key="gae.pk-name", value="true")
-    private String key;								// Use a flightNumber and departure concatenated string to serve as entity key (to avoid using numeric ID) for now
+    private String key1;	// Use a flightNumber and departure concatenated string to serve as entity key (to avoid using numeric ID) for now
 	@Persistent
 	private String flightNumber;					// The Flight's flight number e.g. CX838. This and the departure Date determines the Flight.
 	@Persistent
