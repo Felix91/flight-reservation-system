@@ -25,26 +25,26 @@ public class Test extends HttpServlet{
     {
 		
 		String test=request.getParameter("test");
+		response.setContentType("text/html");
+		response.getWriter().println("<html><body><h2>welcome to the test servlet</h2>");
 		if( test == null )
 		{
-			response.setContentType("text/plain");
-			response.getWriter().println("<h2>welcome to the test servlet</h2>");
+
 		}
 		else if( test.equalsIgnoreCase("Customer") == true )
 		{
 			testCustomer(request,response);
-			return;
 		}
 		else if( test.equalsIgnoreCase("Airport") == true )
 		{
 			testAirport(request,response);
-			return;
+
 		}
 		else if( test.equalsIgnoreCase("Flight") == true )
 		{
 			testFlight(request, response);
-			return;
 		}
+		response.getWriter().println("</body></html>");
 	
     }
 	private void testFlight(HttpServletRequest request, HttpServletResponse response) throws IOException
@@ -80,15 +80,15 @@ public class Test extends HttpServlet{
 			}
 			
 			
-			Airport origin1;
-			Airport destination1;
+			Airport origin1=null;
+			Airport destination1=null;
 			List<Airport> la = Airport.getAllAirports();
 			Iterator<Airport> it = la.iterator();
 			response.getWriter().println("<ul>");
 			
-			// This is last ditch effor
-			origin1 = it.next();
-			destination1 = it.next();
+			// This is last ditch effort
+			//origin1 = it.next();
+			//dsestination1 = it.next();
 			
 			while (it.hasNext())
 			{
