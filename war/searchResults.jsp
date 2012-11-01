@@ -115,7 +115,9 @@
 				</div><!--/span9-->
     	</div>
     	<div id="footer">
+    		
     		<jsp:include page="/_footer.jsp" />
+    		
     	</div>
 	</div>
 	<!-- page generated at: <% //out.print(request.getAttribute("date")); %>-->

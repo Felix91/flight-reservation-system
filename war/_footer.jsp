@@ -1,3 +1,4 @@
+<div class="container">
 <hr/> 
 <p>Powered by uFly Airline Software Systems</p>
               <div class="navbar">
@@ -5,8 +6,9 @@
                    <a class="brand" href="#">Canada Airlines</a>
                       <ul class="nav">
                         <li class="active"><a href="#">Search</a></li>
-                        <li><a href="#">Contact </a></li>
                         <li><a href="#">About</a></li>
+                        <li><a href="#">Contact</a></li>
                       </ul>
                   </div>
               </div>
+</div>
