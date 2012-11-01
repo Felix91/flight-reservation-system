@@ -1,6 +1,6 @@
 #gae generated files
 
-ufly/war/WEB-INF/appengine-generated
+war/WEB-INF/appengine-generated
 war/WEB-INF/classes/
 
 ufly/doc/
