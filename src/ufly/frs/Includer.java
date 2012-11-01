@@ -24,4 +24,9 @@ public class Includer extends HttpServlet {
 		}
 			
 	}
+	public void doPost(HttpServletRequest req, HttpServletResponse resp)
+	throws ServletException,IOException		
+	{
+		doGet(req,  resp);
+	}
 }

@@ -9,7 +9,17 @@
 	
 	<div id="container">
 	<div id="header">
-    	<jsp:include page="/_header" />
+    	<div id="logo">
+        	<p>CANADA AIRLINES</p>
+        </div>
+    	<div id="subheader">
+        	<ul>
+            	<a href="loginpage.html"><li>Home</li></a>
+                <a href="loginpage.html"><li>Search</li></a>
+                <a href="loginpage.html"><li>About</li></a>
+                <a href="loginpage.html"><li>Contact Us</li></a>
+            </ul>
+        </div>
     </div>
     <div id="content">
     	<h2>CUSTOMER LOGIN</h2>
@@ -45,7 +55,14 @@
         </div>       
     </div>
     <div id="footer">
-    	<jsp:include page="/_footer" />
+    	<div id="uflylogo">
+        	<p class="small">Powered by uFly Airline Reservations Software </p>
+        </div>
+    	<div id="contactus">
+        	<p>Check out our FAQ <br />
+               Need help? Call us at 1-888-999-1234 (toll free)<br />
+               For calls outside of North America call us at 800-111-2233</p>
+        </div> 
     </div>
 	</div>
 		<!-- page generated at: <% //out.print(request.getAttribute("date")); %>-->
