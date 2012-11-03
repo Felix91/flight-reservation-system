@@ -49,6 +49,8 @@ public class Test extends HttpServlet{
     }
 	private void testFlight(HttpServletRequest request, HttpServletResponse response) throws IOException
 	{
+		response.getWriter().println("<h3>testing flights</h3>");
+		
 		if(request.getParameter("flightno")==null)
 		{
 			List<Flight> fl = (List<Flight>) Flight.getAllFlights();
@@ -56,7 +58,8 @@ public class Test extends HttpServlet{
 			response.getWriter().println("<ul>");
 			while (it.hasNext())
 			{
-				response.getWriter().println("<li>"+it.next().toString()+"</li>");
+				Flight f = it.next();
+				response.getWriter().println("<li>"+f.toString()+"</li>");
 			}
 			response.getWriter().println("</ul>");
 		}
@@ -67,13 +70,13 @@ public class Test extends HttpServlet{
 			String origin = request.getParameter("origin");
 			String destination = request.getParameter("destination");
 			String arrival = request.getParameter("arrival");
-			String depature = request.getParameter("departure");
+			String departure = request.getParameter("departure");
 			String meals = request.getParameter("meals");
 			String aircraft = request.getParameter("aircraft");
 			
 			if(flightno ==null || origin == null ||
-					destination ==null || arrival == null ||
-					meals ==null || aircraft == null)
+					destination ==null /*|| arrival == null ||
+					meals ==null || aircraft == null*/)
 			{
 				response.getWriter().println("Missing entries");
 				return;
@@ -90,14 +93,14 @@ public class Test extends HttpServlet{
 			//origin1 = it.next();
 			//dsestination1 = it.next();
 			
-			while (it.hasNext())
+			while (it.hasNext() && (origin1==null || destination1==null))
 			{
 				Airport temp = it.next();
-				if (temp.getCallSign() == origin)
+				if (temp.getCallSign().equals(origin))
 				{
 					origin1 = temp;
 				}
-				else if (temp.getCallSign() == destination) 
+				else if (temp.getCallSign().equals(destination)) 
 				{
 					destination1 = temp;
 				}
@@ -111,7 +114,7 @@ public class Test extends HttpServlet{
 			
 			
 			new Flight(flightno, origin1, destination1,a, b, c, AircraftModel.BOEING_777 );
-			response.sendRedirect("/entityTest");
+			response.sendRedirect("/entityTest?test=Flight");
 		}
 	}
 	
@@ -141,7 +144,7 @@ public class Test extends HttpServlet{
 				return;
 			}
 			new Airport(csign,city);
-			response.sendRedirect("/entityTest");
+			response.sendRedirect("/entityTest?test=Airport");
 		}
 	}
 	

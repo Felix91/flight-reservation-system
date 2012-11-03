@@ -5,11 +5,13 @@ import java.util.Vector;
 
 import javax.jdo.PersistenceManager;
 import javax.jdo.Query;
-import javax.jdo.annotations.Extension;
 import javax.jdo.annotations.IdGeneratorStrategy;
 import javax.jdo.annotations.PersistenceCapable;
 import javax.jdo.annotations.Persistent;
 import javax.jdo.annotations.PrimaryKey;
+
+import com.google.appengine.api.datastore.Key;
+import com.google.appengine.api.datastore.KeyFactory;
 
 @PersistenceCapable
 public class Airport {
@@ -24,6 +26,7 @@ public class Airport {
 	{
 		this.callsign = callsign;
 		this.city = city;
+		this.k = KeyFactory.createKey(Airport.class.getSimpleName(), callsign);
 		PersistenceManager pm = PMF.get().getPersistenceManager();
 		try{
 			pm.makePersistent(this);
@@ -31,8 +34,15 @@ public class Airport {
 			pm.close();
 		}
 	}
-
-
+	/**
+	 * 
+	 * @param k key that corresponds to an Airport
+	 * @return Airport that has key k
+	 */
+	public static Airport getAirport(Key k)
+	{
+		return PMF.get().getPersistenceManager().getObjectById(Airport.class, k);
+	}
 	/*------------MODIFIERS--------------*/
 	/**
 	 * @param newCallSign	: new  to update to
@@ -76,7 +86,7 @@ public class Airport {
 		PersistenceManager pm= PMF.get().getPersistenceManager();
 		try
 		{
-			this.departures.add(newDepartingFlight);
+			this.departures.add(newDepartingFlight.getKey());
 			pm.makePersistent(this);
 
 		}finally
@@ -93,7 +103,7 @@ public class Airport {
 		PersistenceManager pm= PMF.get().getPersistenceManager();
 		try
 		{
-			this.arrivals.add(newArrivalFlight);
+			this.arrivals.add(newArrivalFlight.getKey());
 			pm.makePersistent(this);
 
 		}finally
@@ -177,31 +187,38 @@ public class Airport {
 	/**
 	 * @return a vector of departure flights from this
 	 */
-	public Vector<Flight> getDepartingFlight()
-	{
-		return this.departures;
-	}
+	//JDV 02/11/2012 Do we need these accessors? they require lots db work
+//	public Vector<Flight> getDepartingFlight()
+//	{
+//		return this.departures;
+//	}
+//	/**
+//	 * @return a vector of arrival flights from this
+//	 */
+//	public Vector<Flight> getArrivingFlight()
+//	{
+//		return this.arrivals;
+//	}
 	/**
-	 * @return a vector of arrival flights from this
+	 * 
+	 * @return return the datastore key for this Airport
 	 */
-	public Vector<Flight> getArrivingFlight()
-	{
-		return this.arrivals;
+	public Key getKey() {
+		return this.k;
 	}
-
 
 	/*------------ VARIABLES ------------*/
 	@PrimaryKey
 	@Persistent(valueStrategy = IdGeneratorStrategy.IDENTITY)
-	@Extension(vendorName="datanucleus",key="gae.encoded-pk",value="true")
-	private String encodedCallsign;		// Note: encodedCallsign is populated automatically
+	private Key k;
+	
 	@Persistent
-    @Extension(vendorName="datanucleus", key="gae.pk-name", value="true")
     private String callsign;			// The Airport's International Air Transport Association (IATA) airport code. e.g. YVR. Uniquely identifies an Airport.
 	@Persistent
 	private String city;				// The Airport's city e.g. Vancouver
 	@Persistent(mappedBy = "origin")
-	private Vector<Flight> departures; 	// The Airport's departing Flights
+	private Vector<Key> departures; 	// The Airport's departing Flights
 	@Persistent(mappedBy = "destination")
-	private Vector<Flight> arrivals;	// The Airport's arriving Flights
+	private Vector<Key> arrivals;	// The Airport's arriving Flights
+	
 }

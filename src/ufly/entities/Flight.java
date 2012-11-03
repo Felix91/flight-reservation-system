@@ -11,9 +11,9 @@ import javax.jdo.annotations.PersistenceCapable;
 import javax.jdo.annotations.Persistent;
 import javax.jdo.annotations.PrimaryKey;
 
-import org.datanucleus.api.jpa.annotations.Extension;
 
 import com.google.appengine.api.datastore.Key;
+import com.google.appengine.api.datastore.KeyFactory;
 
 import ufly.entities.SeatingArrangement.AircraftModel;
 
@@ -33,10 +33,10 @@ public class Flight {
 	 */
 	public Flight(String flightNumber, Airport origin, Airport destination, Date departure, Date arrival, Vector<Meal> allowableMealTypes, AircraftModel aircraftModel)
 	{
-		this.key1 = flightNumber;
+		this.k = KeyFactory.createKey(Flight.class.getSimpleName(), flightNumber+departure);
 		this.flightNumber = flightNumber;
-		this.origin = origin;
-		this.destination = destination;
+		this.origin = origin.getKey();
+		this.destination = destination.getKey();
 		this.departure = departure;
 		this.arrival = arrival;
 		this.allowableMealTypes = allowableMealTypes; // TODO: Will a reference to the original vector suffice?
@@ -77,7 +77,7 @@ public class Flight {
 		PersistenceManager pm= PMF.get().getPersistenceManager();
 		try
 		{
-			this.origin=orig;
+			this.origin=orig.getKey();
 			pm.makePersistent(this);
 		
 		}finally
@@ -94,7 +94,7 @@ public class Flight {
 		PersistenceManager pm= PMF.get().getPersistenceManager();
 		try
 		{
-			this.destination=dest;
+			this.destination=dest.getKey();
 			pm.makePersistent(this);
 		
 		}finally
@@ -198,7 +198,7 @@ public class Flight {
 	 */
 	public Airport getOrigin()
 	{
-		return this.origin;
+		return Airport.getAirport(this.origin);
 	}
 	
 	/**
@@ -206,7 +206,7 @@ public class Flight {
 	 */
 	public Airport getDestination()
 	{
-		return this.destination;
+		return Airport.getAirport(this.destination);
 	}
 	
 	/**
@@ -225,7 +225,10 @@ public class Flight {
 		return this.arrival;
 	}
 	
-	
+	public Key getKey()
+	{
+		return this.k;
+	}
 	
 	/**
 	 * @return the allowableMealTypes
@@ -247,18 +250,13 @@ public class Flight {
 	/*------------ VARIABLES ------------*/
 	@PrimaryKey
 	@Persistent(valueStrategy = IdGeneratorStrategy.IDENTITY)
-	//private Key key; //test
-	@Extension(vendorName="datanucleus", key="gae.encoded-pk", value="true") // key as encoded string. Note that since Flight is a child class of an entity relationship with Airport, its key must either be a Key or a Key value encoded as a string.
-	private String encodedKey;						// Updated automatically.
-	@Persistent
-    @Extension(vendorName="datanucleus", key="gae.pk-name", value="true")
-    private String key1;	// Use a flightNumber and departure concatenated string to serve as entity key (to avoid using numeric ID) for now
+	private Key k; 	// Use a flightNumber and departure concatenated string to serve as entity key (to avoid using numeric ID) for now
 	@Persistent
 	private String flightNumber;					// The Flight's flight number e.g. CX838. This and the departure Date determines the Flight.
 	@Persistent
-	private Airport origin;							// The Flight's place of origin. Note a new Airport entity should not be created.
+	private Key origin;							// The Flight's place of origin. Note a new Airport entity should not be created.
 	@Persistent
-	private Airport destination;					// The Flight's place of destination. Note a new Airport entity should not be created.
+	private Key destination;					// The Flight's place of destination. Note a new Airport entity should not be created.
 	@Persistent
 	private Date departure;							// The Flight's departure date (defined with year, month, date, hrs, min)
 	@Persistent
@@ -269,4 +267,13 @@ public class Flight {
 	private SeatingArrangement seatingArragement;	// Each Flight will have one seating arrangement layout
 	@Persistent(mappedBy = "bookedFlight") // bidirectional relationship
 	private Vector<FlightBooking> flightBookings;	// The bookings made on this Flight
+	@Override
+	public String toString() {
+		return "Flight [flightNumber=" + flightNumber + ", origin=" + origin.toString()
+				+ ", destination=" + destination.toString()+ ", departure=" + departure
+				+ ", arrival=" + arrival + ", allowableMealTypes="
+				+ allowableMealTypes + ", seatingArragement="
+				+ seatingArragement + ", flightBookings=" + flightBookings
+				+ "]";
+	}
 }
