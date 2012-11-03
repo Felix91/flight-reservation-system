@@ -163,7 +163,8 @@ public class Airport {
 	}
 	@Override
 	public String toString() {
-		return "Airport [callsign=" + callsign + ", city=" + city + "]";
+		return "Airport [callsign=" + callsign + ", city=" + city + "\n\tdepartures="+departures.toString()+
+				"\n\tarrivals="+arrivals.toString()+"]";
 	}
 
 

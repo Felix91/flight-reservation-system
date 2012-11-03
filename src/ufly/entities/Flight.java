@@ -36,8 +36,10 @@ public class Flight {
 		this.k = KeyFactory.createKey(Flight.class.getSimpleName(), flightNumber+departure);
 		this.flightNumber = flightNumber;
 		this.origin = origin.getKey();
+		origin.addDepartingFlight(this);
 		this.destination = destination.getKey();
 		this.departure = departure;
+		destination.addArrivalFlight(this);
 		this.arrival = arrival;
 		this.allowableMealTypes = allowableMealTypes; // TODO: Will a reference to the original vector suffice?
 		//this.seatingArragement = new SeatingArrangement(aircraftModel);
