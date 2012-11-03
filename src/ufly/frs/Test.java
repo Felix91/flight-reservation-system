@@ -150,48 +150,54 @@ public class Test extends HttpServlet{
 	
 	private void testCustomer(HttpServletRequest request, HttpServletResponse response) throws IOException
 	{
-		if(request.getParameter("emailAddr")==null)
+		String emailAddr = request.getParameter("emailAddr");
+		String password = request.getParameter("password");
+		String firstName = request.getParameter("firstName");
+		String lastName = request.getParameter("lastName");
+		
+		if(password == null || firstName == null || lastName == null)
 		{
-			PersistenceManager pm = PMF.get().getPersistenceManager();
-			try {
-	            // TODO make this a query a class method
-	            Query q = pm.newQuery(Customer.class);
-	            /**
-	             * in order to check this we need to check every element to see if it 
-	             * is of type User, too much work, plus we should not get any
-	             * other type. We just suppress the warning
-	             */
-	            @SuppressWarnings("unchecked")
-				List<Customer> results = (List<Customer>) q.execute();
-	            Iterator<Customer> it = results.iterator();
-	            // Print all Users in the datastore
-	            response.getWriter().println("Customers registered: ");
-	            response.getWriter().println("<ul>");
-	            Customer c;
-				while (it.hasNext())
-				{
-					c = it.next();
-					response.getWriter().println("<li>"+c.getFirstName() + " " + c.getLastName() +"</li>");
-				
-				}
-				response.getWriter().println("</ul>");
-	        } finally {
-	            pm.close();
-	        }		
-		}
-		else
-		{
-			String emailAddr = request.getParameter("emailAddr");
-			String password = request.getParameter("password");
-			String firstName = request.getParameter("firstName");
-			String lastName = request.getParameter("lastName");
-			if(emailAddr == null || password == null || firstName == null || lastName == null)
+			if(emailAddr != null )
 			{
-				response.getWriter().println("Missing parameters");
-				return;
+				Customer c=Customer.getCustomer(emailAddr);
+				if (c != null)
+				{
+					response.getWriter().println(c.toString());
+				}else
+				{
+					response.getWriter().println("Customer("+emailAddr+") does not exist ");
+				}
+				
+			}else{
+				PersistenceManager pm = PMF.get().getPersistenceManager();
+				try {
+		            // TODO make this a query a class method
+		            Query q = pm.newQuery(Customer.class);
+		            /**
+		             * in order to check this we need to check every element to see if it 
+		             * is of type User, too much work, plus we should not get any
+		             * other type. We just suppress the warning
+		             */
+		            @SuppressWarnings("unchecked")
+					List<Customer> results = (List<Customer>) q.execute();
+		            Iterator<Customer> it = results.iterator();
+		            // Print all Users in the datastore
+		            response.getWriter().println("Customers registered: ");
+		            response.getWriter().println("<ul>");
+		            Customer c;
+					while (it.hasNext())
+					{
+						c = it.next();
+						response.getWriter().println("<li>"+c.toString() +"</li>");
+					}
+				}finally{
+					pm.close();
+				}
 			}
+		}else{
 			new Customer(emailAddr,password,firstName,lastName);
 			response.sendRedirect("/entityTest?test=Customer");
 		}
+			
 	}
 }

@@ -32,27 +32,21 @@ public class Customer extends User {
 	{
 		PersistenceManager pm = PMF.get().getPersistenceManager();
 		Customer c=null;
-		try{
-			 Query q = pm.newQuery(Customer.class);
-	            /**
-	             * in order to check this we need to check every element to see if it 
-	             * is of type User, too much work, plus we should not get any
-	             * other type. We just suppress the warning
-	             */
-	            @SuppressWarnings("unchecked")
-				List<Customer> results = (List<Customer>) q.execute();
-	            Iterator<Customer> it = results.iterator();
-	            // Print all Users in the datastore
-	            while (it.hasNext())
-				{
-					c = it.next();
-					if (c.getEmailAddr().equals(emailAddr))
-						break;
-				}
-		}finally{
+		Customer results = null;
+		try {
+			Query q = pm.newQuery(Customer.class,"emailAddr == '"+emailAddr+"'");
+			results = (Customer) q.execute();
+		} catch (javax.jdo.JDOException e) {}finally{
 			pm.close();
 		}
+
 		return c;
+	}
+	@Override
+	public String toString() {
+		return "Customer [firstName=" + firstName + ", lastName=" + lastName
+				+ ", loyaltyPoints=" + loyaltyPoints + ", EmailAddr="
+				+ getEmailAddr() + "]";
 	}
 	/*------------MODIFIERS---------------*/
 	/**
