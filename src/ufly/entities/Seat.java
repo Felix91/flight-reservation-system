@@ -1,6 +1,9 @@
 package ufly.entities;
 
+import java.util.List;
+
 import javax.jdo.PersistenceManager;
+import javax.jdo.Query;
 import javax.jdo.annotations.IdGeneratorStrategy;
 import javax.jdo.annotations.PersistenceCapable;
 import javax.jdo.annotations.Persistent;
@@ -37,6 +40,21 @@ public class Seat {
 			pm.makePersistent(this);
 		}finally
 		{
+			pm.close();
+		}
+	}
+	
+	/*------------CLASS METHODS------------*/
+	public static List<Seat> getAllSeat()
+	{
+		PersistenceManager pm = PMF.get().getPersistenceManager();
+		try
+		{
+			Query q = pm.newQuery(Seat.class);
+            @SuppressWarnings("unchecked")
+            List<Seat> results = (List<Seat>) q.execute();
+            return results;
+		}finally{
 			pm.close();
 		}
 	}
