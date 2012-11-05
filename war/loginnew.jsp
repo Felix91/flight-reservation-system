@@ -6,7 +6,7 @@
 	<jsp:include page="_head.jsp" />
 </head>
 <body>
-		<jsp:include page="/navBar.jsp" />
+		<jsp:include page="/_navBar.jsp" />
 	<div class="container">
 		<div class="row-fluid">
 			<div class="span12">
