@@ -30,8 +30,8 @@ public class SeatingArrangementTest extends HttpServlet {
 	public void doPost(HttpServletRequest req, HttpServletResponse resp)
 		throws IOException,ServletException
 	{
-		String aircraftmodel = req.getParameter("aircraftmodel");
-		SeatingArrangement newSeatingArrangement = new SeatingArrangement(aircraftmodel); 
+		String aircraftModel = req.getParameter("aircraftModel");
+		SeatingArrangement newSeatingArrangement = new SeatingArrangement(aircraftModel); 
 		PersistenceManager pm = PMF.get().getPersistenceManager();
 		try {
             pm.makePersistent(newSeatingArrangement);

@@ -1,7 +1,10 @@
 package ufly.entities;
 
+import java.util.List;
 import java.util.Vector;
 
+import javax.jdo.PersistenceManager;
+import javax.jdo.Query;
 import javax.jdo.annotations.IdGeneratorStrategy;
 import javax.jdo.annotations.PersistenceCapable;
 import javax.jdo.annotations.Persistent;
@@ -56,6 +59,7 @@ public class SeatingArrangement {
 		this.numRowsEconomyClass = this.numRows - this.numRowsFirstClass - this.numRowsBusinessClass;
 		
 		// Add Seats
+		seats = new Vector<Seat>();
 		for( int i=1; i<=this.numRows; i++ )
 		{
 			for( int j=1; j<=this.numColumns; j++)
@@ -114,6 +118,20 @@ public class SeatingArrangement {
 		return this.numRowsEconomyClass;
 	}
 	
+	/*------------ CLASS METHODS --------------*/
+	public static List<SeatingArrangement> getAllSeatingArrangement()
+	{
+		PersistenceManager pm = PMF.get().getPersistenceManager();
+		try
+		{
+			Query q = pm.newQuery(SeatingArrangement.class);
+            @SuppressWarnings("unchecked")
+            List<SeatingArrangement> results = (List<SeatingArrangement>) q.execute();
+            return results;
+		}finally{
+			pm.close();
+		}
+	}
 	
 	/*------------ VARIABLES ------------*/
 	@PrimaryKey

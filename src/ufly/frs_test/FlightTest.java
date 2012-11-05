@@ -36,13 +36,14 @@ public class FlightTest extends HttpServlet {
 		String seatingArrangementLayout = req.getParameter("seatingArrangementLayout");		
 		
 		Flight newFlight = new Flight(flightNumber, origin,destination,departure,arrival,allowableMealTypes,seatingArrangementLayout); // TODO: create Customer once User has proven to work
-		PersistenceManager pm = PMF.get().getPersistenceManager();
+		// Flight's constructor will automaticallly make object persistent
+		/*PersistenceManager pm = PMF.get().getPersistenceManager();
 		try {
             pm.makePersistent(newFlight);
             
         } finally {
             pm.close();
-        }
+        }*/
 		
 		//resp.setContentType("text/plain");
 		//resp.getWriter().println("City: "+city+" your callsign is "+ callsign);

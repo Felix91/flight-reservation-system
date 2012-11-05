@@ -22,6 +22,7 @@ import ufly.entities.FlightStaff;
 import ufly.entities.Meal;
 import ufly.entities.PMF;
 import ufly.entities.Seat;
+import ufly.entities.SeatingArrangement;
 import ufly.entities.SeatingArrangement.AircraftModel;
 import ufly.entities.Airport;
 
@@ -61,6 +62,10 @@ public class Test extends HttpServlet{
 		else if( test.equalsIgnoreCase("Seat") == true )
 		{
 			testSeat(request, response);
+		}
+		else if( test.equalsIgnoreCase("SeatingArrangement") == true )
+		{
+			testSeatingArrangement(request, response);
 		}
 		response.getWriter().println("</body></html>");
 	
@@ -261,6 +266,27 @@ public class Test extends HttpServlet{
 			{
 				s = it.next();
 				response.getWriter().println("<li>"+ "ID: " + s.getKey().toString() + ", row: " + s.getRowNumber() + ", col: " + s.getColumn() +"</li>");
+			}
+			response.getWriter().println("</ul>");
+        } finally {
+            pm.close();
+        }		
+	}
+	
+	private void testSeatingArrangement(HttpServletRequest request, HttpServletResponse response) throws IOException
+	{
+		PersistenceManager pm = PMF.get().getPersistenceManager();
+		try {
+			List<SeatingArrangement> results = SeatingArrangement.getAllSeatingArrangement();
+            Iterator<SeatingArrangement> it = results.iterator();
+            // Print all SeatingArrangements in the datastore
+            response.getWriter().println("SeatingArrangements added: ");
+            response.getWriter().println("<ul>");
+            SeatingArrangement sa;
+			while (it.hasNext())
+			{
+				sa = it.next();
+				response.getWriter().println("<li>"+ "ID: " + sa.getKey().toString() + ", #rows: " + sa.getNumRows() + ", #cols: " + sa.getNumColumns() +"</li>");
 			}
 			response.getWriter().println("</ul>");
         } finally {
