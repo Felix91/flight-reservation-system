@@ -148,16 +148,16 @@ public class Flight {
 		//Pare the String of aircraft model
 		// Example String input format = "B737" "A320"
 		if (aircraftModel.equalsIgnoreCase("B737")) {
-			this.seatingArrangement = new SeatingArrangement(AircraftModel.BOEING_737);
+			this.seatingArrangement = new SeatingArrangement("BOEING_737");
 		}
 		else if (aircraftModel.equalsIgnoreCase("B777")) {
-			this.seatingArrangement = new SeatingArrangement(AircraftModel.BOEING_777);
+			this.seatingArrangement = new SeatingArrangement("BOEING_777");
 		}
 		else if (aircraftModel.equalsIgnoreCase("A320")) {
-			this.seatingArrangement = new SeatingArrangement(AircraftModel.AIRBUS_A320);
+			this.seatingArrangement = new SeatingArrangement("AIRBUS_A320");
 		}
 		else if (aircraftModel.equalsIgnoreCase("A340")) {
-			this.seatingArrangement = new SeatingArrangement(AircraftModel.AIRBUS_A340);
+			this.seatingArrangement = new SeatingArrangement("AIRBUS_A340");
 		}
 		
 		
