@@ -18,6 +18,7 @@ import ufly.entities.Airport;
 import ufly.entities.Customer;
 import ufly.entities.Flight;
 import ufly.entities.FlightManager;
+import ufly.entities.FlightStaff;
 import ufly.entities.Meal;
 import ufly.entities.PMF;
 import ufly.entities.SeatingArrangement.AircraftModel;
@@ -44,10 +45,13 @@ public class Test extends HttpServlet{
 		{
 			testFlightManager(request,response);
 		}
+		else if( test.equalsIgnoreCase("FlightStaff") == true )
+		{
+			testFlightStaff(request,response);
+		}
 		else if( test.equalsIgnoreCase("Airport") == true )
 		{
 			testAirport(request,response);
-
 		}
 		else if( test.equalsIgnoreCase("Flight") == true )
 		{
@@ -198,6 +202,34 @@ public class Test extends HttpServlet{
 				{
 					fm = it.next();
 					response.getWriter().println("<li>"+ fm.getEmailAddr() +"</li>");
+				}
+				response.getWriter().println("</ul>");
+	        } finally {
+	            pm.close();
+	        }		
+		}
+		else
+		{
+			// Add new FlightManager here. Optional.
+		}
+	}
+	
+	private void testFlightStaff(HttpServletRequest request, HttpServletResponse response) throws IOException
+	{
+		if(request.getParameter("emailAddr")==null)
+		{
+			PersistenceManager pm = PMF.get().getPersistenceManager();
+			try {
+				List<FlightStaff> results = FlightStaff.getAllFlightStaff();
+	            Iterator<FlightStaff> it = results.iterator();
+	            // Print all FlightManagers in the datastore
+	            response.getWriter().println("FlightStaff registered: ");
+	            response.getWriter().println("<ul>");
+	            FlightStaff fs;
+				while (it.hasNext())
+				{
+					fs = it.next();
+					response.getWriter().println("<li>"+ fs.getEmailAddr() +"</li>");
 				}
 				response.getWriter().println("</ul>");
 	        } finally {

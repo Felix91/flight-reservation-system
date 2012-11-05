@@ -31,10 +31,10 @@ public class FlightStaffTest extends HttpServlet {
 		String email = req.getParameter("emailAddr");
 		String password = req.getParameter("password");
 		
-		FlightManager newFlightManager = new FlightManager(email, password); 
+		FlightStaff newFlightStaff = new FlightStaff(email, password); 
 		PersistenceManager pm = PMF.get().getPersistenceManager();
 		try {
-            pm.makePersistent(newFlightManager);
+            pm.makePersistent(newFlightStaff);
             
         } finally {
             pm.close();
