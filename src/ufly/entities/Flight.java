@@ -1,6 +1,10 @@
 package ufly.entities;
 
+import java.text.Format;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Vector;
 
@@ -11,11 +15,12 @@ import javax.jdo.annotations.PersistenceCapable;
 import javax.jdo.annotations.Persistent;
 import javax.jdo.annotations.PrimaryKey;
 
-import org.datanucleus.api.jpa.annotations.Extension;
 
 import com.google.appengine.api.datastore.Key;
+import com.google.appengine.api.datastore.KeyFactory;
 
 import ufly.entities.SeatingArrangement.AircraftModel;
+import java.text.ParsePosition;
 
 @PersistenceCapable (detachable="true")
 public class Flight {
@@ -30,20 +35,135 @@ public class Flight {
 	 * @param arrival					: The Flight's arrival date
 	 * @param allowableMealTypes		: A vector of Meals available on this Flight
 	 * @param seatingArrangementLayout	: The string which determines the Flight's SeatingArrangment instance
+	 * 
+	 * Example initialization
+	 * new Flight (	####
+	 * 				YVR
+	 * 				LAX
+	 * 				YYYY/MM/DD/HH
+	 * 				YYYY/MM/DD/HH
+	 * 				BF-CK-PK
+	 * 				B777
 	 */
-	public Flight(String flightNumber, Airport origin, Airport destination, Date departure, Date arrival, Vector<Meal> allowableMealTypes, AircraftModel aircraftModel)
+	public Flight(String flightNumber, String origin, String destination, String departure, String arrival, String allowableMealTypes, String aircraftModel)
 	{
-		this.key1 = flightNumber;
+		/*
+		 *  Create a new flight - need to check error using iterator 
+		 * 
+		 */
+		
+		
+		//Hanks Modified 
+		this.k = KeyFactory.createKey(Flight.class.getSimpleName(), flightNumber+departure);
+		PersistenceManager pm = PMF.get().getPersistenceManager();
+		
+		this.flightNumber = null;
+		this.origin = null;
+		this.destination = null;
+		this.departure = null;
+		this.arrival = null;
+		this.allowableMealTypes=null;
+		
 		this.flightNumber = flightNumber;
-		this.origin = origin;
-		this.destination = destination;
-		this.departure = departure;
-		this.arrival = arrival;
-		this.allowableMealTypes = allowableMealTypes; // TODO: Will a reference to the original vector suffice?
+		
+		//Query for origin
+		Query q = pm.newQuery(Airport.class);
+		List<Airport> originResults=(List<Airport>) q.execute();
+		Iterator<Airport> originIt = originResults.iterator();
+		while(originIt.hasNext()){
+			Airport a = originIt.next();
+			if(a.getCallSign().equalsIgnoreCase(origin)){
+				this.origin=a.getKey();
+				break;
+			}
+		}
+		if (this.origin==null || this.destination==null ) {
+			//Need to handle this exception on calling end in future error checking code 
+			//throw new Exception ("Not a valid callsign");
+		}
+		
+		//Move this up?
+		Airport tempOrigin = pm.getObjectById(Airport.class, this.origin);
+		tempOrigin.addDepartingFlight(this);
+		
+		//Query for Destination 
+		q = pm.newQuery(Airport.class);
+		List<Airport> destinationResults=(List<Airport>) q.execute();
+		Iterator<Airport> destinationIt = destinationResults.iterator();
+		while(destinationIt.hasNext()){
+			Airport b = destinationIt.next();
+			if(b.getCallSign().equalsIgnoreCase(destination)){
+				this.destination=b.getKey();
+				break;
+			}
+		}
+		if (this.origin==null || this.destination==null ) {
+			//Need to handle this exception on calling end in future error checking code 
+			//throw new Exception ("Not a valid callsign");
+		}
+		
+		Airport tempDestination = pm.getObjectById(Airport.class, this.destination);
+		tempDestination.addArrivalFlight(this);
+
+		SimpleDateFormat convertToDate = new SimpleDateFormat("yyyy/MM/dd/HH");
+		//Departure
+		this.departure = convertToDate.parse(departure, new ParsePosition(0));
+		//Arrival
+		this.arrival = convertToDate.parse(arrival, new ParsePosition(0));
+		
+		//Query for allowableMealTypes
+		// TODO: Will a reference to the original vector suffice?
 		//this.seatingArragement = new SeatingArrangement(aircraftModel);
 		
 		
-		PersistenceManager pm = PMF.get().getPersistenceManager();
+		//Format of the allowMeal vector input string: "CK-BF-PK"
+		Vector<Meal> thisFlightMeals = new Vector<Meal>();
+		for (int i = 0; i < allowableMealTypes.length(); i+=2) {
+			String firstChar = Character.toString(allowableMealTypes.charAt(i));
+			String seconChar = Character.toString(allowableMealTypes.charAt(i+1));
+			String mealType = firstChar + seconChar;
+			
+			if (mealType.equalsIgnoreCase("ck")) {
+				thisFlightMeals.add(Meal.chicken);
+			}
+			else if (mealType.equalsIgnoreCase("bf")) {
+				thisFlightMeals.add(Meal.beef);
+				
+			}
+			else if (mealType.equalsIgnoreCase("pk")) {
+				thisFlightMeals.add(Meal.pork);
+			}
+			else if (mealType.equalsIgnoreCase("FH")) {
+				thisFlightMeals.add(Meal.fish);
+				
+			}
+			else if (mealType.equalsIgnoreCase("VG")) {
+				thisFlightMeals.add(Meal.veggie);
+			}			
+
+		}
+		this.allowableMealTypes = thisFlightMeals; 
+
+		
+		//Pare the String of aircraft model
+		// Example String input format = "B737" "A320"
+		if (aircraftModel.equalsIgnoreCase("B737")) {
+			this.seatingArrangement = new SeatingArrangement(AircraftModel.BOEING_737);
+		}
+		else if (aircraftModel.equalsIgnoreCase("B777")) {
+			this.seatingArrangement = new SeatingArrangement(AircraftModel.BOEING_777);
+		}
+		else if (aircraftModel.equalsIgnoreCase("A320")) {
+			this.seatingArrangement = new SeatingArrangement(AircraftModel.AIRBUS_A320);
+		}
+		else if (aircraftModel.equalsIgnoreCase("A340")) {
+			this.seatingArrangement = new SeatingArrangement(AircraftModel.AIRBUS_A340);
+		}
+		
+		
+		
+		
+		
 		try{
 			pm.makePersistent(this);
 		}finally{
@@ -77,7 +197,7 @@ public class Flight {
 		PersistenceManager pm= PMF.get().getPersistenceManager();
 		try
 		{
-			this.origin=orig;
+			this.origin=orig.getKey();
 			pm.makePersistent(this);
 		
 		}finally
@@ -94,7 +214,7 @@ public class Flight {
 		PersistenceManager pm= PMF.get().getPersistenceManager();
 		try
 		{
-			this.destination=dest;
+			this.destination=dest.getKey();
 			pm.makePersistent(this);
 		
 		}finally
@@ -161,7 +281,7 @@ public class Flight {
 		PersistenceManager pm= PMF.get().getPersistenceManager();
 		try
 		{
-			this.seatingArragement=newSeatingArrangement;
+			this.seatingArrangement=newSeatingArrangement;
 			pm.makePersistent(this);
 		
 		}finally
@@ -198,7 +318,7 @@ public class Flight {
 	 */
 	public Airport getOrigin()
 	{
-		return this.origin;
+		return Airport.getAirport(this.origin);
 	}
 	
 	/**
@@ -206,7 +326,7 @@ public class Flight {
 	 */
 	public Airport getDestination()
 	{
-		return this.destination;
+		return Airport.getAirport(this.destination);
 	}
 	
 	/**
@@ -225,7 +345,10 @@ public class Flight {
 		return this.arrival;
 	}
 	
-	
+	public Key getKey()
+	{
+		return this.k;
+	}
 	
 	/**
 	 * @return the allowableMealTypes
@@ -240,25 +363,20 @@ public class Flight {
 	 */
 	public SeatingArrangement getSeatingArragement()
 	{
-		return this.seatingArragement;
+		return this.seatingArrangement;
 	}
 
 
 	/*------------ VARIABLES ------------*/
 	@PrimaryKey
 	@Persistent(valueStrategy = IdGeneratorStrategy.IDENTITY)
-	//private Key key; //test
-	@Extension(vendorName="datanucleus", key="gae.encoded-pk", value="true") // key as encoded string. Note that since Flight is a child class of an entity relationship with Airport, its key must either be a Key or a Key value encoded as a string.
-	private String encodedKey;						// Updated automatically.
-	@Persistent
-    @Extension(vendorName="datanucleus", key="gae.pk-name", value="true")
-    private String key1;	// Use a flightNumber and departure concatenated string to serve as entity key (to avoid using numeric ID) for now
+	private Key k; 	// Use a flightNumber and departure concatenated string to serve as entity key (to avoid using numeric ID) for now
 	@Persistent
 	private String flightNumber;					// The Flight's flight number e.g. CX838. This and the departure Date determines the Flight.
 	@Persistent
-	private Airport origin;							// The Flight's place of origin. Note a new Airport entity should not be created.
+	private Key origin;							// The Flight's place of origin. Note a new Airport entity should not be created.
 	@Persistent
-	private Airport destination;					// The Flight's place of destination. Note a new Airport entity should not be created.
+	private Key destination;					// The Flight's place of destination. Note a new Airport entity should not be created.
 	@Persistent
 	private Date departure;							// The Flight's departure date (defined with year, month, date, hrs, min)
 	@Persistent
@@ -266,7 +384,16 @@ public class Flight {
 	@Persistent
 	private Vector<Meal> allowableMealTypes;		// The meals available on this Flight
 	@Persistent
-	private SeatingArrangement seatingArragement;	// Each Flight will have one seating arrangement layout
+	private SeatingArrangement seatingArrangement;	// Each Flight will have one seating arrangement layout
 	@Persistent(mappedBy = "bookedFlight") // bidirectional relationship
 	private Vector<FlightBooking> flightBookings;	// The bookings made on this Flight
+	@Override
+	public String toString() {
+		return "Flight [flightNumber=" + flightNumber + ", origin=" + origin.toString()
+				+ ", destination=" + destination.toString()+ ", departure=" + departure
+				+ ", arrival=" + arrival + ", allowableMealTypes="
+				+ allowableMealTypes + ", seatingArragement="
+				+ seatingArragement + ", flightBookings=" + flightBookings
+				+ "]";
+	}
 }

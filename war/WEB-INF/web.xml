@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8" standalone="no"?><web-app xmlns="http://java.sun.com/xml/ns/javaee" xmlns:web="http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="2.5" xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd">
 	<welcome-file-list>
-		<welcome-file>flightSearch</welcome-file>
+		<welcome-file>index.html</welcome-file>
 	</welcome-file-list>
 	<servlet>
 		<servlet-name>Ufly</servlet-name>
@@ -73,6 +73,19 @@
 	<servlet-mapping>
 		<servlet-name>_footer</servlet-name>
 		<url-pattern>/_footer</url-pattern>
+	</servlet-mapping>
+	<!-- NAVBAR -->
+	<servlet>
+		<servlet-name>_navbar</servlet-name>
+		<servlet-class>ufly.frs.Includer</servlet-class>
+		<init-param>
+            <param-name>page</param-name>
+            <param-value>navbar</param-value>
+        </init-param>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>_navbar</servlet-name>
+		<url-pattern>/_navbar</url-pattern>
 	</servlet-mapping>
 	<!-- ENTITY TEST -->
 	<servlet>

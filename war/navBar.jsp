@@ -8,7 +8,15 @@
           </a>
           <a class="brand" href="/index.jsp">Canada Airlines</a>
             <div class="navbar-text dropdown pull-right">
-              Logged in as <a href="#" data-toggle="dropdown" class="navbar-link ">Username</a>
+              <a href="#" data-toggle="dropdown" class="navbar-link ">
+              Logged in as 
+              <%if (request.getAttribute("userEmailAddress")!= null)
+            	  { out.print((String)request.getAttribute("userEmailAddress"));
+            	  }else{%>
+              Anonymous
+              <%} %>
+              </a>
+              <% %>
 				<ul aria-labelledby="drop5" role="menu" class="dropdown-menu" id="menu2">
                   <li><a href="/customerProfile.jsp" tabindex="-1">Profile Page</a></li>
                   <li><a href="#" tabindex="-1">Modify a Booking</a></li>

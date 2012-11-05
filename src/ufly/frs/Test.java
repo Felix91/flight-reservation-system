@@ -1,7 +1,9 @@
 package ufly.frs;
 
 import java.io.IOException;
+import java.util.Calendar;
 import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Vector;
@@ -49,6 +51,13 @@ public class Test extends HttpServlet{
     }
 	private void testFlight(HttpServletRequest request, HttpServletResponse response) throws IOException
 	{
+		/**
+		 * URIs that to test flight:
+		 * Assuminging you have YVR and LAX in your database
+		 * http://localhost:8888/entityTest?test=Flight&flightno=abc&origin=YVR&destination=LAX&date=2012/11/11&leaveTime=4:30&arriveTime=8:30
+		 */
+		response.getWriter().println("<h3>testing flights</h3>");
+		
 		if(request.getParameter("flightno")==null)
 		{
 			List<Flight> fl = (List<Flight>) Flight.getAllFlights();
@@ -56,7 +65,8 @@ public class Test extends HttpServlet{
 			response.getWriter().println("<ul>");
 			while (it.hasNext())
 			{
-				response.getWriter().println("<li>"+it.next().toString()+"</li>");
+				Flight f = it.next();
+				response.getWriter().println("<li>"+f.toString()+"</li>");
 			}
 			response.getWriter().println("</ul>");
 		}
@@ -66,14 +76,15 @@ public class Test extends HttpServlet{
 			String flightno = request.getParameter("flightno");
 			String origin = request.getParameter("origin");
 			String destination = request.getParameter("destination");
-			String arrival = request.getParameter("arrival");
-			String depature = request.getParameter("departure");
-			String meals = request.getParameter("meals");
-			String aircraft = request.getParameter("aircraft");
+			String date = request.getParameter("date");
+			String leaveTime = request.getParameter("leaveTime");
+			String arriveTime = request.getParameter("arriveTime");
+			
+			
 			
 			if(flightno ==null || origin == null ||
-					destination ==null || arrival == null ||
-					meals ==null || aircraft == null)
+					destination ==null /*|| arrival == null ||
+					meals ==null || aircraft == null*/)
 			{
 				response.getWriter().println("Missing entries");
 				return;
@@ -90,28 +101,40 @@ public class Test extends HttpServlet{
 			//origin1 = it.next();
 			//dsestination1 = it.next();
 			
-			while (it.hasNext())
+			while (it.hasNext() && (origin1==null || destination1==null))
 			{
 				Airport temp = it.next();
-				if (temp.getCallSign() == origin)
+				if (temp.getCallSign().equals(origin))
 				{
 					origin1 = temp;
 				}
-				else if (temp.getCallSign() == destination) 
+				else if (temp.getCallSign().equals(destination)) 
 				{
 					destination1 = temp;
 				}
 			}
 			// for testing
-			Date a = new Date();
-			Date b = new Date();
+			GregorianCalendar a = new GregorianCalendar();
+			GregorianCalendar b = new GregorianCalendar();
+			a.set(Integer.parseInt(date.split("/")[0]), 
+				  Integer.parseInt(date.split("/")[1]), 
+			      Integer.parseInt(date.split("/")[2]), 
+			      Integer.parseInt(leaveTime.split(":")[0]),
+			      Integer.parseInt(leaveTime.split(":")[1]));
+			b.set(Integer.parseInt(date.split("/")[0]), 
+					  Integer.parseInt(date.split("/")[1]), 
+				      Integer.parseInt(date.split("/")[2]), 
+				      Integer.parseInt(arriveTime.split(":")[0]),
+				      Integer.parseInt(arriveTime.split(":")[1]));	
 			Vector<Meal> c = new Vector<Meal>();
 			c.add(Meal.chicken);
+			c.add(Meal.lamb);
 			
 			
 			
-			new Flight(flightno, origin1, destination1,a, b, c, AircraftModel.BOEING_777 );
-			response.sendRedirect("/entityTest");
+			
+			new Flight(flightno, origin1, destination1,a.getTime(), b.getTime(), c, AircraftModel.BOEING_777 );
+			response.sendRedirect("/entityTest?test=Flight");
 		}
 	}
 	
@@ -141,7 +164,7 @@ public class Test extends HttpServlet{
 				return;
 			}
 			new Airport(csign,city);
-			response.sendRedirect("/entityTest");
+			response.sendRedirect("/entityTest?test=Airport");
 		}
 	}
 	
