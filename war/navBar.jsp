@@ -10,14 +10,19 @@
             <div class="navbar-text dropdown pull-right">
               <a href="#" data-toggle="dropdown" class="navbar-link ">
               Logged in as 
-              <%if (request.getAttribute("userEmailAddress")!= null)
-            	  { out.print((String)request.getAttribute("userEmailAddress"));
-            	  }else{%>
-              Anonymous
-              <%} %>
+              <% String username; 
+              boolean loggedin = false;
+              if (request.getAttribute("userEmailAddress")!= null)
+            	  { username = (String)request.getAttribute("userEmailAddress");
+            	  	out.println(username);
+            	  	loggedin = true;
+            	  }else{
+              username = "Anonymous";
+              out.println(username);            
+              } %>
               </a>
-              <% int x = 1; 
-              	if( x == 0){ %>
+              <% 
+              	if(loggedin){ %>
 				<ul aria-labelledby="drop5" role="menu" class="dropdown-menu" id="menu2">
                   <li><a href="/customerProfile.jsp" tabindex="-1">Profile Page</a></li>
                   <li><a href="#" tabindex="-1">Modify a Booking</a></li>
@@ -25,7 +30,12 @@
                   <li class="divider"></li>
                   <li><a href="#" tabindex="-1">Log out</a></li>
                 </ul>
-               <%}%> 
+               <%}else{%>
+            	<ul aria-labelledby="drop1" role="menu" class="dropdown-menu" id="menu2">
+                  <li><a href="/loginnew.jsp" tabindex="-1">Sign Up</a></li>                  
+                </ul>
+               <%} %>   
+               
             </div>
             <ul class="nav">
               <li class="active"><a href="#">Home</a></li>
