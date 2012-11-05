@@ -96,4 +96,13 @@
 		<servlet-name>test</servlet-name>
 		<url-pattern>/entityTest</url-pattern>
 	</servlet-mapping>
+	<!-- AIRPORT TEST PAGE -->
+	<servlet>
+		<servlet-name>airportTestPage</servlet-name>
+		<servlet-class>ufly.frs_test.AirportTest</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>airportTestPage</servlet-name>
+		<url-pattern>/airportTest</url-pattern>
+	</servlet-mapping>
 </web-app>

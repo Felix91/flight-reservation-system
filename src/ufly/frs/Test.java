@@ -20,6 +20,8 @@ import ufly.entities.Flight;
 import ufly.entities.Meal;
 import ufly.entities.PMF;
 import ufly.entities.SeatingArrangement.AircraftModel;
+import ufly.entities.Airport;
+
 @SuppressWarnings("serial")
 public class Test extends HttpServlet{
 	public void doGet(HttpServletRequest request, HttpServletResponse response)
@@ -49,6 +51,8 @@ public class Test extends HttpServlet{
 		response.getWriter().println("</body></html>");
 	
     }
+	
+
 	private void testFlight(HttpServletRequest request, HttpServletResponse response) throws IOException
 	{
 		/**
@@ -76,64 +80,22 @@ public class Test extends HttpServlet{
 			String flightno = request.getParameter("flightno");
 			String origin = request.getParameter("origin");
 			String destination = request.getParameter("destination");
-			String date = request.getParameter("date");
-			String leaveTime = request.getParameter("leaveTime");
-			String arriveTime = request.getParameter("arriveTime");
-			
+			String departure = request.getParameter("departure");
+			String arrival = request.getParameter("arrival");
+			String mealTypes = request.getParameter("mealsTypes");
+			String aircraftModel = request.getParameter("aircraftModel");
 			
 			
 			if(flightno ==null || origin == null ||
-					destination ==null /*|| arrival == null ||
-					meals ==null || aircraft == null*/)
+					destination ==null || arrival == null || departure == null ||
+					mealTypes ==null || aircraftModel == null)
 			{
 				response.getWriter().println("Missing entries");
 				return;
 			}
 			
+			new Flight(flightno, origin, destination, departure, arrival, mealTypes, aircraftModel);
 			
-			Airport origin1=null;
-			Airport destination1=null;
-			List<Airport> la = Airport.getAllAirports();
-			Iterator<Airport> it = la.iterator();
-			response.getWriter().println("<ul>");
-			
-			// This is last ditch effort
-			//origin1 = it.next();
-			//dsestination1 = it.next();
-			
-			while (it.hasNext() && (origin1==null || destination1==null))
-			{
-				Airport temp = it.next();
-				if (temp.getCallSign().equals(origin))
-				{
-					origin1 = temp;
-				}
-				else if (temp.getCallSign().equals(destination)) 
-				{
-					destination1 = temp;
-				}
-			}
-			// for testing
-			GregorianCalendar a = new GregorianCalendar();
-			GregorianCalendar b = new GregorianCalendar();
-			a.set(Integer.parseInt(date.split("/")[0]), 
-				  Integer.parseInt(date.split("/")[1]), 
-			      Integer.parseInt(date.split("/")[2]), 
-			      Integer.parseInt(leaveTime.split(":")[0]),
-			      Integer.parseInt(leaveTime.split(":")[1]));
-			b.set(Integer.parseInt(date.split("/")[0]), 
-					  Integer.parseInt(date.split("/")[1]), 
-				      Integer.parseInt(date.split("/")[2]), 
-				      Integer.parseInt(arriveTime.split(":")[0]),
-				      Integer.parseInt(arriveTime.split(":")[1]));	
-			Vector<Meal> c = new Vector<Meal>();
-			c.add(Meal.chicken);
-			c.add(Meal.lamb);
-			
-			
-			
-			
-			new Flight(flightno, origin1, destination1,a.getTime(), b.getTime(), c, AircraftModel.BOEING_777 );
 			response.sendRedirect("/entityTest?test=Flight");
 		}
 	}

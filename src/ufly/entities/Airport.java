@@ -26,6 +26,8 @@ public class Airport {
 	{
 		this.callsign = callsign;
 		this.city = city;
+		this.departures = new Vector<Key>();
+		this.arrivals = new Vector<Key>();
 		this.k = KeyFactory.createKey(Airport.class.getSimpleName(), callsign);
 		PersistenceManager pm = PMF.get().getPersistenceManager();
 		try{
