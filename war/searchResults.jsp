@@ -16,7 +16,7 @@
 			  		<div class="row-fluid">
 		                <div class="span12">
 	                        <h2>Departure Flight Option</h2>
-	                        <form action="" method="post">
+	                        <form method="post" action="">
 							<div class="row-fluid">
 								<div class="span10">
 									<table class="table table-striped">
@@ -124,6 +124,7 @@
     		
     	</div>
 	</div>
+</div>
 	<!-- page generated at: <% //out.print(request.getAttribute("date")); %>-->
 </body>
 </html>

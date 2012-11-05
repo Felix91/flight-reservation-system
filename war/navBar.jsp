@@ -16,7 +16,8 @@
               Anonymous
               <%} %>
               </a>
-              <% %>
+              <% int x = 1; 
+              	if( x == 0){ %>
 				<ul aria-labelledby="drop5" role="menu" class="dropdown-menu" id="menu2">
                   <li><a href="/customerProfile.jsp" tabindex="-1">Profile Page</a></li>
                   <li><a href="#" tabindex="-1">Modify a Booking</a></li>
@@ -24,7 +25,8 @@
                   <li class="divider"></li>
                   <li><a href="#" tabindex="-1">Log out</a></li>
                 </ul>
-			</div>
+               <%}%> 
+            </div>
             <ul class="nav">
               <li class="active"><a href="#">Home</a></li>
 			  <li><a href="#">Search</a></li>
