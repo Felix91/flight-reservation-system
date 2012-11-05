@@ -6,7 +6,7 @@
 	
 </head>
 <body>
-	<jsp:include page="/navBar.jsp" />
+	<jsp:include page="/_navBar.jsp" />
 	<div class="container">
 		<div id="content"><!-- start content -->
 			<h2>Welcome Admin</h2>

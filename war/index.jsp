@@ -2,10 +2,10 @@
 
 <html>
 <head>	
-	<jsp:include page="_head.jsp" />
+	<jsp:include page="/_header" />
 </head>
 <body>
-	<jsp:include page="/navBar.jsp" />
+	<jsp:include page="/_navbar" />
 	<div class="container">
 		<div id="content">
 			<div class="row-fluid">
@@ -93,7 +93,7 @@
     	</div><!-- content -->
     
     	<div id="footer">
-    		<jsp:include page="/_footer.jsp" />
+    		<jsp:include page="/_footer" />
     	</div>
 	</div>
 	<!-- page generated at: <% //out.print(request.getAttribute("date")); %>-->
