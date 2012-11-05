@@ -21,6 +21,7 @@ import ufly.entities.FlightManager;
 import ufly.entities.FlightStaff;
 import ufly.entities.Meal;
 import ufly.entities.PMF;
+import ufly.entities.Seat;
 import ufly.entities.SeatingArrangement.AircraftModel;
 import ufly.entities.Airport;
 
@@ -56,6 +57,10 @@ public class Test extends HttpServlet{
 		else if( test.equalsIgnoreCase("Flight") == true )
 		{
 			testFlight(request, response);
+		}
+		else if( test.equalsIgnoreCase("Seat") == true )
+		{
+			testSeat(request, response);
 		}
 		response.getWriter().println("</body></html>");
 	
@@ -240,5 +245,26 @@ public class Test extends HttpServlet{
 		{
 			// Add new FlightManager here. Optional.
 		}
+	}
+	
+	private void testSeat(HttpServletRequest request, HttpServletResponse response) throws IOException
+	{
+		PersistenceManager pm = PMF.get().getPersistenceManager();
+		try {
+			List<Seat> results = Seat.getAllSeat();
+            Iterator<Seat> it = results.iterator();
+            // Print all Seats in the datastore
+            response.getWriter().println("Seats added: ");
+            response.getWriter().println("<ul>");
+            Seat s;
+			while (it.hasNext())
+			{
+				s = it.next();
+				response.getWriter().println("<li>"+ "ID: " + s.getKey().toString() + ", row: " + s.getRowNumber() + ", col: " + s.getColumn() +"</li>");
+			}
+			response.getWriter().println("</ul>");
+        } finally {
+            pm.close();
+        }		
 	}
 }

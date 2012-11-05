@@ -29,10 +29,9 @@ public class seatTest extends HttpServlet {
 		throws IOException,ServletException
 	{
 		int row = Integer.parseInt(req.getParameter("rowNumber"));
-		String colChar= req.getParameter("columnNumber");
-		char column = colChar.charAt(0);
+		int col= Integer.parseInt(req.getParameter("columnNumber"));
 	
-		Seat newSeat = new Seat(row, column); 
+		Seat newSeat = new Seat(row, col); 
 		PersistenceManager pm = PMF.get().getPersistenceManager();
 		try {
             pm.makePersistent(newSeat);
