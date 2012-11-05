@@ -16,6 +16,7 @@
 			  		<div class="row-fluid">
 		                <div class="span12">
 	                        <h2>Departure Flight Option</h2>
+	                        <form action="" method="post">
 							<div class="row-fluid">
 								<div class="span10">
 									<table class="table table-striped">
@@ -33,7 +34,7 @@
 											<tr>
 												<td>
 													<label class="radio">
-														<input type="radio" name="optionsRadios" id="optionsRadios1" value="option1" checked>
+														<input type="radio" name="depart" id="optionsRadios1" value="option1" checked>
 														test1
 													</label>
 												</td>
@@ -46,7 +47,7 @@
 											<tr>
 	                                            <td>
 	                                            	<label class="radio">
-														<input type="radio" name="optionsRadios" id="optionsRadios1" value="option1" checked>
+														<input type="radio" name="depart" id="optionsRadios1" value="option2">
 														test1
 													</label>
 												</td>
@@ -60,7 +61,9 @@
 									</table>
 								</div><!-- span10 -->
 							</div><!--/span row-->
+							
 							<h2>Return Flight Option</h2>
+							
 	                    	<div class="row-fluid">
 		                    	<div class="span10">
 									<table class="table table-striped">
@@ -78,7 +81,7 @@
 		                                	<tr>
 		                                		<td>
 													<label class="radio">
-														<input type="radio" name="optionsRadios" id="optionsRadios1" value="option1" checked>
+														<input type="radio" name="return" id="optionsRadios2" value="option1" checked>
 														test1
 													</label>
 												</td>
@@ -91,7 +94,7 @@
 		                                   <tr>
 		                                   		<td>
 													<label class="radio">
-														<input type="radio" name="optionsRadios" id="optionsRadios1" value="option1" checked>
+														<input type="radio" name="return" id="optionsRadios2" value="option2" >
 														test1
 													</label>
 												</td>
@@ -105,6 +108,7 @@
 									</table>
 	                  			</div><!-- span10 -->
 	            			</div><!--/span row-->
+	            			</form> <!-- Return flight option -->
 							<div class="row-fluid">
 								<div class="span10">
 									<button class="btn pull-right" type="submit">Book Flight</button>
