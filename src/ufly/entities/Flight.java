@@ -393,7 +393,7 @@ public class Flight {
 				+ ", destination=" + destination.toString()+ ", departure=" + departure
 				+ ", arrival=" + arrival + ", allowableMealTypes="
 				+ allowableMealTypes + ", seatingArragement="
-				+ seatingArragement + ", flightBookings=" + flightBookings
+				+ seatingArrangement + ", flightBookings=" + flightBookings
 				+ "]";
 	}
 }

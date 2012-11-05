@@ -1,8 +1,11 @@
 package ufly.entities;
 
+import javax.jdo.annotations.Inheritance;
+import javax.jdo.annotations.InheritanceStrategy;
 import javax.jdo.annotations.PersistenceCapable;
 
 @PersistenceCapable
+@Inheritance(strategy = InheritanceStrategy.SUBCLASS_TABLE)
 public abstract class Admin extends User {
 
 	/*------------ CONSTRUCTORS ------------*/
