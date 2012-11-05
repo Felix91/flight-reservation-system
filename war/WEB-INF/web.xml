@@ -105,4 +105,13 @@
 		<servlet-name>airportTestPage</servlet-name>
 		<url-pattern>/airportTest</url-pattern>
 	</servlet-mapping>
+	<!-- FLIGHTMANAGER TEST PAGE -->
+	<servlet>
+		<servlet-name>flightmanagerTestPage</servlet-name>
+		<servlet-class>ufly.frs_test.FlightManagerTest</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>flightmanagerTestPage</servlet-name>
+		<url-pattern>/flightmanagerTest</url-pattern>
+	</servlet-mapping>
 </web-app>
