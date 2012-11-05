@@ -22,35 +22,37 @@ public class SeatingArrangement {
 	 * Create a SeatingArrangment
 	 * @param aircraftModel	: The SeatingArrangment's aircraft model which will determine the object's numRows, numColumns, numRowsFirstClass, numRowsBusinessClass, and numRowsEconomyClass
 	 */
-	public SeatingArrangement(AircraftModel aircraftModel)
+	public SeatingArrangement(String aircraftModel)
 	{
-		switch (aircraftModel)
+		if( aircraftModel.equalsIgnoreCase("BOEING_737") )
 		{
-			case BOEING_737:
-				this.numRows = 25;
-				this.numColumns = 6;
-				this.numRowsFirstClass = 3;
-				this.numRowsBusinessClass = 5;
-				break;
-			case BOEING_777:
-				this.numRows = 43;
-				this.numColumns = 9;
-				this.numRowsFirstClass = 3;
-				this.numRowsBusinessClass = 12;
-				break;
-			case AIRBUS_A320:
-				this.numRows = 30;
-				this.numColumns = 6;
-				this.numRowsFirstClass = 6;
-				this.numRowsBusinessClass = 12;
-				break;
-			case AIRBUS_A340:
-				this.numRows = 48;
-				this.numColumns = 8;
-				this.numRowsFirstClass = 6;
-				this.numRowsBusinessClass = 3;
-				break;
+			this.numRows = 25;
+			this.numColumns = 6;
+			this.numRowsFirstClass = 3;
+			this.numRowsBusinessClass = 5;
 		}
+		else if( aircraftModel.equalsIgnoreCase("BOEING_777") )
+		{
+			this.numRows = 43;
+			this.numColumns = 9;
+			this.numRowsFirstClass = 3;
+			this.numRowsBusinessClass = 12;
+		}
+		else if( aircraftModel.equalsIgnoreCase("AIRBUS_A320") )
+		{
+			this.numRows = 30;
+			this.numColumns = 6;
+			this.numRowsFirstClass = 6;
+			this.numRowsBusinessClass = 12;
+		}
+		else if( aircraftModel.equalsIgnoreCase("AIRBUS_A340") )
+		{
+			this.numRows = 48;
+			this.numColumns = 8;
+			this.numRowsFirstClass = 6;
+			this.numRowsBusinessClass = 3;
+		}
+		
 		this.numRowsEconomyClass = this.numRows - this.numRowsFirstClass - this.numRowsBusinessClass;
 		
 		// Add Seats

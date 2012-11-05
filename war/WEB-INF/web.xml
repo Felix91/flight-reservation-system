@@ -132,4 +132,13 @@
 		<servlet-name>seatTestPage</servlet-name>
 		<url-pattern>/seatTest</url-pattern>
 	</servlet-mapping>
+		<!-- SEATING ARRANGEMENT TEST PAGE -->
+	<servlet>
+		<servlet-name>seatingarrangementTestPage</servlet-name>
+		<servlet-class>ufly.frs_test.SeatingArrangementTest</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>seatingarrangementTestPage</servlet-name>
+		<url-pattern>/seatingarrangementTest</url-pattern>
+	</servlet-mapping>
 </web-app>
