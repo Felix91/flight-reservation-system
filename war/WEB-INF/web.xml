@@ -105,7 +105,7 @@
 		<servlet-name>airportTestPage</servlet-name>
 		<url-pattern>/airportTest</url-pattern>
 	</servlet-mapping>
-	<!-- FLIGHTMANAGER TEST PAGE -->
+	<!-- FLIGHT MANAGER TEST PAGE -->
 	<servlet>
 		<servlet-name>flightmanagerTestPage</servlet-name>
 		<servlet-class>ufly.frs_test.FlightManagerTest</servlet-class>
@@ -113,5 +113,23 @@
 	<servlet-mapping>
 		<servlet-name>flightmanagerTestPage</servlet-name>
 		<url-pattern>/flightmanagerTest</url-pattern>
+	</servlet-mapping>
+	<!-- FLIGHT STAFF TEST PAGE -->
+	<servlet>
+		<servlet-name>flightstaffTestPage</servlet-name>
+		<servlet-class>ufly.frs_test.FlightStaffTest</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>flightstaffTestPage</servlet-name>
+		<url-pattern>/flightstaffTest</url-pattern>
+	</servlet-mapping>
+		<!-- SEAT TEST PAGE -->
+	<servlet>
+		<servlet-name>seatTestPage</servlet-name>
+		<servlet-class>ufly.frs_test.seatTest</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>seatTestPage</servlet-name>
+		<url-pattern>/seatTest</url-pattern>
 	</servlet-mapping>
 </web-app>
