@@ -34,7 +34,7 @@
 											<tr>
 												<td>
 													<label class="radio">
-														<input type="radio" name="depart" id="optionsRadios1" value="option1" checked>
+														<input type="radio" name="departopt" id="optionsRadios1" value="option1" checked>
 														test1
 													</label>
 												</td>
@@ -47,7 +47,7 @@
 											<tr>
 	                                            <td>
 	                                            	<label class="radio">
-														<input type="radio" name="depart" id="optionsRadios1" value="option2">
+														<input type="radio" name="departopt" id="optionsRadios1" value="option2">
 														test1
 													</label>
 												</td>
@@ -81,7 +81,7 @@
 		                                	<tr>
 		                                		<td>
 													<label class="radio">
-														<input type="radio" name="return" id="optionsRadios2" value="option1" checked>
+														<input type="radio" name="returnopt" id="optionsRadios2" value="option1" checked>
 														test1
 													</label>
 												</td>
@@ -94,7 +94,7 @@
 		                                   <tr>
 		                                   		<td>
 													<label class="radio">
-														<input type="radio" name="return" id="optionsRadios2" value="option2" >
+														<input type="radio" name="returnopt" id="optionsRadios2" value="option2" >
 														test1
 													</label>
 												</td>
