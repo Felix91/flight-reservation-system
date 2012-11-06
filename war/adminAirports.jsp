@@ -10,7 +10,7 @@
 		<div id="content">
 			<div class="row-fluid">
         		<div class="span3 pull-left well">
-					<jsp:include page="/_sideSearchBox.jsp" />
+					<jsp:include page="/_sideAdminNav.jsp" />
         		</div><!--/span-->
 		        <div class="span9">
 			  		<div class="row-fluid">
