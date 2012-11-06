@@ -108,12 +108,13 @@
 									</table>
 	                  			</div><!-- span10 -->
 	            			</div><!--/span row-->
-	            			</form> <!-- Return flight option -->
-							<div class="row-fluid">
+	            			
+	            			<div class="row-fluid">
 								<div class="span10">
 									<button class="btn pull-right" type="submit">Book Flight</button>
 								</div>
 							</div>
+	            			</form> <!-- Return flight option -->
 		      			</div><!--/span12-->
 		      		</div><!--/row-->
 				</div><!--/span9-->
