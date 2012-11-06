@@ -150,4 +150,13 @@
 		<servlet-name>flightTestPage</servlet-name>
 		<url-pattern>/flightTest</url-pattern>
 	</servlet-mapping>
+		<!-- CUSTOMER TEST PAGE -->
+	<servlet>
+		<servlet-name>customerTestPage</servlet-name>
+		<servlet-class>ufly.frs_test.CustomerTest</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>customerTestPage</servlet-name>
+		<url-pattern>/customerTest</url-pattern>
+	</servlet-mapping>
 </web-app>
