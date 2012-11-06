@@ -28,11 +28,11 @@
                   <li><a href="#" tabindex="-1">Modify a Booking</a></li>
                   <li><a href="#" tabindex="-1">Something else here</a></li>
                   <li class="divider"></li>
-                  <li><a href="#" tabindex="-1">Log out</a></li>
+                  <li><a href="/login?logout" tabindex="-1">Log out</a></li>
                 </ul>
                <%}else{%>
             	<ul aria-labelledby="drop1" role="menu" class="dropdown-menu" id="menu2">
-                  <li><a href="/loginnew.jsp" tabindex="-1">Sign Up</a></li>                  
+                  <li><a href="/loginnew.jsp" tabindex="-1">Login/Sign Up</a></li>                  
                 </ul>
                <%} %>   
                

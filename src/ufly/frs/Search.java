@@ -11,8 +11,6 @@ public class Search extends UflyServlet {
 	public void doGet(HttpServletRequest req, HttpServletResponse resp)
 			throws IOException ,ServletException
 	{
-		req.setAttribute("User", getLoggedInUser(req.getSession()));
-		resp.setContentType("text/plain");
 		req.getRequestDispatcher("flightSearch.jsp")
 		.forward(req,resp);
 		

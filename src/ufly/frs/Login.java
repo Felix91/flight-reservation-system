@@ -27,19 +27,24 @@ public class Login extends UflyServlet {
 	}
 
 	public void doPost(HttpServletRequest req, HttpServletResponse resp)
-		throws IOException
+		throws IOException,ServletException
 	{
 		resp.setContentType("text/plain");
 		String email= req.getParameter("username");
 		String Password= req.getParameter("password");
 		
 		Customer localUser = Customer.getCustomer(email);
-		if (localUser.checkPassword(Password))
+		if (localUser != null && localUser.checkPassword(Password))
 		{
-			login(email,req.getSession());	
+			login(email,req.getSession());
+			resp.sendRedirect("/");
+		}
+		else
+		{
+			req.setAttribute("failedEmail", email);
+			req.setAttribute("loginError", "userNameNotFound");
+			req.getRequestDispatcher("login.jsp").forward(req, resp);
 		}
 		
-		resp.getWriter().println("Hello "+localUser.getFirstName()+" "+localUser.getLastName());
-
 	}
 }

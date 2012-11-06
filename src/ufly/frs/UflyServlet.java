@@ -12,6 +12,8 @@ public class UflyServlet extends HttpServlet {
 	{
 		User localUser =null;
 		String email = (String) s.getAttribute("loggedInUser");
+		if (email == null)
+			return null;
 		localUser = Customer.getCustomer(email);
 		//add check for admin if localuser is null
 		return localUser;			
