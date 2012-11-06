@@ -43,7 +43,7 @@ public class Flight {
 	 * 				YYYY/MM/DD/HH
 	 * 				YYYY/MM/DD/HH
 	 * 				BF-CK-PK
-	 * 				B777
+	 * 				BOEING_777
 	 */
 	public Flight(String flightNumber, String origin, String destination, String departure, String arrival, String allowableMealTypes, String aircraftModel)
 	{
@@ -55,7 +55,7 @@ public class Flight {
 		
 		//Hanks Modified 
 		this.k = KeyFactory.createKey(Flight.class.getSimpleName(), flightNumber+departure);
-		PersistenceManager pm = PMF.get().getPersistenceManager();
+		//this.k = KeyFactory.createKey(Flight.class.getSimpleName(), "testkey");
 		
 		this.flightNumber = null;
 		this.origin = null;
@@ -66,56 +66,78 @@ public class Flight {
 		
 		this.flightNumber = flightNumber;
 		
-		//Query for origin
-		Query q = pm.newQuery(Airport.class);
-		List<Airport> originResults=(List<Airport>) q.execute();
-		Iterator<Airport> originIt = originResults.iterator();
-		while(originIt.hasNext()){
-			Airport a = originIt.next();
-			if(a.getCallSign().equalsIgnoreCase(origin)){
-				this.origin=a.getKey();
-				break;
+		Query q;
+		
+		// Query for origin Airport key
+		PersistenceManager pm = PMF.get().getPersistenceManager();
+		try
+		{
+			q = pm.newQuery(Airport.class);
+			@SuppressWarnings("unchecked")
+			List<Airport> originResults=(List<Airport>) q.execute();
+			Iterator<Airport> it = originResults.iterator();
+			while(it.hasNext())
+			{
+				Airport a = it.next();
+				if(a.getCallSign().equalsIgnoreCase(origin))
+				{
+					this.origin=a.getKey();
+					break;
+				}
 			}
-		}
-		if (this.origin==null || this.destination==null ) {
-			//Need to handle this exception on calling end in future error checking code 
-			//throw new Exception ("Not a valid callsign");
-		}
-		
-		//Move this up?
-		Airport tempOrigin = pm.getObjectById(Airport.class, this.origin);
-		tempOrigin.addDepartingFlight(this);
-		
-		//Query for Destination 
-		q = pm.newQuery(Airport.class);
-		List<Airport> destinationResults=(List<Airport>) q.execute();
-		Iterator<Airport> destinationIt = destinationResults.iterator();
-		while(destinationIt.hasNext()){
-			Airport b = destinationIt.next();
-			if(b.getCallSign().equalsIgnoreCase(destination)){
-				this.destination=b.getKey();
-				break;
+			if( this.origin == null )
+			{
+				System.out.println("NOT found origin Airport");
+				// TODO some error message here which redirects Customer back to search page
 			}
-		}
-		if (this.origin==null || this.destination==null ) {
-			//Need to handle this exception on calling end in future error checking code 
-			//throw new Exception ("Not a valid callsign");
+		}finally{
+			pm.close();
 		}
 		
-		Airport tempDestination = pm.getObjectById(Airport.class, this.destination);
-		tempDestination.addArrivalFlight(this);
-
+		// Retrieve detached Airport object for modifying
+		Airport tempOrigin = Airport.getAirport(this.origin);
+		// Add Flight's key to origin Airport
+		tempOrigin.addDepartingFlight(this.k);
+		
+		// Query for destination Airport key
+		pm = PMF.get().getPersistenceManager();
+		try
+		{
+			q = pm.newQuery(Airport.class);
+			@SuppressWarnings("unchecked")
+			List<Airport> destinationResults=(List<Airport>) q.execute();
+			Iterator<Airport> it = destinationResults.iterator();
+			while(it.hasNext())
+			{
+				Airport a = it.next();
+				if(a.getCallSign().equalsIgnoreCase(destination))
+				{
+					this.destination=a.getKey();
+					break;
+				}
+			}
+			if( this.destination == null )
+			{
+				System.out.println("NOT found destination Airport");
+				// TODO some error message here which redirects Customer back to search page
+			}
+		}finally{
+			pm.close();
+		}
+		
+		// Retrieve detached Airport object for modifying
+		Airport tempDestination = Airport.getAirport(this.destination);
+		// Add Flight's key to destination Airport
+		tempDestination.addArrivalFlight(this.k);
+		
+		// TODO add minutes to Date
 		SimpleDateFormat convertToDate = new SimpleDateFormat("yyyy/MM/dd/HH");
 		//Departure
 		this.departure = convertToDate.parse(departure, new ParsePosition(0));
 		//Arrival
 		this.arrival = convertToDate.parse(arrival, new ParsePosition(0));
 		
-		//Query for allowableMealTypes
-		// TODO: Will a reference to the original vector suffice?
-		//this.seatingArragement = new SeatingArrangement(aircraftModel);
-		
-		
+		// Set available in-flight meals
 		//Format of the allowMeal vector input string: "CK-BF-PK"
 		Vector<Meal> thisFlightMeals = new Vector<Meal>();
 		for (int i = 0; i < allowableMealTypes.length(); i+=2) {
@@ -144,26 +166,14 @@ public class Flight {
 		}
 		this.allowableMealTypes = thisFlightMeals; 
 
+		// Create Flight's seating arrangement
+		this.seatingArrangement = new SeatingArrangement(aircraftModel);
 		
-		//Pare the String of aircraft model
-		// Example String input format = "B737" "A320"
-		if (aircraftModel.equalsIgnoreCase("B737")) {
-			this.seatingArrangement = new SeatingArrangement("BOEING_737");
-		}
-		else if (aircraftModel.equalsIgnoreCase("B777")) {
-			this.seatingArrangement = new SeatingArrangement("BOEING_777");
-		}
-		else if (aircraftModel.equalsIgnoreCase("A320")) {
-			this.seatingArrangement = new SeatingArrangement("AIRBUS_A320");
-		}
-		else if (aircraftModel.equalsIgnoreCase("A340")) {
-			this.seatingArrangement = new SeatingArrangement("AIRBUS_A340");
-		}
+		// Initialise flightBookings
+		flightBookings = new Vector<FlightBooking>();
 		
-		
-		
-		
-		
+		// Finally, add Flight to datastore
+		pm = PMF.get().getPersistenceManager();
 		try{
 			pm.makePersistent(this);
 		}finally{
@@ -291,17 +301,17 @@ public class Flight {
 	}
 	
 	public static List<Flight> getAllFlights()
-	{
+	{   
 		PersistenceManager pm = PMF.get().getPersistenceManager();
-		Query q = pm.newQuery(Flight.class);
-        /**
-         * in order to check this we need to check every element to see if it
-         * is of type User, too much work, plus we should not get any
-         * other type. We just suppress the warning
-         */
-        @SuppressWarnings("unchecked")
-		List<Flight> results = (List<Flight>) q.execute();
-        return results;
+		try
+		{
+			Query q = pm.newQuery(Flight.class);
+            @SuppressWarnings("unchecked")
+            List<Flight> results = (List<Flight>) q.execute();
+            return results;
+		}finally{
+			pm.close();
+		}
 	}
 	
 	/*------------ ACCESSORS ------------*/

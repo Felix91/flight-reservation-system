@@ -82,16 +82,25 @@ public class Test extends HttpServlet{
 		response.getWriter().println("<h3>testing flights</h3>");
 		
 		if(request.getParameter("flightno")==null)
-		{
-			List<Flight> fl = (List<Flight>) Flight.getAllFlights();
-			Iterator<Flight> it = fl.iterator();
-			response.getWriter().println("<ul>");
-			while (it.hasNext())
-			{
-				Flight f = it.next();
-				response.getWriter().println("<li>"+f.toString()+"</li>");
-			}
-			response.getWriter().println("</ul>");
+		{	
+			PersistenceManager pm = PMF.get().getPersistenceManager();
+			try {
+				List<Flight> results = Flight.getAllFlights();
+	            Iterator<Flight> it = results.iterator();
+	            // Print all Flights in the datastore
+	            response.getWriter().println("Flights added: ");
+	            response.getWriter().println("<ul>");
+	            Flight f;
+				while (it.hasNext())
+				{
+					f = it.next();
+					//response.getWriter().println("<li>"+ f.toString() +"</li>");
+					response.getWriter().println("<li>"+ f.getKey().toString() +"</li>");
+				}
+				response.getWriter().println("</ul>");
+	        } finally {
+	            pm.close();
+	        }		
 		}
 		else
 		{

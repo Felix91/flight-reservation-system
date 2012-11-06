@@ -29,14 +29,8 @@ public class AirportTest extends HttpServlet {
 		String city = req.getParameter("city");
 		String callsign = req.getParameter("Callsign");
 		
-		Airport newAirport = new Airport(city, callsign); // TODO: create Customer once User has proven to work
+		Airport newAirport = new Airport(callsign, city); // TODO: create Customer once User has proven to work
 		PersistenceManager pm = PMF.get().getPersistenceManager();
-		try {
-            pm.makePersistent(newAirport);
-            
-        } finally {
-            pm.close();
-        }
 		
 		//resp.setContentType("text/plain");
 		//resp.getWriter().println("City: "+city+" your callsign is "+ callsign);

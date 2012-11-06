@@ -13,7 +13,7 @@ import javax.jdo.annotations.PrimaryKey;
 import com.google.appengine.api.datastore.Key;
 import com.google.appengine.api.datastore.KeyFactory;
 
-@PersistenceCapable
+@PersistenceCapable(detachable="true")
 public class Airport {
 
 	/*------------ CONSTRUCTORS ------------*/
@@ -36,15 +36,7 @@ public class Airport {
 			pm.close();
 		}
 	}
-	/**
-	 * 
-	 * @param k key that corresponds to an Airport
-	 * @return Airport that has key k
-	 */
-	public static Airport getAirport(Key k)
-	{
-		return PMF.get().getPersistenceManager().getObjectById(Airport.class, k);
-	}
+
 	/*------------MODIFIERS--------------*/
 	/**
 	 * @param newCallSign	: new  to update to
@@ -55,8 +47,8 @@ public class Airport {
 		try
 		{
 			this.callsign=newCallSign;
+			// TODO change key as well
 			pm.makePersistent(this);
-
 		}finally
 		{
 			pm.close();
@@ -81,16 +73,19 @@ public class Airport {
 	}
 
 	/**
-	 * @param newDepartingFlight	: new Flight to add to list of flights
+	 * @param newDepartingFlight	: new Key of Flight to add to list of flights
 	 */
-	public void addDepartingFlight(Flight newDepartingFlight)
+	public void addDepartingFlight(Key newDepartingFlight)
 	{
 		PersistenceManager pm= PMF.get().getPersistenceManager();
 		try
 		{
-			this.departures.add(newDepartingFlight.getKey());
-			pm.makePersistent(this);
-
+			// Keep elements unique
+			if( !this.departures.contains(newDepartingFlight) )
+			{
+				this.departures.add(newDepartingFlight);
+				pm.makePersistent(this);
+			}
 		}finally
 		{
 			pm.close();
@@ -98,16 +93,19 @@ public class Airport {
 	}
 
 	/**
-	 * @param newDepartingFlight	: new Flight to add to list of flights
+	 * @param newArrivalFlight	: new Key of Flight to add to list of flights
 	 */
-	public void addArrivalFlight(Flight newArrivalFlight)
+	public void addArrivalFlight(Key newArrivalFlight)
 	{
 		PersistenceManager pm= PMF.get().getPersistenceManager();
 		try
 		{
-			this.arrivals.add(newArrivalFlight.getKey());
-			pm.makePersistent(this);
-
+			// Keep elements unique
+			if( !this.arrivals.contains(newArrivalFlight) )
+			{
+				this.arrivals.add(newArrivalFlight);
+				pm.makePersistent(this);
+			}
 		}finally
 		{
 			pm.close();
@@ -117,14 +115,13 @@ public class Airport {
 	/**
 	 * @param DepartFlight	: flight to be removed from departures
 	 */
-	public void removeDepartingFlight(Flight DepartFlight)
+	public void removeDepartingFlight(Key DepartFlight)
 	{
 		PersistenceManager pm= PMF.get().getPersistenceManager();
 		try
 		{
 			this.departures.remove(DepartFlight);
 			pm.makePersistent(this);
-
 		}finally
 		{
 			pm.close();
@@ -134,14 +131,13 @@ public class Airport {
 	/**
 	 * @param ArrivalFlight	: flight to be removed from arrivals
 	 */
-	public void removeArrivalFlight(Flight ArrivalFlight)
+	public void removeArrivalFlight(Key ArrivalFlight)
 	{
 		PersistenceManager pm= PMF.get().getPersistenceManager();
 		try
 		{
 			this.arrivals.remove(ArrivalFlight);
 			pm.makePersistent(this);
-
 		}finally
 		{
 			pm.close();
@@ -149,20 +145,39 @@ public class Airport {
 	}
 
 
-
+	/*------------CLASS METHODS--------------*/
 	public static List<Airport> getAllAirports()
 	{
 		PersistenceManager pm = PMF.get().getPersistenceManager();
-		Query q = pm.newQuery(Airport.class);
-        /**
-         * in order to check this we need to check every element to see if it
-         * is of type User, too much work, plus we should not get any
-         * other type. We just suppress the warning
-         */
-        @SuppressWarnings("unchecked")
-		List<Airport> results = (List<Airport>) q.execute();
-        return results;
+		try
+		{
+			Query q = pm.newQuery(Airport.class);
+            @SuppressWarnings("unchecked")
+            List<Airport> results = (List<Airport>) q.execute();
+            return results;
+		}finally{
+			pm.close();
+		}
 	}
+	
+	/**
+	 * 
+	 * @param k key that corresponds to an Airport
+	 * @return Airport that has key k
+	 */
+	public static Airport getAirport(Key k)
+	{
+	    PersistenceManager pm = PMF.get().getPersistenceManager();
+	    Airport airport, detached = null;
+	    try {
+	    	airport = pm.getObjectById(Airport.class, k);
+	        detached = pm.detachCopy(airport);
+	    } finally {
+	        pm.close();
+	    }
+	    return detached;
+	}
+
 	@Override
 	public String toString() {
 		return "Airport [callsign=" + callsign + ", city=" + city + "\n\tdepartures="+departures.toString()+
@@ -219,9 +234,9 @@ public class Airport {
     private String callsign;			// The Airport's International Air Transport Association (IATA) airport code. e.g. YVR. Uniquely identifies an Airport.
 	@Persistent
 	private String city;				// The Airport's city e.g. Vancouver
-	@Persistent(mappedBy = "origin")
+	@Persistent//(mappedBy = "origin")
 	private Vector<Key> departures; 	// The Airport's departing Flights
-	@Persistent(mappedBy = "destination")
+	@Persistent//(mappedBy = "destination")
 	private Vector<Key> arrivals;	// The Airport's arriving Flights
 	
 }
