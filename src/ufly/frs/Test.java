@@ -161,33 +161,32 @@ public class Test extends HttpServlet{
 	private void testCustomer(HttpServletRequest request, HttpServletResponse response) throws IOException
 	{
 		if(request.getParameter("emailAddr")==null)
-		{
-			PersistenceManager pm = PMF.get().getPersistenceManager();
-			try {
-	            // TODO make this a query a class method
-	            Query q = pm.newQuery(Customer.class);
-	            /**
-	             * in order to check this we need to check every element to see if it 
-	             * is of type User, too much work, plus we should not get any
-	             * other type. We just suppress the warning
-	             */
-	            @SuppressWarnings("unchecked")
-				List<Customer> results = (List<Customer>) q.execute();
-	            Iterator<Customer> it = results.iterator();
-	            // Print all Users in the datastore
-	            response.getWriter().println("Customers registered: ");
-	            response.getWriter().println("<ul>");
-	            Customer c;
-				while (it.hasNext())
-				{
-					c = it.next();
-					response.getWriter().println("<li>"+c.getFirstName() + " " + c.getLastName() +"</li>");
-				
-				}
+		{   
+	        List<Customer> la = Customer.getAllCustomers();
+			Iterator<Customer> it = la.iterator();
+			response.getWriter().println("<ul>");
+			Customer c;
+			while (it.hasNext())
+			{
+				c = it.next();
+				response.getWriter().println("<li>" + c.getFirstName() + " " + c.getLastName() + ", email: " + c.getEmailAddr() + "</li>");
+			}
+			response.getWriter().println("</ul>");
+			
+			// Test for JoelV
+			c = Customer.getCustomer("email");
+			response.getWriter().println();
+			response.getWriter().println("Retrieving one particular Customer (email hardcoded as 'email')");
+			if( c != null)
+			{
+				response.getWriter().println("<ul>");
+				response.getWriter().println("<li>"+ c.getFirstName() + " " + c.getLastName() + ", email: " + c.getEmailAddr() + "</li>");
 				response.getWriter().println("</ul>");
-	        } finally {
-	            pm.close();
-	        }		
+			}
+			else
+			{
+				response.getWriter().println("Customer not found.");
+			}
 		}
 		else
 		{

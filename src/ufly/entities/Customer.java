@@ -9,6 +9,8 @@ import javax.jdo.Query;
 import javax.jdo.annotations.PersistenceCapable;
 import javax.jdo.annotations.Persistent;
 
+import com.google.appengine.api.datastore.Key;
+
 
 @PersistenceCapable (detachable="true")
 public class Customer extends User {
@@ -28,32 +30,36 @@ public class Customer extends User {
 			pm.close();
 		}
 	}
-	public static Customer getCustomer(String emailAddr)
+	
+	/*------------CLASS METHODS---------------*/
+	public static List<Customer> getAllCustomers()
 	{
 		PersistenceManager pm = PMF.get().getPersistenceManager();
-		Customer c=null;
-		try{
-			 Query q = pm.newQuery(Customer.class);
-	            /**
-	             * in order to check this we need to check every element to see if it 
-	             * is of type User, too much work, plus we should not get any
-	             * other type. We just suppress the warning
-	             */
-	            @SuppressWarnings("unchecked")
-				List<Customer> results = (List<Customer>) q.execute();
-	            Iterator<Customer> it = results.iterator();
-	            // Print all Users in the datastore
-	            while (it.hasNext())
-				{
-					c = it.next();
-					if (c.getEmailAddr().equals(emailAddr))
-						break;
-				}
+		try
+		{
+			Query q = pm.newQuery(Customer.class);
+            @SuppressWarnings("unchecked")
+            List<Customer> results = (List<Customer>) q.execute();
+            return results;
 		}finally{
 			pm.close();
 		}
-		return c;
 	}
+	
+	public static Customer getCustomer(String emailAddr)
+	{
+		PersistenceManager pm = PMF.get().getPersistenceManager();
+		Customer c, detached = null;
+		try{
+		    	c = pm.getObjectById(Customer.class, emailAddr);
+		        detached = pm.detachCopy(c);
+		    } finally {
+			pm.close();
+		}
+		return detached;
+	}
+	
+	
 	/*------------MODIFIERS---------------*/
 	/**
 	 * @param newFirstName	: new first name to update to
@@ -66,7 +72,6 @@ public class Customer extends User {
 		{
 			this.firstName=newFirstName;
 			pm.makePersistent(this);
-		
 		}finally
 		{
 			pm.close();
