@@ -1,7 +1,5 @@
 package ufly.entities;
 
-import java.text.Format;
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Iterator;
@@ -19,7 +17,6 @@ import javax.jdo.annotations.PrimaryKey;
 import com.google.appengine.api.datastore.Key;
 import com.google.appengine.api.datastore.KeyFactory;
 
-import ufly.entities.SeatingArrangement.AircraftModel;
 import java.text.ParsePosition;
 
 @PersistenceCapable (detachable="true")

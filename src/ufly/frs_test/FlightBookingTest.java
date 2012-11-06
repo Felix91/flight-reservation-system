@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import ufly.entities.Airport;
+import ufly.entities.FlightBooking;
 import ufly.entities.PMF;
 import ufly.entities.User;
 import ufly.entities.Flight;

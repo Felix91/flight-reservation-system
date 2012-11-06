@@ -9,7 +9,6 @@ import javax.jdo.Query;
 import javax.jdo.annotations.PersistenceCapable;
 import javax.jdo.annotations.Persistent;
 
-import com.google.appengine.api.datastore.Key;
 
 
 @PersistenceCapable (detachable="true")

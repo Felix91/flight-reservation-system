@@ -1,15 +1,11 @@
 package ufly.frs;
 
 import java.io.IOException;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.GregorianCalendar;
+
 import java.util.Iterator;
 import java.util.List;
-import java.util.Vector;
 
 import javax.jdo.PersistenceManager;
-import javax.jdo.Query;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -19,12 +15,9 @@ import ufly.entities.Customer;
 import ufly.entities.Flight;
 import ufly.entities.FlightManager;
 import ufly.entities.FlightStaff;
-import ufly.entities.Meal;
 import ufly.entities.PMF;
 import ufly.entities.Seat;
 import ufly.entities.SeatingArrangement;
-import ufly.entities.SeatingArrangement.AircraftModel;
-import ufly.entities.Airport;
 
 @SuppressWarnings("serial")
 public class Test extends HttpServlet{
