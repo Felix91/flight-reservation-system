@@ -15,27 +15,36 @@
 		        <div class="span9">
 			  		<div class="row-fluid">
 		                <div class="span12">
-	                        <h2>Admin Airport Management</h2>
+	                        <h2>Admin Flights Management</h2>
 							<div class="row-fluid">
 								<div class="span10">
 									<table class="table table-striped">
 										<thead>
 											<tr>
-												<th>Callsign</th>
-												<th>City</th>
+												<th>Flight Number</th>
+												<th>Origin</th>
+												<th>Destination</th>
+												<th>Departure Date</th>
+												<th>Arrival Date</th>
 												<th>Action</th>
 											</tr>
 										</thead>
 										<tbody>
 											<tr>
-												<td>YVR</td>
+												<td>1</td>
 												<td>Vancouver</td>
-												<td><a href="#">Delete</a></td>
+												<td>Toronto</td>
+												<td>Date</td>
+												<td>Date</td>
+												<td><a href="#">View</a></td>
 											</tr>
 											<tr>
-	                                            <td>YVR</td>
-	                                            <td>Vancouver</td>
-												<td><a href="#">Delete</a></td>
+												<td>1</td>
+												<td>Vancouver</td>
+												<td>Toronto</td>
+												<td>Date</td>
+												<td>Date</td>
+												<td><a href="#">View</a></td>
 											</tr>
 										</tbody>
 									</table>
