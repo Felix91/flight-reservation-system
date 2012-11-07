@@ -182,6 +182,97 @@ public class Flight {
 		}
 	}
 
+	public static List<Flight> getAllFlights()
+	{   
+		PersistenceManager pm = PMF.get().getPersistenceManager();
+		try
+		{
+			Query q = pm.newQuery(Flight.class);
+            @SuppressWarnings("unchecked")
+            List<Flight> results = (List<Flight>) q.execute();
+            return results;
+		}finally{
+			pm.close();
+		}
+	}
+	
+	public static List<Flight> getFlightsWithOrigin(Airport originAirport) {
+		PersistenceManager pm = PMF.get().getPersistenceManager();
+		Query q = pm.newQuery(Flight.class, "origin == originParam");
+		q.declareImports("import com.google.appengine.api.datastore.Key" );
+		q.declareParameters("Key originParam");
+
+		return (List<Flight>) q.execute(originAirport.getKey());
+		
+	}
+	
+	/**
+	 * @param newMeals	: new list of meals to update to
+	 */
+	public void changeAllowableMeals(Vector<Meal> newMeals )
+	{
+		PersistenceManager pm= PMF.get().getPersistenceManager();
+		try
+		{
+			this.allowableMealTypes=newMeals;
+			pm.makePersistent(this);
+		
+		}finally
+		{
+			pm.close();
+		}
+	}
+	/**
+	 * @param newArrival	: new arrival date to update to
+	 */
+	public void changeArrival(Date newArrival)
+	{
+		PersistenceManager pm= PMF.get().getPersistenceManager();
+		try
+		{
+			this.arrival=newArrival;
+			pm.makePersistent(this);
+		
+		}finally
+		{
+			pm.close();
+		}
+	}
+	
+	/**
+	 * @param newDeparture	: new departure date to update to
+	 */
+	public void changeDeparture(Date newDeparture)
+	{
+		PersistenceManager pm= PMF.get().getPersistenceManager();
+		try
+		{
+			this.departure=newDeparture;
+			pm.makePersistent(this);
+		
+		}finally
+		{
+			pm.close();
+		}
+	}
+	
+	/**
+	 * @param dest	: new destination to update to
+	 */
+	public void changeDestination(Airport dest)
+	{
+		PersistenceManager pm= PMF.get().getPersistenceManager();
+		try
+		{
+			this.destination=dest.getKey();
+			pm.makePersistent(this);
+		
+		}finally
+		{
+			pm.close();
+		}
+	}
+	
 	/*------------ MODIFIERS ------------*/
 	/**
 	 * @param newFlightNumber	: new flight number to update to
@@ -218,73 +309,6 @@ public class Flight {
 	}
 	
 	/**
-	 * @param dest	: new destination to update to
-	 */
-	public void changeDestination(Airport dest)
-	{
-		PersistenceManager pm= PMF.get().getPersistenceManager();
-		try
-		{
-			this.destination=dest.getKey();
-			pm.makePersistent(this);
-		
-		}finally
-		{
-			pm.close();
-		}
-	}
-	/**
-	 * @param newDeparture	: new departure date to update to
-	 */
-	public void changeDeparture(Date newDeparture)
-	{
-		PersistenceManager pm= PMF.get().getPersistenceManager();
-		try
-		{
-			this.departure=newDeparture;
-			pm.makePersistent(this);
-		
-		}finally
-		{
-			pm.close();
-		}
-	}
-	
-	/**
-	 * @param newArrival	: new arrival date to update to
-	 */
-	public void changeArrival(Date newArrival)
-	{
-		PersistenceManager pm= PMF.get().getPersistenceManager();
-		try
-		{
-			this.arrival=newArrival;
-			pm.makePersistent(this);
-		
-		}finally
-		{
-			pm.close();
-		}
-	}
-	
-	/**
-	 * @param newMeals	: new list of meals to update to
-	 */
-	public void changeAllowableMeals(Vector<Meal> newMeals )
-	{
-		PersistenceManager pm= PMF.get().getPersistenceManager();
-		try
-		{
-			this.allowableMealTypes=newMeals;
-			pm.makePersistent(this);
-		
-		}finally
-		{
-			pm.close();
-		}
-	}
-	
-	/**
 	 * @param newSeatingArrangement	: new seating arrangement to update to
 	 */
 	public void changeSeatingArrangement(SeatingArrangement newSeatingArrangement )
@@ -301,43 +325,20 @@ public class Flight {
 		}
 	}
 	
-	public static List<Flight> getAllFlights()
-	{   
-		PersistenceManager pm = PMF.get().getPersistenceManager();
-		try
-		{
-			Query q = pm.newQuery(Flight.class);
-            @SuppressWarnings("unchecked")
-            List<Flight> results = (List<Flight>) q.execute();
-            return results;
-		}finally{
-			pm.close();
-		}
-	}
-	
-	/*------------ ACCESSORS ------------*/
 	/**
-	 * @return the flightNumber
+	 * @return the allowableMealTypes
 	 */
-	public String getFlightNumber()
+	public Vector<Meal> getAllowableMeals()
 	{
-		return this.flightNumber;
+		return this.allowableMealTypes;
 	}
 	
 	/**
-	 * @return the origin airport
+	 * @return the arrival date
 	 */
-	public Airport getOrigin()
+	public Date getArrival()
 	{
-		return Airport.getAirport(this.origin);
-	}
-	
-	/**
-	 * @return the destination airport
-	 */
-	public Airport getDestination()
-	{
-		return Airport.getAirport(this.destination);
+		return this.arrival;
 	}
 	
 	/**
@@ -349,11 +350,20 @@ public class Flight {
 	}
 	
 	/**
-	 * @return the arrival date
+	 * @return the destination airport
 	 */
-	public Date getArrival()
+	public Airport getDestination()
 	{
-		return this.arrival;
+		return Airport.getAirport(this.destination);
+	}
+	
+	/*------------ ACCESSORS ------------*/
+	/**
+	 * @return the flightNumber
+	 */
+	public String getFlightNumber()
+	{
+		return this.flightNumber;
 	}
 	
 	public Key getKey()
@@ -362,13 +372,14 @@ public class Flight {
 	}
 	
 	/**
-	 * @return the allowableMealTypes
+	 * @return the origin airport
 	 */
-	public Vector<Meal> getAllowableMeals()
+	public Airport getOrigin()
 	{
-		return this.allowableMealTypes;
+		return Airport.getAirport(this.origin);
 	}
-	
+
+
 	/**
 	 * @return the seatingArragement
 	 */
@@ -376,8 +387,15 @@ public class Flight {
 	{
 		return this.seatingArrangement;
 	}
-
-
+	@Override
+	public String toString() {
+		return "Flight [flightNumber=" + flightNumber + ", origin=" + origin.toString()
+				+ ", destination=" + destination.toString()+ ", departure=" + departure
+				+ ", arrival=" + arrival + ", allowableMealTypes="
+				+ allowableMealTypes + ", seatingArragement="
+				+ seatingArrangement + ", flightBookings=" + flightBookings
+				+ "]";
+	}
 	/*------------ VARIABLES ------------*/
 	@PrimaryKey
 	@Persistent(valueStrategy = IdGeneratorStrategy.IDENTITY)
@@ -396,25 +414,7 @@ public class Flight {
 	private Vector<Meal> allowableMealTypes;		// The meals available on this Flight
 	@Persistent
 	private SeatingArrangement seatingArrangement;	// Each Flight will have one seating arrangement layout
+
 	@Persistent(mappedBy = "bookedFlight") // bidirectional relationship
 	private Vector<FlightBooking> flightBookings;	// The bookings made on this Flight
-	@Override
-	public String toString() {
-		return "Flight [flightNumber=" + flightNumber + ", origin=" + origin.toString()
-				+ ", destination=" + destination.toString()+ ", departure=" + departure
-				+ ", arrival=" + arrival + ", allowableMealTypes="
-				+ allowableMealTypes + ", seatingArragement="
-				+ seatingArrangement + ", flightBookings=" + flightBookings
-				+ "]";
-	}
-
-	public static List<Flight> getFlightsWithOrigin(Airport originAirport) {
-		PersistenceManager pm = PMF.get().getPersistenceManager();
-		Query q = pm.newQuery(Flight.class, "origin == originParam");
-		q.declareImports("import com.google.appengine.api.datastore.Key" );
-		q.declareParameters("Key originParam");
-
-		return (List<Flight>) q.execute(originAirport.getKey());
-		
-	}
 }
