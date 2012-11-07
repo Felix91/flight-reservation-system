@@ -3,7 +3,7 @@ package ufly.entities;
 import javax.jdo.JDOHelper;
 import javax.jdo.PersistenceManagerFactory;
 
-public final class PMF {
+final class PMF {
     private static final PersistenceManagerFactory pmfInstance =
         JDOHelper.getPersistenceManagerFactory("transactions-optional");
 
