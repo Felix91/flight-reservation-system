@@ -19,41 +19,15 @@
 				</ul>
 				<div class="tab-content">
 					<div id="flights" class="tab-pane fade active in">
-						<h3>Upcoming Flights</h3>									
-						<table class="table table-striped table-hover">
-							<thead>
-								<tr>
-									<th>To</th>
-									<th>From</th>
-									<th>Date</th>
-									<th>Departure Time</th>
-									<th>ETA</th>
-								</tr>
-							</thead>
-							<tbody>
-							<tr>
-								<td>Test</td>
-								<td>Test</td>
-								<td>Test</td>
-								<td>Test</td>
-								<td>Test</td>
-							</tr>
-							<tr>
-								<td>Test</td>
-								<td>Test</td>
-								<td>Test</td>
-								<td>Test</td>
-								<td>Test</td>
-							</tr>
-							</tbody>
-						</table>
+						<jsp:include page="/_adminFlights.jsp" />
 						<a href="#"><button class="btn btn-primary">Add Flights</button></a>
 					</div>
 					<div id="flightstat" class="tab-pane fade">
-						<p>Stat goes here</p>
+						<p>Stat goes here</p>						
 					</div>
-					<div id="airports" class="tab-pane fade">
-						<p>Do Airport stuff</p>
+					<div id="airports" class="tab-pane fade">				
+						<jsp:include page="/_adminAirports.jsp" />
+						<a href="#"><button class="btn btn-primary">Add Airports</button></a>
 					</div>
 				</div> <!-- tab content -->
 			</div><!-- tabbable -->
