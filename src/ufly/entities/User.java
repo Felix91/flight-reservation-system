@@ -12,7 +12,7 @@ import javax.servlet.http.HttpSession;
 @PersistenceCapable
 @Inheritance(strategy = InheritanceStrategy.SUBCLASS_TABLE)
 // TODO make User an abstract class
-public class User {
+public abstract class User {
 	/*------------ CONSTRUCTORS ------------*/
 	/**
 	 * Create a User object

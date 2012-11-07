@@ -34,6 +34,7 @@ public class Flight {
 	 * @param seatingArrangementLayout	: The string which determines the Flight's SeatingArrangment instance
 	 * 
 	 * Example initialization
+	 * JDV - Why are do we not pass objects Flight(string,Airport,Airport,Date,Date,Meal,Airplane)??
 	 * new Flight (	####
 	 * 				YVR
 	 * 				LAX
@@ -117,6 +118,9 @@ public class Flight {
 			{
 				System.out.println("NOT found destination Airport");
 				// TODO some error message here which redirects Customer back to search page
+				// RE: JDV - This is why we should be passing in an airport rather than a string, 
+				// The constructor cannot redirect, we can throw an exception and redirect
+				// when we catch it.
 			}
 		}finally{
 			pm.close();
@@ -177,7 +181,7 @@ public class Flight {
 			pm.close();
 		}
 	}
-	
+
 	/*------------ MODIFIERS ------------*/
 	/**
 	 * @param newFlightNumber	: new flight number to update to
@@ -402,5 +406,15 @@ public class Flight {
 				+ allowableMealTypes + ", seatingArragement="
 				+ seatingArrangement + ", flightBookings=" + flightBookings
 				+ "]";
+	}
+
+	public static List<Flight> getFlightsWithOrigin(Airport originAirport) {
+		PersistenceManager pm = PMF.get().getPersistenceManager();
+		Query q = pm.newQuery(Flight.class, "origin == originParam");
+		q.declareImports("import com.google.appengine.api.datastore.Key" );
+		q.declareParameters("Key originParam");
+
+		return (List<Flight>) q.execute(originAirport.getKey());
+		
 	}
 }

@@ -177,7 +177,11 @@ public class Airport {
 	    }
 	    return detached;
 	}
-
+	public static Airport getAirportByCallSign(String callsign)
+	{
+		Key k =KeyFactory.createKey(Airport.class.getSimpleName(), callsign);
+		return getAirport(k);
+	}
 	@Override
 	public String toString() {
 		return "Airport [callsign=" + callsign + ", city=" + city + "\n\tdepartures="+departures.toString()+
