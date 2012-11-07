@@ -52,7 +52,12 @@ public class Customer extends User {
 		try{
 		    	c = pm.getObjectById(Customer.class, emailAddr);
 		        detached = pm.detachCopy(c);
-		    } finally {
+		    }
+		catch( javax.jdo.JDOException e)
+		{
+			e.printStackTrace();
+		}
+		finally {
 			pm.close();
 		}
 		return detached;
