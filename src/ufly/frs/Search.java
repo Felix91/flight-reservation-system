@@ -1,6 +1,8 @@
 package ufly.frs;
 
 import java.io.IOException;
+import java.util.Enumeration;
+
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -18,7 +20,7 @@ public class Search extends UflyServlet {
 	}
 	public void doPost(HttpServletRequest req, HttpServletResponse resp)
 			throws IOException {
-		resp.setContentType("text/plain");
-		resp.getWriter().println("Hello, world");
+		printParam(req,resp);
+		
 	}
 }

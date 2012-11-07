@@ -10,30 +10,30 @@
 		<div id="content">
 			<div class="row-fluid">
    				<div class="span12">
-              		<div class="hero-unit" style="background-color:#00E5FF">
+              		<div class="hero-unit" style="background-color:whiteSmoke">
                 		<h1>Canada Airlines</h1>
                 		<p>Flying at its best</p>
               		</div>
           			<div class="row-fluid">
                     	<div class="span7">
                             <h2>Searh for Flights</h2>
-                      		<form class="form-horizontal" action="/searchResults.jsp" method="post">
+                      		<form class="form-horizontal" action="/search" method="post">
 	                        	<div class="control-group">
 	                            	<label class="control-label" for="in_from">Leaving From</label>
 	                            	<div class="controls">
-	                                	<input type="text" id="in_from" placeholder="Enter your Departure City">
+	                                	<input name="departure" type="text" id="in_from" placeholder="Enter your Departure City">
 	                            	</div>
 	                        	</div>
 	                        	<div class="control-group">
 	                            	<label class="control-label" for="in_to">Leaving To</label>
 	                            	<div class="controls">
-	                                	<input type="text" id="in_to" placeholder="Enter your Destination City">
+	                                	<input name="destination" type="text" id="in_to" placeholder="Enter your Destination City">
 	                            	</div>
 	                        	</div>
 	                        	<div class="control-group">
 	                            	<label class="control-label" for="in_depart">Date of Departure</label>
 	                            	<div class="controls">
-	                               		<input type="text" id="in_depart" placeholder="Enter Date of Departure">
+	                               		<input name="departureDate" type="text" id="in_depart" placeholder="Enter Date of Departure">
 	                               		<script>
                                         	$('#in_depart').datepicker({
        		                                	format: 'mm-dd-yyyy'
@@ -44,7 +44,7 @@
 	                        	<div class="control-group">
 	                            	<label class="control-label" for="in_return">Date of Return</label>
 	                            	<div class="controls">
-	                                	<input type="text" id="in_return" placeholder="Enter Date of Return">
+	                                	<input name="returnDate" type="text" id="in_return" placeholder="Enter Date of Return">
 	                                	<script>
                                         	$('#in_return').datepicker({
        		                                	format: 'mm-dd-yyyy'
@@ -55,16 +55,16 @@
 	                        	<div class="control-group">
 	                            	<label class="control-label" for="in_psgr">Number of Passangers</label>
 	                            	<div class="controls">
-	                                	<input type="text" id="in_psgr" placeholder="Number of Passangers">
+	                                	<input name="numPax" type="text" id="in_psgr" placeholder="Number of Passangers">
 	                            	</div>
 	                        	</div>
 	                        	<div class="control-group">
 	                            	<div class="controls">
 	                                	<label class="radio">
-	                                    	<input type="radio" name="flightOpt" value="opt1"> Direct Flight
+	                                    	<input name="directOrConnect" type="radio" name="flightOpt" value="direct"> Direct Flight
 	                                	</label>
 	                                	<label class="radio">
-	                                    	<input type="radio" name="flightOpt" value="opt2"> Connecting Flight
+	                                    	<input name="directOrConnect" type="radio" name="flightOpt" value="connect"> Connecting Flight
 	                                	</label>
 	                                	<button type="submit" class="btn">Search for Flights</button>
 	                            	</div>
