@@ -13,7 +13,6 @@ import javax.servlet.http.HttpServletResponse;
 
 import ufly.entities.Airport;
 import ufly.entities.FlightBooking;
-import ufly.entities.PMF;
 import ufly.entities.User;
 import ufly.entities.Flight;
 
@@ -36,13 +35,7 @@ public class FlightBookingTest extends HttpServlet {
 	
 		FlightBooking newFlightBooking = new FlightBooking(bookedBy,bookedFlight,bookedFlightClass,bookedSeat,mealChoice); // TODO: create Customer once User has proven to work
 		// Flight's constructor will automaticallly make object persistent
-		PersistenceManager pm = PMF.get().getPersistenceManager();
-		try {
-            pm.makePersistent(newFlightBooking);
-            
-        } finally {
-            pm.close();
-        }
+
 		
 		//resp.setContentType("text/plain");
 		//resp.getWriter().println("City: "+city+" your callsign is "+ callsign);
