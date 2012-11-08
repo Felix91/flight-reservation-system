@@ -188,7 +188,9 @@ public class Airport {
 				"\n\tarrivals="+arrivals.toString()+"]";
 	}
 
-
+	public boolean equals(Airport a){
+		return a.callsign.equals(this.callsign);
+	}
 	/*------------ACCESSORS--------------*/
 	/**
 	 * @return the callsign

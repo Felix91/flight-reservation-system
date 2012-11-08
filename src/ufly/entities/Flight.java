@@ -1,7 +1,9 @@
 package ufly.entities;
 
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Vector;
@@ -196,13 +198,45 @@ public class Flight {
 		}
 	}
 	
-	public static List<Flight> getFlightsWithOrigin(Airport originAirport) {
+	@SuppressWarnings("deprecation")
+	public static List<Flight> getFlightsOriginDate(Airport origin,Date day) {
+		/*get date stuff set up*/
+		List<Flight> toRet;
+		GregorianCalendar startDate = new GregorianCalendar();
+		GregorianCalendar endDate = new GregorianCalendar();
+		startDate.setTime(day);
+		startDate.set(Calendar.HOUR, 0);
+		startDate.set(Calendar.MINUTE, 0);
+		endDate.setTime(day);
+		endDate.set(Calendar.HOUR,23);
+		endDate.set(Calendar.MINUTE, 59);
+		
 		PersistenceManager pm = PMF.get().getPersistenceManager();
-		Query q = pm.newQuery(Flight.class, "origin == originParam");
-		q.declareImports("import com.google.appengine.api.datastore.Key" );
-		q.declareParameters("Key originParam");
-
-		return (List<Flight>) q.execute(originAirport.getKey());
+		try{
+			Query q = pm.newQuery(Flight.class, "origin == originParam && " +
+												"departure >  startDateParam && departure < endDateParam" );
+			q.declareImports("import com.google.appengine.api.datastore.Key;import java.util.Date" );
+			Object[] param = new Object[3];
+			param[0]=origin.getKey();
+			param[1]=startDate.getTime();
+			param[2]=endDate.getTime();
+			q.declareParameters("Key originParam, Date startDateParam,Date endDateParam");
+			toRet=(List<Flight>)q.executeWithArray(param);
+			Iterator<Flight> it = toRet.iterator();
+			while (it.hasNext())
+			{
+				pm.detachCopy(it.next());
+			}
+				
+		}catch( javax.jdo.JDOException e)
+		{
+			e.printStackTrace();
+			return Flight.getFlightsOriginDate(origin, day);
+		}
+		finally{
+			pm.close();
+		}
+		return toRet;
 		
 	}
 	
@@ -387,10 +421,11 @@ public class Flight {
 	{
 		return this.seatingArrangement;
 	}
+	@SuppressWarnings("deprecation")
 	@Override
 	public String toString() {
 		return "Flight [flightNumber=" + flightNumber + ", origin=" + origin.toString()
-				+ ", destination=" + destination.toString()+ ", departure=" + departure
+				+ ", destination=" + destination.toString()+ ", departure=" + departure.toLocaleString()
 				+ ", arrival=" + arrival + ", allowableMealTypes="
 				+ allowableMealTypes + ", seatingArragement="
 				+ seatingArrangement + ", flightBookings=" + flightBookings

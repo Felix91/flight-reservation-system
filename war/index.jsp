@@ -21,7 +21,7 @@
 	                        	<div class="control-group">
 	                            	<label class="control-label" for="in_from">Leaving From</label>
 	                            	<div class="controls">
-	                                	<input name="departure" type="text" id="in_from" placeholder="Enter your Departure City">
+	                                	<input name="origin" type="text" id="in_from" placeholder="Enter your Departure City">
 	                            	</div>
 	                        	</div>
 	                        	<div class="control-group">
@@ -61,7 +61,7 @@
 	                        	<div class="control-group">
 	                            	<div class="controls">
 	                                	<label class="radio">
-	                                    	<input name="directOrConnect" type="radio" name="flightOpt" value="direct"> Direct Flight
+	                                    	<input name="directOrConnect" type="radio" name="flightOpt" value="direct" checked> Direct Flight
 	                                	</label>
 	                                	<label class="radio">
 	                                    	<input name="directOrConnect" type="radio" name="flightOpt" value="connect"> Connecting Flight

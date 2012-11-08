@@ -31,19 +31,42 @@
 											</tr>
 										</thead>
 										<tbody>
+											<% 
+											
+												Vector<Vector<HashMap<String,Object>>> trips = (Vector<Vector<HashMap<String,Object>>>) request.getAttribute("trips");
+												if (trips != null)
+												{
+													Iterator tripsIt = trips.iterator();
+													while(tripsIt.hasNext())
+													{
+														HashMap flightAttributes = (HashMap<String,Object>)((Vector)tripsIt.next()).get(0);
+
+											%>
 											<tr>
 												<td>
 													<label class="radio">
 														<input type="radio" name="departopt" id="optionsRadios1" value="option1" checked>
-														test1
+														<%=(String)flightAttributes.get("flightNo") %>
 													</label>
 												</td>
-												<td>test2</td>
-												<td>test3</td>
-												<td>test4</td>
-												<td>test5</td>
-												<td>test6</td>
+												<td><%out.print(((Calendar)flightAttributes.get("departs")).getTime().toString()); %></td>
+												<td><%out.print(((Calendar)flightAttributes.get("arrives")).getTime().toString()); %></td>
+												<td><%out.print(flightAttributes.get("stops").toString()); %> </td>
+												<td><%
+													Long duration = (Long)flightAttributes.get("durationInMins");
+													out.print(new Long(duration/60).toString());
+													out.print(":");
+													if(duration%60 <10){
+														out.print("0");
+													}
+													out.print(new Long(duration % 60).toString());
+													%></td>
+												<td>n/a</td>
 											</tr>
+											<%
+													}
+												}
+											%>
 											<tr>
 	                                            <td>
 	                                            	<label class="radio">

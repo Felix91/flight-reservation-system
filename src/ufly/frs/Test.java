@@ -2,6 +2,7 @@ package ufly.frs;
 
 import java.io.IOException;
 
+import java.util.GregorianCalendar;
 import java.util.Iterator;
 import java.util.List;
 
@@ -80,14 +81,17 @@ public class Test extends HttpServlet{
 		String aircraftModel = request.getParameter("aircraftModel");
 	
 		
-		if (origin == null && destination == null && departure ==  null && arrival == null && mealTypes== null && aircraftModel == null)
-		{
-			response.getWriter().println("Missing entries");
-			return;
-		}else if(flightno==null && origin != null && destination == null && departure ==  null && arrival == null && mealTypes== null && aircraftModel == null)
+		
+		if(flightno==null && origin != null && destination == null && departure !=  null && arrival == null && mealTypes== null && aircraftModel == null)
 		{
 			Airport OriginAirport = Airport.getAirportByCallSign(origin);
-			List<Flight> results=Flight.getFlightsWithOrigin(OriginAirport);
+			GregorianCalendar day = new GregorianCalendar();
+			day.set(Integer.parseInt(departure.split("/")[0]),
+					Integer.parseInt(departure.split("/")[1])-1,
+					Integer.parseInt(departure.split("/")[2]),0,0,0);
+			System.out.println(day.getTime().toString());
+			List<Flight> results=Flight.getFlightsOriginDate(OriginAirport, day.getTime());
+			
 			if (!results.isEmpty() )
 			{
 				Iterator<Flight> it = results.iterator();
@@ -116,7 +120,7 @@ public class Test extends HttpServlet{
 			while (it.hasNext())
 			{
 				f = it.next();
-				response.getWriter().println("<li>"+ f.getKey().toString() +"</li>");
+				response.getWriter().println("<li>"+ f.toString() +"</li>");
 			}
 			response.getWriter().println("</ul>");
         		
