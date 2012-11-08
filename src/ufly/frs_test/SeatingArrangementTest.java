@@ -8,7 +8,6 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import ufly.entities.PMF;
 import ufly.entities.SeatingArrangement;
 
 @SuppressWarnings("serial")
@@ -23,7 +22,9 @@ public class SeatingArrangementTest extends HttpServlet {
 		throws IOException,ServletException
 	{
 		String aircraftModel = req.getParameter("aircraftModel");
-		SeatingArrangement newSeatingArrangement = new SeatingArrangement(aircraftModel); 
+		SeatingArrangement newSeatingArrangement = new SeatingArrangement(aircraftModel);
+		
+		/*
 		PersistenceManager pm = PMF.get().getPersistenceManager();
 		try {
             pm.makePersistent(newSeatingArrangement);
@@ -31,6 +32,7 @@ public class SeatingArrangementTest extends HttpServlet {
         } finally {
             pm.close();
         }
+        */
 		
 		//resp.setContentType("text/plain");
 		//resp.getWriter().println("Airplane: "+aircraftmodel);
