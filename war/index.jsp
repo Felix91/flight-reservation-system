@@ -16,7 +16,7 @@
               		</div>
           			<div class="row-fluid">
                     	<div class="span7">
-                            <h2>Searh for Flights</h2>
+                            <h2>Search for Flights</h2>
                       		<form class="form-horizontal" action="/search" method="post">
 	                        	<div class="control-group">
 	                            	<label class="control-label" for="in_from">Leaving From</label>
