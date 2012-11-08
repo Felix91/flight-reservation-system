@@ -28,14 +28,6 @@ public class CustomerTest extends HttpServlet {
 		String lastName = req.getParameter("lastName");
 		
 		Customer newCustomer = new Customer(emailAddr, password, firstName, lastName); 
-		PersistenceManager pm = PMF.get().getPersistenceManager();
-		try {
-            pm.makePersistent(newCustomer);
-            
-        } finally {
-            pm.close();
-        }
-		
 		//resp.setContentType("text/plain");
 		//resp.getWriter().println("City: "+emailAddr+" your callsign is "+ password);
 		resp.sendRedirect("/entityTest?test=Customer");
