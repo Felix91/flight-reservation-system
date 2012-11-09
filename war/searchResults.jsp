@@ -70,7 +70,7 @@
 											<tr>
 	                                            <td>
 	                                            	<label class="radio">
-														<input type="radio" name="departopt" id="optionsRadios1" value="option2">
+														<input type="radio" name="departopt" id="optionsRadios1" value="option2" checked>
 														test1
 													</label>
 												</td>
