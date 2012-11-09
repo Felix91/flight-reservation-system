@@ -48,6 +48,15 @@
 	   <servlet-name>flightSearch</servlet-name>
 	   <url-pattern>/search</url-pattern>
 	</servlet-mapping>
+	<!-- CUSTOMER PROFILE PAGE -->
+	<servlet>
+		<servlet-name>customerProfile</servlet-name>
+		<servlet-class>ufly.frs.CustomerProfile</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>customerProfile</servlet-name>
+		<url-pattern>/customerProfile</url-pattern>
+	</servlet-mapping>
 	<!-- HEADER -->
 	<servlet>
 		<servlet-name>_header</servlet-name>

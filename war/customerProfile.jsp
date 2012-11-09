@@ -14,7 +14,15 @@
               <div class="span8">
                   <dl class="dl-horizontal">
                   	<dt>Full Name</dt>
-                    <dd>Edward Budiman</dd>
+                    <dd>
+                    <% 
+                    	String firstName;
+						String lastName; 
+                    	firstName = (String) request.getAttribute("customerFirstName");
+                    	lastName = (String) request.getAttribute("customerLastName");
+                    	out.print(firstName + " " + lastName); 
+                    %>
+                    </dd>
                     <dt>Date of Birth</dt>
                     <dd>05/05/90</dd>
                     <dt>Address</dt>
@@ -29,7 +37,6 @@
                   <ul class="unstyled">
                   	<li><h4><a href="#">Edit Profile</a></h4></li>
                     <li><h4><a href='#'>Check Loyalty Points</a></h4></li>
-                    <li><h4><a href='#'>Sign Out</a></h4></li>
                   </ul>
               </div>
             </div><!--rowfluid spans-->
@@ -61,6 +68,5 @@
     		<jsp:include page="/_footer" />
     	</div><!-- end footer -->
 	</div>
-	<!-- page generated at: <% //out.print(request.getAttribute("date")); %>-->
 </body>
 </html>

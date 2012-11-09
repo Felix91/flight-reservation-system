@@ -22,7 +22,7 @@ public class Login extends UflyServlet {
 			resp.sendRedirect("/search");
 		}
 		req.setAttribute("date", new java.util.Date());
-		req.getRequestDispatcher("login.jsp")
+		req.getRequestDispatcher("loginnew.jsp")
 			.forward(req,resp);
 	}
 

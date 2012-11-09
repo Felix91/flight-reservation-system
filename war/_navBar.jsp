@@ -24,7 +24,7 @@
               <% 
               	if(loggedin){ %>
 				<ul aria-labelledby="drop5" role="menu" class="dropdown-menu" id="menu2">
-                  <li><a href="/customerProfile.jsp" tabindex="-1">Profile Page</a></li>
+                  <li><a href="/customerProfile" tabindex="-1">Profile Page</a></li>
                   <li><a href="#" tabindex="-1">Modify a Booking</a></li>
                   <li><a href="#" tabindex="-1">Something else here</a></li>
                   <li class="divider"></li>
@@ -32,7 +32,7 @@
                 </ul>
                <%}else{%>
             	<ul aria-labelledby="drop1" role="menu" class="dropdown-menu" id="menu2">
-                  <li><a href="/loginnew.jsp" tabindex="-1">Login/Sign Up</a></li>                  
+                  <li><a href="/login" tabindex="-1">Login/Sign Up</a></li>                  
                 </ul>
                <%} %>   
                
