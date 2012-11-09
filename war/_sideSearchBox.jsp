@@ -44,7 +44,15 @@
         								<script>
         									$('#dp1').datepicker({
 												format: 'mm-dd-yyyy'
-											});
+											})
+											 .on('changeDate', function(ev){								
+												$('#dp1').datepicker('hide');
+											}); 
+											
+											
+											
+											
+											
 										</script>
                                     </div>
 									<div class="control-group">
@@ -53,7 +61,10 @@
                                         <script>
                                         	$('#dp2').datepicker({
        		                                	format: 'mm-dd-yyyy'
- 	                                    	});     
+ 	                                    	})
+ 	                                    	.on('changeDate', function(ev){								
+												$('#dp2').datepicker('hide');
+											});     
                                         </script>
                                     </div>
 							</div><!-- span12 -->
