@@ -15,6 +15,7 @@
 				<ul class="nav nav-pills">
 					<li class="active"><a href="#flights" data-toggle="tab">Upcoming Flights</a></li>
 					<li><a href="#flightstat" data-toggle="tab">Flight Statistics</a></li>
+					<li><a href="#flightbookings" data-toggle="tab">Flightbookings</a></li>			
 					<li><a href="#airports" data-toggle="tab">Airports</a></li>				
 				</ul>
 				<div class="tab-content">
@@ -24,6 +25,10 @@
 					</div>
 					<div id="flightstat" class="tab-pane fade">
 						<p>Stat goes here</p>						
+					</div>
+					<div id="flightbookings" class="tab-pane fade">				
+						<jsp:include page="/_adminFlightbookings.jsp" />
+						<a href="#"><button class="btn btn-primary">Add Flightbookings</button></a>
 					</div>
 					<div id="airports" class="tab-pane fade">				
 						<jsp:include page="/_adminAirports.jsp" />
