@@ -2,11 +2,11 @@
 
 <html>
 <head>	
-	<jsp:include page="_head.jsp" />
+	<jsp:include page="/_header" />
 	
 </head>
 <body>
-	<jsp:include page="/_navBar.jsp" />
+	<jsp:include page="/_navbar" />
 	<div class="container">
 		<div id="content"><!-- start content -->
 			<h2>Welcome Admin</h2>
@@ -36,7 +36,7 @@
     	</div><!-- end content -->
 		    
     	<div id="footer"><!-- start footer -->
-    		<jsp:include page="/_footer.jsp" />
+    		<jsp:include page="/_footer" />
     	</div><!-- end footer -->
 	</div>
 	<!-- page generated at: <% //out.print(request.getAttribute("date")); %>-->

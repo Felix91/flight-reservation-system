@@ -57,6 +57,15 @@
 		<servlet-name>customerProfile</servlet-name>
 		<url-pattern>/customerProfile</url-pattern>
 	</servlet-mapping>
+	<!-- ADMIN PAGE -->
+	<servlet>
+		<servlet-name>adminProfile</servlet-name>
+		<servlet-class>ufly.frs.AdminProfile</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>adminProfile</servlet-name>
+		<url-pattern>/adminProfile</url-pattern>
+	</servlet-mapping>
 	<!-- HEADER -->
 	<servlet>
 		<servlet-name>_header</servlet-name>
