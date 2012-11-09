@@ -17,9 +17,9 @@
 				        	<h3>SIGN IN</h3>
 				            <form class="form-horizontal" action="/login" method="post">
 				            	<div class="control-group">
-		                            <label class="control-label" for="username">Username</label>
+		                            <label class="control-label" for="username">Email</label>
 		                            <div class="controls">
-		                                <input type="text" id="in_from" name="username" placeholder="Enter your Username">
+		                                <input type="text" id="in_from" name="username" placeholder="Enter your Email">
 		                            </div>
                         		</div>
                         		<div class="control-group">
@@ -73,7 +73,7 @@
 		                                <input type="password" id="confpassword" name="confirmnewpass" placeholder="Confirm your Password" />
 		                            </div>
 		                            <br>
-		                            <button type="submit" class="btn">Search for Flights</button>
+		                            <button type="submit" class="btn">Sign Up</button>
 
 					           </div>
 
