@@ -1,5 +1,16 @@
-<%@ page import="java.util.*" %>
+<%@ page import="java.util.*, ufly.entities.Flight" %>
 
+
+
+
+<% 
+                    	List<Flight> allFlights = (List<Flight>) request.getAttribute("allFlights");
+						
+						Iterator<Flight> iterator = allFlights.iterator();
+						while (iterator.hasNext()) {
+							out.println(iterator.next().getFlightNumber());
+						}
+%>
 
 <div class="row-fluid">
     <div class="span12">

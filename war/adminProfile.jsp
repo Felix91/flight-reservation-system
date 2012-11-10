@@ -20,7 +20,7 @@
 				</ul>
 				<div class="tab-content">
 					<div id="flights" class="tab-pane fade active in">
-						<jsp:include page="/_adminFlights.jsp" />
+						<jsp:include page="/_adminFlights" />
 						<a href="#"><button class="btn btn-primary">Add Flights</button></a>
 					</div>
 					<div id="flightstat" class="tab-pane fade">
