@@ -7,6 +7,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import ufly.entities.Airport;
+
 
 @SuppressWarnings("serial")
 public class AirportTest extends HttpServlet {
@@ -19,6 +21,10 @@ public class AirportTest extends HttpServlet {
 	public void doPost(HttpServletRequest req, HttpServletResponse resp)
 		throws IOException,ServletException
 	{
+		String city = req.getParameter("city");
+		String callsign = req.getParameter("Callsign");
 		
+		new Airport(callsign, city);
+		resp.sendRedirect("/entityTest?test=Airport");
 	}
 }
