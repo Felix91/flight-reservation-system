@@ -1,16 +1,4 @@
-<%@ page import="java.util.*, ufly.entities.Flight" %>
-
-
-
-
-<% 
-                    	List<Flight> allFlights = (List<Flight>) request.getAttribute("allFlights");
-						
-						Iterator<Flight> iterator = allFlights.iterator();
-						while (iterator.hasNext()) {
-							out.println(iterator.next().getFlightNumber());
-						}
-%>
+<%@ page import="java.util.*, ufly.entities.Flight, ufly.entities.Airport" %>
 
 <div class="row-fluid">
     <div class="span12">
@@ -29,22 +17,22 @@
 						</tr>
 					</thead>
 					<tbody>
-						<tr>
-							<td>1</td>
-							<td>Vancouver</td>
-							<td>Toronto</td>
-							<td>Date</td>
-							<td>Date</td>
-							<td><a href="#">View</a></td>
-						</tr>
-						<tr>
-							<td>1</td>
-							<td>Vancouver</td>
-							<td>Toronto</td>
-							<td>Date</td>
-							<td>Date</td>
-							<td><a href="#">View</a></td>
-						</tr>
+						<% 
+                    	List<Flight> allFlights = (List<Flight>) request.getAttribute("allFlights");
+						
+						Iterator<Flight> iterator = allFlights.iterator();
+						while (iterator.hasNext()) {
+							Flight nextFlight = iterator.next();
+							out.println("<tr>");
+							out.println("<td>"+nextFlight.getFlightNumber()+"</td>");
+							out.println("<td>"+nextFlight.getOrigin().getCity()+"</td>");
+							out.println("<td>"+nextFlight.getDestination().getCity()+"</td>");
+							out.println("<td>"+nextFlight.getDeparture().toString()+"</td>");
+							out.println("<td>"+nextFlight.getArrival().toString()+"</td>");
+							out.println("<td><a href=\"#\">View</a></td>");
+							out.println("</tr>");
+						}
+						%>
 					</tbody>
 				</table>
 			</div><!-- span10 -->
