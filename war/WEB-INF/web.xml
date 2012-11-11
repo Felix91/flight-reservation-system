@@ -70,10 +70,27 @@
 	<servlet>
 		<servlet-name>adminFlights</servlet-name>
 		<servlet-class>ufly.frs.AdminFlights</servlet-class>
+		<init-param>
+	            <param-name>action</param-name>
+	            <param-value>index</param-value>
+	    </init-param>
 	</servlet>
 	<servlet-mapping>
 		<servlet-name>adminFlights</servlet-name>
 		<url-pattern>/_adminFlights</url-pattern>
+	</servlet-mapping>
+	<!-- ADMIN ADD FLIGHTS PAGE -->
+	<servlet>
+		<servlet-name>adminFlights_create</servlet-name>
+		<servlet-class>ufly.frs.AdminFlights</servlet-class>
+		<init-param>
+	            <param-name>action</param-name>
+	            <param-value>create</param-value>
+	    </init-param>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>adminFlights_create</servlet-name>
+		<url-pattern>/adminProfile/addFlights</url-pattern>
 	</servlet-mapping>
 	<!-- ADMIN AIRPORTS PAGE -->
 	<servlet>

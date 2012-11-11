@@ -19,10 +19,19 @@ public class AdminFlights extends UflyServlet {
 		//	Customer loggedInCustomer = Customer.getCustomer(getLoggedInUser(req.getSession()).getEmailAddr());
 		//	req.setAttribute("customerFirstName", loggedInCustomer.getFirstName());
 		//	req.setAttribute("customerLastName", loggedInCustomer.getLastName());
+		
+		String pageToInclude= getServletConfig().getInitParameter("action");
+		if(pageToInclude.equals("create") )
+		{
+			req.getRequestDispatcher("/adminFlights_create.jsp")
+			.forward(req,resp);
+		}else{
+		
 		List<Flight> allFlights = Flight.getAllFlights();
 		req.setAttribute("allFlights", allFlights);
 			req.getRequestDispatcher("_adminFlights.jsp")
 			.include(req,resp);
+		}
 		//}
 		//else{
 		//	resp.sendRedirect("/");

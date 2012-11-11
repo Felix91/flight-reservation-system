@@ -4,7 +4,6 @@
     <div class="span12">
         <h4>Flight Management</h4>
 		<div class="row-fluid">
-			<div class="span12">
 				<table class="table table-striped">
 					<thead>
 						<tr>
@@ -35,7 +34,6 @@
 						%>
 					</tbody>
 				</table>
-			</div><!-- span10 -->
 		</div><!--/span row-->
 	</div><!--/span12-->
 </div><!--/row-->

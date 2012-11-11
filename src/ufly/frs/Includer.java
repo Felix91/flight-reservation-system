@@ -16,11 +16,11 @@ public class Includer extends UflyServlet {
 		String pageToInclude= getServletConfig().getInitParameter("page");
 		if(pageToInclude.equals("footer") )
 		{
-			req.getRequestDispatcher("_footer.jsp")
+			req.getRequestDispatcher("/_footer.jsp")
 				.include(req,resp);
 		}else if (pageToInclude.equals("header") )
 		{
-			req.getRequestDispatcher("_head.jsp")
+			req.getRequestDispatcher("/_head.jsp")
 				.include(req,resp);
 		}else if ( pageToInclude.equals("navbar") )
 		{
@@ -29,7 +29,7 @@ public class Includer extends UflyServlet {
 			{
 				req.setAttribute("userEmailAddress", u.getEmailAddr());
 			}
-			req.getRequestDispatcher("_navBar.jsp")
+			req.getRequestDispatcher("/_navBar.jsp")
 				.include(req,resp);
 		}
 			
