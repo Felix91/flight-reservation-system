@@ -170,9 +170,23 @@ public class Flight {
 		this.allowableMealTypes = thisFlightMeals; 
 
 		// Create Flight's seating arrangement
-		this.seatingArrangement = new SeatingArrangement(aircraftModel);
+		SeatingArrangement sa = new SeatingArrangement(aircraftModel);
+		// Have to makePersistant here otherwise I won't know the SeatingArrangement's key
+		// TODO use superclass makePersistent method
+		pm = PMF.get().getPersistenceManager();
+		try{
+			pm.makePersistent(sa);
+		}finally{
+			pm.close();
+		}
+		this.seatingArrangement = sa.getKey();
+		/*if( this.seatingArrangement == null )
+			System.out.println("[Flight] seating arrangement is null");
+		else
+			System.out.println("[Flight] seating arrangement is OK");*/
 		
 		// Initialise flightBookings
+		// TODO store Keys
 		flightBookings = new Vector<FlightBooking>();
 		
 		// Finally, add Flight to datastore
@@ -183,7 +197,8 @@ public class Flight {
 			pm.close();
 		}
 	}
-
+	
+	/*------------ CLASS METHODS ------------*/
 	public static List<Flight> getAllFlights()
 	{   
 		PersistenceManager pm = PMF.get().getPersistenceManager();
@@ -196,6 +211,24 @@ public class Flight {
 		}finally{
 			pm.close();
 		}
+	}
+	
+	public static Flight getFlight(String flightKey)
+	{
+		PersistenceManager pm = PMF.get().getPersistenceManager();
+		Flight f, detached = null;
+		try{
+		    	f = pm.getObjectById(Flight.class, flightKey);
+		        detached = pm.detachCopy(f);
+		    }
+		catch( javax.jdo.JDOException e)
+		{
+			e.printStackTrace();
+		}
+		finally {
+			pm.close();
+		}
+		return detached;
 	}
 	
 	@SuppressWarnings("deprecation")
@@ -345,7 +378,8 @@ public class Flight {
 	/**
 	 * @param newSeatingArrangement	: new seating arrangement to update to
 	 */
-	public void changeSeatingArrangement(SeatingArrangement newSeatingArrangement )
+	// Don't think we want this. Can get really messy with this...
+	/*public void changeSeatingArrangement(SeatingArrangement newSeatingArrangement )
 	{
 		PersistenceManager pm= PMF.get().getPersistenceManager();
 		try
@@ -357,7 +391,7 @@ public class Flight {
 		{
 			pm.close();
 		}
-	}
+	}*/
 	
 	/**
 	 * @return the allowableMealTypes
@@ -413,14 +447,14 @@ public class Flight {
 		return Airport.getAirport(this.origin);
 	}
 
-
 	/**
 	 * @return the seatingArragement
 	 */
 	public SeatingArrangement getSeatingArragement()
 	{
-		return this.seatingArrangement;
+		return SeatingArrangement.getSeatingArrangement(this.seatingArrangement);
 	}
+	
 	@SuppressWarnings("deprecation")
 	@Override
 	public String toString() {
@@ -447,8 +481,8 @@ public class Flight {
 	private Date arrival;							// The Flight's arrival date (defined with year, month, date, hrs, min)
 	@Persistent
 	private Vector<Meal> allowableMealTypes;		// The meals available on this Flight
-	@Persistent
-	private SeatingArrangement seatingArrangement;	// Each Flight will have one seating arrangement layout
+	@Persistent(defaultFetchGroup = "true")
+	private Key seatingArrangement;					// Each Flight will have one seating arrangement layout
 
 	@Persistent(mappedBy = "bookedFlight") // bidirectional relationship
 	private Vector<FlightBooking> flightBookings;	// The bookings made on this Flight
