@@ -31,7 +31,7 @@
 						<a href="#"><button class="btn btn-primary">Add Flightbookings</button></a>
 					</div>
 					<div id="airports" class="tab-pane fade">				
-						<jsp:include page="/_adminAirports.jsp" />
+						<jsp:include page="/_adminAirports" />
 						<a href="#"><button class="btn btn-primary">Add Airports</button></a>
 					</div>
 				</div> <!-- tab content -->

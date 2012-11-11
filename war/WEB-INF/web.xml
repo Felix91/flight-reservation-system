@@ -75,6 +75,15 @@
 		<servlet-name>adminFlights</servlet-name>
 		<url-pattern>/_adminFlights</url-pattern>
 	</servlet-mapping>
+	<!-- ADMIN AIRPORTS PAGE -->
+	<servlet>
+		<servlet-name>adminAirports</servlet-name>
+		<servlet-class>ufly.frs.AdminAirports</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>adminAirports</servlet-name>
+		<url-pattern>/_adminAirports</url-pattern>
+	</servlet-mapping>
 	<!-- HEADER -->
 	<servlet>
 		<servlet-name>_header</servlet-name>
