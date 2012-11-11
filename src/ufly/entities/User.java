@@ -88,10 +88,9 @@ public abstract class User {
 	{
 		return this.emailAddr;
 	}
-	public boolean checkPassword( String pwd)
+	public boolean checkPassword(String pwd)
 	{
-		return true;
-//		return this.password.Matches(pwd);
+		return this.password.Matches(pwd);
 	}
 	
 	
@@ -111,7 +110,7 @@ public abstract class User {
 	@Persistent
 	private String emailAddr;		// The User's email address. Uniquely identifies the entity.
 	
-	@Persistent(serialized = "true")
+	@Persistent(serialized="true", defaultFetchGroup="true") 
 	private UflyPassword password;	// The User's password
 	@NotPersistent
 	private HttpSession session;

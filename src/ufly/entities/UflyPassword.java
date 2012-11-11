@@ -47,7 +47,7 @@ public class UflyPassword implements Serializable
 		switch(this.getSecurityVersion())
 		{
 		case 0://PlainText
-			if (this.storedPassword == check)
+			if (this.storedPassword.equals(check))
 				return true;
 			return false;
 		//add cases for future security models

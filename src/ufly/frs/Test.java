@@ -189,6 +189,10 @@ public class Test extends HttpServlet{
 			{
 				response.getWriter().println("<ul>");
 				response.getWriter().println("<li>"+ c.getFirstName() + " " + c.getLastName() + ", email: " + c.getEmailAddr() + "</li>");
+				if( c.checkPassword("pw") )
+					response.getWriter().println("Password matches 'pw'");
+				else
+					response.getWriter().println("Password does not match 'pw'");
 				response.getWriter().println("</ul>");
 			}
 			else
