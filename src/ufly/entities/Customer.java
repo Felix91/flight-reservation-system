@@ -10,6 +10,7 @@ import javax.jdo.annotations.PersistenceCapable;
 import javax.jdo.annotations.Persistent;
 
 import com.google.appengine.api.datastore.Key;
+import com.google.appengine.api.datastore.KeyFactory;
 
 
 
@@ -23,6 +24,8 @@ public class Customer extends User {
 		this.firstName = firstName;
 		this.lastName = lastName;
 		this.loyaltyPoints = 0; // Every Customer starts with 0 loyalty points
+		this.flightBookings = new Vector<Key>();
+		flightBookings.add(KeyFactory.createKey(FlightBooking.class.getSimpleName(), "test"));
 		
 		PersistenceManager pm = PMF.get().getPersistenceManager();
 		try{
@@ -140,13 +143,14 @@ public class Customer extends User {
 	/**
 	 * @param fb	: add fb into flightbooking vector
 	 */
-	public void addBooking(Key fb)
+	public void addFlightBooking(Key fbKey)
 	{
 		PersistenceManager pm= PMF.get().getPersistenceManager();
 		try
 		{
-			this.flightBookings.add(fb);
+			this.flightBookings.add(fbKey);
 			pm.makePersistent(this);
+		
 		}finally
 		{
 			pm.close();
@@ -216,6 +220,17 @@ public class Customer extends User {
 		return this.flightBookings;
 	}
 	
+	@Override
+	public String toString() 
+	{
+		return "Customer [email=" + this.getEmailAddr()
+				+ ", fname=" + this.getFirstName()
+				+ ", lname=" + this.getLastName()
+				+ ", loyalty_pts=" + this.getLoyaltyPoints()
+				+ ", flightBookings=" + flightBookings.toString() + " #elems: " + flightBookings.size()
+				+ "]";
+	}
+	
 	
 	/*------------ VARIABLES ------------*/
 	@Persistent
@@ -224,7 +239,7 @@ public class Customer extends User {
 	String lastName;
 	@Persistent
 	int loyaltyPoints;
-	@Persistent
+	@Persistent(defaultFetchGroup = "true")
 	private Vector<Key> flightBookings;	// The Customer's flight bookings
 
 }

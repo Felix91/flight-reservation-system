@@ -64,16 +64,14 @@ public class FlightBooking {
 		
 		Vector<Seat> seats = sa.getSeats();
 		Iterator<Seat> seatsIt = seats.iterator();
-		Seat _seat = null;
+		Seat s = null;
 		// Attempt to find Seat entity
 		while( seatsIt.hasNext() )
 		{
-			_seat = seatsIt.next();
-			if( _seat.getRowNumber()==rowNum && _seat.getColumn()==colChar )
+			s = seatsIt.next();
+			if( s.getRowNumber()==rowNum && s.getColumn()==colChar )
 			{
-				this.bookedSeat = _seat.getKey();
-				// Occupy Seat
-				_seat.setFlightBooking(this.bookedSeat);
+				this.bookedSeat = s.getKey();
 				break;
 			}
 		}
@@ -99,9 +97,12 @@ public class FlightBooking {
 			pm.close();
 		}
 		
-		// Add this to Customer's flightbookings
-		// TODO add for Flight too
-		c.addBooking(this.getConfirmationNumber());
+		// Add this to Customer's flightBookings
+		c.addFlightBooking(this.getConfirmationNumber());
+		// Add this to Flight's flightBookings
+		f.addFlightBooking(this.getConfirmationNumber());
+		// Occupy Seat
+		s.setFlightBooking(this.getConfirmationNumber());
 	}
 	
 	/*------------ CLASS METHODS ------------*/
@@ -169,7 +170,7 @@ public class FlightBooking {
 	/**
 	 * @param newCustomer	: new customer to change to
 	 */
-	public void changeCustomer(Customer newCustomer)
+	/*public void changeCustomer(Customer newCustomer)
 	{
 		PersistenceManager pm= PMF.get().getPersistenceManager();
 		try
@@ -181,11 +182,11 @@ public class FlightBooking {
 		{
 			pm.close();
 		}
-	}
+	}*/
 	/**
 	 * @param newFlight	: new flight booked to change to
 	 */
-	public void changeFlight(Flight newFlight)
+	/*public void changeFlight(Flight newFlight)
 	{
 		PersistenceManager pm= PMF.get().getPersistenceManager();
 		try
@@ -197,7 +198,7 @@ public class FlightBooking {
 		{
 			pm.close();
 		}
-	}
+	}*/
 	
 	/**
 	 * @param newFlightClass	: new fight class to change to
@@ -218,7 +219,7 @@ public class FlightBooking {
 	/**
 	 * @param newSeat	: new seat booking to change to
 	 */
-	public void changeSeat(Seat newSeat)
+	/*public void changeSeat(Seat newSeat)
 	{
 		PersistenceManager pm= PMF.get().getPersistenceManager();
 		try
@@ -230,7 +231,7 @@ public class FlightBooking {
 		{
 			pm.close();
 		}
-	}
+	}*/
 	
 	/**
 	 * @param newMeal	: new meal choice to change to
@@ -263,18 +264,18 @@ public class FlightBooking {
 	/**
 	 * @return the customer object
 	 */
-	public Customer getBookedBy()
+	/*public Customer getBookedBy()
 	{
 		return this.bookedBy;
-	}
+	}*/
 	
 	/**
 	 * @return the flight booked by customer
 	 */
-	public Flight getBookedFlight()
+	/*public Flight getBookedFlight()
 	{
 		return this.bookedFlight;
-	}
+	}*/
 	
 	/**
 	 * @return the flight class of booked flight
@@ -287,10 +288,10 @@ public class FlightBooking {
 	/**
 	 * @return the booked seat
 	 */
-	public Seat getBookedSeat()
+	/*public Seat getBookedSeat()
 	{
 		return this.bookedSeat;
-	}
+	}*/
 	
 	/**
 	 * @return the meal choice

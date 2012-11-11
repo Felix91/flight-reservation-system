@@ -177,7 +177,7 @@ public class Test extends HttpServlet{
 			while (it.hasNext())
 			{
 				c = it.next();
-				response.getWriter().println("<li>" + c.getFirstName() + " " + c.getLastName() + ", email: " + c.getEmailAddr() + "</li>");
+				response.getWriter().println("<li>" + c.toString() + "</li>");
 			}
 			response.getWriter().println("</ul>");
 			

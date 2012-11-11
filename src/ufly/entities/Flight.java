@@ -394,6 +394,23 @@ public class Flight {
 	}*/
 	
 	/**
+	 * @param newFlightNumber	: new flight number to update to
+	 */
+	public void addFlightBooking(Key fbKey)
+	{
+		PersistenceManager pm= PMF.get().getPersistenceManager();
+		try
+		{
+			this.flightBookings.add(fbKey);
+			pm.makePersistent(this);
+		
+		}finally
+		{
+			pm.close();
+		}
+	}
+	
+	/**
 	 * @return the allowableMealTypes
 	 */
 	public Vector<Meal> getAllowableMeals()
@@ -462,7 +479,7 @@ public class Flight {
 				+ ", destination=" + destination.toString()+ ", departure=" + departure.toLocaleString()
 				+ ", arrival=" + arrival + ", allowableMealTypes="
 				+ allowableMealTypes + ", seatingArragement="
-				+ seatingArrangement + ", flightBookings=" + flightBookings
+				+ seatingArrangement + ", flightBookings=" + flightBookings.toString() + " #elems: " + flightBookings.size()
 				+ "]";
 	}
 	/*------------ VARIABLES ------------*/
