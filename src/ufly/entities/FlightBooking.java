@@ -55,13 +55,7 @@ public class FlightBooking {
 		// Set seat
 		int rowNum = Character.getNumericValue(bookedSeat.charAt(0));
 		char colChar = bookedSeat.charAt(1);
-		SeatingArrangement sa = f.getSeatingArrangement();
-		
-		if( sa == null )
-			System.out.println("seating arrangement is null...");
-		else
-			System.out.println("seating arrangement is OK");
-		
+		SeatingArrangement sa = f.getSeatingArrangement();		
 		Vector<Seat> seats = sa.getSeats();
 		Iterator<Seat> seatsIt = seats.iterator();
 		Seat s = null;
@@ -145,7 +139,7 @@ public class FlightBooking {
 				+ ", customer=" + bookedBy.toString()
 				+ ", flight=" + bookedFlight.toString()
 				+ ", flightClass=" + bookedFlightClass.toString()
-				//+ ", seat=" + bookedSeat.toString()
+				+ ", seat=" + bookedSeat.toString()
 				+ ", meal=" + mealChoice 
 				+ "]";
 	}
