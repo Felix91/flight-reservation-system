@@ -1,4 +1,4 @@
-<%@ page import="java.util.*" %>
+<%@ page import="java.util.*, ufly.entities.Airport" %>
 
 <div class="row-fluid">
     <div class="span12">
@@ -14,16 +14,20 @@
 						</tr>
 					</thead>
 					<tbody>
-						<tr>
-							<td>YVR</td>
-							<td>Vancouver</td>
-							<td><a href="#">Delete</a></td>
-						</tr>
-						<tr>
-                            <td>YVR</td>
-                            <td>Vancouver</td>
-							<td><a href="#">Delete</a></td>
-						</tr>
+						<% 
+						List<Airport> airports =  (List<Airport>) request.getAttribute("allAirports");
+						
+						Iterator<Airport> it = airports.iterator();
+						while (it.hasNext())
+						{
+							Airport nextAirport = it.next();
+							out.println("<tr>");
+							out.println("<td>"+nextAirport.getCallSign()+"</td>");
+							out.println("<td>"+nextAirport.getCity()+"</td>");
+							out.println("<td><a href=\"#\">Delete</a></td>");
+							out.println("</tr>");
+						}
+						%>
 					</tbody>
 				</table>
 			</div><!-- span10 -->
