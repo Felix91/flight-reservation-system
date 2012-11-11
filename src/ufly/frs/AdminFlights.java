@@ -29,7 +29,7 @@ public class AdminFlights extends UflyServlet {
 		
 		List<Flight> allFlights = Flight.getAllFlights();
 		req.setAttribute("allFlights", allFlights);
-			req.getRequestDispatcher("_adminFlights.jsp")
+			req.getRequestDispatcher("/_adminFlights.jsp")
 			.include(req,resp);
 		}
 		//}

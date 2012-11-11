@@ -96,10 +96,27 @@
 	<servlet>
 		<servlet-name>adminAirports</servlet-name>
 		<servlet-class>ufly.frs.AdminAirports</servlet-class>
+		<init-param>
+	            <param-name>action</param-name>
+	            <param-value>index</param-value>
+	    </init-param>
 	</servlet>
 	<servlet-mapping>
 		<servlet-name>adminAirports</servlet-name>
 		<url-pattern>/_adminAirports</url-pattern>
+	</servlet-mapping>
+		<!-- ADMIN ADD AIRPORTS PAGE -->
+	<servlet>
+		<servlet-name>adminAirports_create</servlet-name>
+		<servlet-class>ufly.frs.AdminAirports</servlet-class>
+		<init-param>
+	            <param-name>action</param-name>
+	            <param-value>create</param-value>
+	    </init-param>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>adminAirports_create</servlet-name>
+		<url-pattern>/adminProfile/addAirports</url-pattern>
 	</servlet-mapping>
 	<!-- HEADER -->
 	<servlet>

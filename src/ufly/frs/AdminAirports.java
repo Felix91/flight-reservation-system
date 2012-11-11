@@ -20,10 +20,18 @@ public class AdminAirports extends UflyServlet {
 		//	Customer loggedInCustomer = Customer.getCustomer(getLoggedInUser(req.getSession()).getEmailAddr());
 		//	req.setAttribute("customerFirstName", loggedInCustomer.getFirstName());
 		//	req.setAttribute("customerLastName", loggedInCustomer.getLastName());
-		List<Airport> la = Airport.getAllAirports();
-		req.setAttribute("allAirports", la);
-			req.getRequestDispatcher("_adminAirports.jsp")
-			.include(req,resp);
+		
+		String pageToInclude= getServletConfig().getInitParameter("action");
+		if(pageToInclude.equals("create") )
+		{
+			req.getRequestDispatcher("/adminAirports_create.jsp")
+			.forward(req,resp);
+		}else{
+			List<Airport> la = Airport.getAllAirports();
+			req.setAttribute("allAirports", la);
+			req.getRequestDispatcher("/_adminAirports.jsp")
+				.include(req,resp);
+		}
 		//}
 		//else{
 		//	resp.sendRedirect("/");

@@ -32,7 +32,7 @@
 					</div>
 					<div id="airports" class="tab-pane fade">				
 						<jsp:include page="/_adminAirports" />
-						<a href="#"><button class="btn btn-primary">Add Airports</button></a>
+						<a href="/adminProfile/addAirports"><button class="btn btn-primary">Add Airports</button></a>
 					</div>
 				</div> <!-- tab content -->
 			</div><!-- tabbable -->

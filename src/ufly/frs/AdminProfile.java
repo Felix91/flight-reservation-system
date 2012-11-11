@@ -18,7 +18,7 @@ public class AdminProfile extends UflyServlet {
 		//	Customer loggedInCustomer = Customer.getCustomer(getLoggedInUser(req.getSession()).getEmailAddr());
 		//	req.setAttribute("customerFirstName", loggedInCustomer.getFirstName());
 		//	req.setAttribute("customerLastName", loggedInCustomer.getLastName());
-			req.getRequestDispatcher("adminProfile.jsp")
+			req.getRequestDispatcher("/adminProfile.jsp")
 			.forward(req,resp);
 		//}
 		//else{
