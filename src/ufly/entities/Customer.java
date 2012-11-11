@@ -9,6 +9,8 @@ import javax.jdo.Query;
 import javax.jdo.annotations.PersistenceCapable;
 import javax.jdo.annotations.Persistent;
 
+import com.google.appengine.api.datastore.Key;
+
 
 
 @PersistenceCapable (detachable="true")
@@ -138,7 +140,7 @@ public class Customer extends User {
 	/**
 	 * @param fb	: add fb into flightbooking vector
 	 */
-	public void addBooking(FlightBooking fb)
+	public void addBooking(Key fb)
 	{
 		PersistenceManager pm= PMF.get().getPersistenceManager();
 		try
@@ -154,18 +156,18 @@ public class Customer extends User {
 	/**
 	 * @param fb	: remove fb from flightbooking vector
 	 */
-	public void removeBooking(FlightBooking fb)
+	public void removeBooking(Key fb)
 	{
 		PersistenceManager pm= PMF.get().getPersistenceManager();
 
 		try
 		{	
-			Iterator<FlightBooking> itr=this.flightBookings.iterator();
+			Iterator<Key> itr=this.flightBookings.iterator();
 
 			
 			while(itr.hasNext()){
-				FlightBooking cur_fb = itr.next();
-				if(cur_fb.getConfirmationNumber().equals(fb.getConfirmationNumber()))
+				Key cur_fb = itr.next();
+				if( cur_fb.toString().equals(fb.toString()) )
 				{
 					this.flightBookings.remove(cur_fb);//since a flightbooking is unique this works
 					pm.makePersistent(this);
@@ -209,7 +211,7 @@ public class Customer extends User {
 	/**
 	 * @return the flight bookings
 	 */
-	public Vector<FlightBooking> getFlightBookings()
+	public Vector<Key> getFlightBookings()
 	{
 		return this.flightBookings;
 	}
@@ -222,7 +224,7 @@ public class Customer extends User {
 	String lastName;
 	@Persistent
 	int loyaltyPoints;
-	@Persistent(mappedBy = "bookedBy")
-	private Vector<FlightBooking> flightBookings;	// The Customer's flight bookings
+	@Persistent
+	private Vector<Key> flightBookings;	// The Customer's flight bookings
 
 }

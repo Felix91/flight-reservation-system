@@ -187,7 +187,7 @@ public class Flight {
 		
 		// Initialise flightBookings
 		// TODO store Keys
-		flightBookings = new Vector<FlightBooking>();
+		flightBookings = new Vector<Key>();
 		
 		// Finally, add Flight to datastore
 		pm = PMF.get().getPersistenceManager();
@@ -450,7 +450,7 @@ public class Flight {
 	/**
 	 * @return the seatingArragement
 	 */
-	public SeatingArrangement getSeatingArragement()
+	public SeatingArrangement getSeatingArrangement()
 	{
 		return SeatingArrangement.getSeatingArrangement(this.seatingArrangement);
 	}
@@ -481,9 +481,9 @@ public class Flight {
 	private Date arrival;							// The Flight's arrival date (defined with year, month, date, hrs, min)
 	@Persistent
 	private Vector<Meal> allowableMealTypes;		// The meals available on this Flight
-	@Persistent(defaultFetchGroup = "true")
+	@Persistent
 	private Key seatingArrangement;					// Each Flight will have one seating arrangement layout
 
-	@Persistent(mappedBy = "bookedFlight") // bidirectional relationship
-	private Vector<FlightBooking> flightBookings;	// The bookings made on this Flight
+	@Persistent
+	private Vector<Key> flightBookings;	// The bookings made on this Flight
 }

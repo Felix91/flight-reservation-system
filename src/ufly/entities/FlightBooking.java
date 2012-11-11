@@ -1,7 +1,12 @@
 package ufly.entities;
 
 
+import java.util.Iterator;
+import java.util.List;
+import java.util.Vector;
+
 import javax.jdo.PersistenceManager;
+import javax.jdo.Query;
 import javax.jdo.annotations.IdGeneratorStrategy;
 import javax.jdo.annotations.PersistenceCapable;
 import javax.jdo.annotations.Persistent;
@@ -15,19 +20,133 @@ public class FlightBooking {
 	/*------------ CONSTRUCTORS ------------*/
 	/**
 	 * Create a FlightBooking object
-	 * @param bookedBy			: The FlightBooking's bookedBy Customer
-	 * @param bookedFlight 		: The FlightBooking's bookedFlight
-	 * @param bookedFlightClass	: The FlightBooking's flight class
-	 * @param bookedSeat		: The FlightBooking's booked seat
-	 * @param mealChoice		: The FlightBooking's selected meal
+	 * @param bookedBy
+	 * @param bookedFlight
+	 * @param bookedFlightClass	: The FlightBookiing's flight class. Must either be "first", "business", or "economy"
+	 * @param bookedSeat		: The FlightBooking's booked seat. In "<row#><columnChar>" format e.g. "3C"
+	 * @param mealChoice		: The FlightBooking's meal choice. E.g. "beef"
 	 */
-	public FlightBooking(Customer bookedBy, Flight bookedFlight, FlightClass bookedFlightClass, Seat bookedSeat, Meal mealChoice)
+	public FlightBooking(String bookedBy, String bookedFlight, String bookedFlightClass, String bookedSeat, String mealChoice)
 	{
-		this.bookedBy = bookedBy;
-		this.bookedFlight = bookedFlight;
-		this.bookedFlightClass = bookedFlightClass; // TODO is this enough for storing an enum in the datastore?
-		this.bookedSeat = bookedSeat;
-		this.mealChoice = mealChoice; // TODO enum. similar to bookedFlightClass's TODO
+		// Key will be generated automatically
+		
+		// Set customer
+		Customer c = Customer.getCustomer(bookedBy);
+		this.bookedBy = c.getEmailAddr();
+		
+		// Set flight
+		Flight f = Flight.getFlight(bookedFlight);
+		this.bookedFlight = f.getKey();
+		
+		// Set flight class
+		if (bookedFlightClass.equalsIgnoreCase("first")) 
+		{
+			this.bookedFlightClass = FlightClass.first;
+		}
+		else if (bookedFlightClass.equalsIgnoreCase("business"))
+		{
+			this.bookedFlightClass = FlightClass.business;
+		}
+		else
+		{
+			this.bookedFlightClass = FlightClass.economy;
+		}
+		
+		// Set seat
+		int rowNum = Character.getNumericValue(bookedSeat.charAt(0));
+		char colChar = bookedSeat.charAt(1);
+		SeatingArrangement sa = f.getSeatingArrangement();
+		
+		if( sa == null )
+			System.out.println("seating arrangement is null...");
+		else
+			System.out.println("seating arrangement is OK");
+		
+		Vector<Seat> seats = sa.getSeats();
+		Iterator<Seat> seatsIt = seats.iterator();
+		Seat _seat = null;
+		// Attempt to find Seat entity
+		while( seatsIt.hasNext() )
+		{
+			_seat = seatsIt.next();
+			if( _seat.getRowNumber()==rowNum && _seat.getColumn()==colChar )
+			{
+				this.bookedSeat = _seat.getKey();
+				// Occupy Seat
+				_seat.setFlightBooking(this.bookedSeat);
+				break;
+			}
+		}
+		if( this.bookedSeat == null )
+		{
+			// TODO some error handling here
+			System.out.println("Could not find Seat");
+		}
+		else
+		{
+			System.out.println("Seat found: " + this.bookedSeat.toString());
+		}
+		
+		//  Set meal choice
+		this.mealChoice = Meal.valueOf(mealChoice);
+		
+		// Finally, add FlightBooking to datastore
+		// TODO use parent class method
+		PersistenceManager pm = PMF.get().getPersistenceManager();
+		try{
+			pm.makePersistent(this);
+		}finally{
+			pm.close();
+		}
+		
+		// Add this to Customer's flightbookings
+		// TODO add for Flight too
+		c.addBooking(this.getConfirmationNumber());
+	}
+	
+	/*------------ CLASS METHODS ------------*/
+	public static List<FlightBooking> getAllFlightBookings()
+	{
+		PersistenceManager pm = PMF.get().getPersistenceManager();
+		try
+		{
+			Query q = pm.newQuery(FlightBooking.class);
+            @SuppressWarnings("unchecked")
+            List<FlightBooking> results = (List<FlightBooking>) q.execute();
+            return results;
+		}finally{
+			pm.close();
+		}
+	}
+	
+	public static FlightBooking getFlightBooking(Key confirmationNumber)
+	{
+		PersistenceManager pm = PMF.get().getPersistenceManager();
+		FlightBooking fb, detached = null;
+		try{
+		    	fb = pm.getObjectById(FlightBooking.class, confirmationNumber);
+		        detached = pm.detachCopy(fb);
+		    }
+		catch( javax.jdo.JDOException e)
+		{
+			e.printStackTrace();
+		}
+		finally {
+			pm.close();
+		}
+		return detached;
+	}
+	
+	@Override
+	public String toString() 
+	{
+		return "FlightBooking [key=" + confirmationNumber.toString()
+				+ ", customer=" + bookedBy.toString()
+				+ ", flight=" + bookedFlight.toString()
+				+ ", flightClass=" + bookedFlightClass.toString()
+				//+ ", seat=" + bookedSeat.toString()
+				+ ", meal=" + mealChoice 
+				+ "]";
 	}
 	
 	/*------------MODIFIERS--------------*/
@@ -186,13 +305,13 @@ public class FlightBooking {
 	@Persistent(valueStrategy = IdGeneratorStrategy.IDENTITY) // automatically generate a numeric ID
 	private Key confirmationNumber;			// The FlightBooking's confirmation number. Note that since FlightBooking is a child class of entity relationships, its key must either be a Key or a Key value encoded as a string.
 	@Persistent
-	private Customer bookedBy;				// The FlightBooking's owner
+	private String bookedBy;				// The FlightBooking's owner
 	@Persistent
-	private Flight bookedFlight;			// The FlightBooking's flight
+	private Key bookedFlight;			// The FlightBooking's flight
 	@Persistent
 	private FlightClass bookedFlightClass;	// The FlightBooking's flight class
-	@Persistent(defaultFetchGroup = "true") // Always load the Seat when parent (this) is loaded
-	private Seat bookedSeat;				// The FlightBooking's booked seat
+	@Persistent // Always load the Seat when parent (this) is loaded
+	private Key bookedSeat;				// The FlightBooking's booked seat
 	@Persistent
 	private Meal mealChoice;				// The FlightBooking's meal choice
 	

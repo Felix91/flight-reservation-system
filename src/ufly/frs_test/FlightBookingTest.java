@@ -33,12 +33,9 @@ public class FlightBookingTest extends HttpServlet {
 		String bookedSeat = req.getParameter("bookedSeat");
 		String mealChoice = req.getParameter("mealChoice");
 	
-		FlightBooking newFlightBooking = new FlightBooking(bookedBy,bookedFlight,bookedFlightClass,bookedSeat,mealChoice); // TODO: create Customer once User has proven to work
-		// Flight's constructor will automaticallly make object persistent
+		new FlightBooking(bookedBy,bookedFlight,bookedFlightClass,bookedSeat,mealChoice); // TODO: create Customer once User has proven to work
+		// FlightBooking's constructor will automatically make object persistant
 
-		
-		//resp.setContentType("text/plain");
-		//resp.getWriter().println("City: "+city+" your callsign is "+ callsign);
 		resp.sendRedirect("/entityTest?test=FlightBooking");
 	}
 }

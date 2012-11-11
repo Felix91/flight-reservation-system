@@ -67,6 +67,9 @@ public class SeatingArrangement {
 				this.seats.add(new Seat(i, j));
 			}
 		}
+		
+		// debugging
+		//System.out.println("Number of elements in Seats: " + this.seats.size());
 	}
 	/*------------ACCESSORS--------------*/
 	
@@ -118,6 +121,15 @@ public class SeatingArrangement {
 		return this.numRowsEconomyClass;
 	}
 	
+	/**
+	 * Get seats vector
+	 * @return the vector containing all the Seats in this SeatingArrangement
+	 */
+	public Vector<Seat> getSeats()
+	{
+		return this.seats;
+	}
+	
 	/*------------ CLASS METHODS --------------*/
 	public static List<SeatingArrangement> getAllSeatingArrangement()
 	{
@@ -131,6 +143,24 @@ public class SeatingArrangement {
 		}finally{
 			pm.close();
 		}
+	}
+	
+	public static SeatingArrangement getSeatingArrangement(Key id)
+	{
+		PersistenceManager pm = PMF.get().getPersistenceManager();
+		SeatingArrangement sa, detached = null;
+		try{
+		    	sa = pm.getObjectById(SeatingArrangement.class, id);
+		        detached = pm.detachCopy(sa);
+		    }
+		catch( javax.jdo.JDOException e)
+		{
+			e.printStackTrace();
+		}
+		finally {
+			pm.close();
+		}
+		return detached;
 	}
 	
 	/*------------ VARIABLES ------------*/
@@ -147,6 +177,6 @@ public class SeatingArrangement {
 	private int numRowsBusinessClass;	// The number of rows in the business class of the SeatingArrangement
 	@Persistent
 	private int numRowsEconomyClass;	// The number of rows in the economy class of the SeatingArrangement. numRowsEconomyClass = numRows-numRowsFirstClass-numRowsBusinessClass
-	@Persistent
+	@Persistent(defaultFetchGroup = "true")
 	private Vector<Seat> seats;			// The SeatingArrangment's Seats. I do not think it's possible to store 2D collections in JDO. So just make use of the number of rows and columns to step through the 1D vector.
 }

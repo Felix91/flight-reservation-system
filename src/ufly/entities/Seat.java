@@ -32,7 +32,7 @@ public class Seat {
 	 * Set the Seat's flightBooking
 	 * @param flightBooking	: The Seat's flightBooking to be set
 	 */
-	public void setFlightBooking(FlightBooking flightBooking)
+	public void setFlightBooking(Key flightBooking)
 	{
 		PersistenceManager pm= PMF.get().getPersistenceManager();
 		try{
@@ -57,6 +57,24 @@ public class Seat {
 		}finally{
 			pm.close();
 		}
+	}
+	
+	public static Seat getSeat(String id)
+	{
+		PersistenceManager pm = PMF.get().getPersistenceManager();
+		Seat s, detached = null;
+		try{
+		    	s = pm.getObjectById(Seat.class, id);
+		        detached = pm.detachCopy(s);
+		    }
+		catch( javax.jdo.JDOException e)
+		{
+			e.printStackTrace();
+		}
+		finally {
+			pm.close();
+		}
+		return detached;
 	}
 	
 	/*------------ACCESSORS------------*/
@@ -90,7 +108,7 @@ public class Seat {
 	 */
 	public FlightBooking getFlightBooking()
 	{
-		return this.flightBooking;
+		return FlightBooking.getFlightBooking(this.flightBooking);
 	}
 	
 	/*------------ VARIABLES ------------*/
@@ -101,6 +119,6 @@ public class Seat {
 	private int rowNumber;
 	@Persistent
 	private char columnChar;
-	@Persistent(mappedBy = "bookedSeat")
-	private FlightBooking flightBooking;	// The Seat's flightBooking. If not equal to null, implies that Seat has been booked.
+	@Persistent
+	private Key flightBooking;	// The Seat's flightBooking. If not equal to null, implies that Seat has been booked.
 }

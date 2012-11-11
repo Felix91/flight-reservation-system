@@ -13,6 +13,7 @@ import javax.servlet.http.HttpServletResponse;
 import ufly.entities.Airport;
 import ufly.entities.Customer;
 import ufly.entities.Flight;
+import ufly.entities.FlightBooking;
 import ufly.entities.FlightManager;
 import ufly.entities.FlightStaff;
 import ufly.entities.Seat;
@@ -58,6 +59,10 @@ public class Test extends HttpServlet{
 		else if( test.equalsIgnoreCase("SeatingArrangement") == true )
 		{
 			testSeatingArrangement(request, response);
+		}
+		else if( test.equalsIgnoreCase("FlightBooking") == true )
+		{
+			testFlightBooking(request, response);
 		}
 		response.getWriter().println("</body></html>");
 	
@@ -266,6 +271,8 @@ public class Test extends HttpServlet{
 		{
 			s = it.next();
 			response.getWriter().println("<li>"+ "ID: " + s.getKey().toString() + ", row: " + s.getRowNumber() + ", col: " + s.getColumn() +"</li>");
+			if( s.getFlightBooking() != null )
+				response.getWriter().println("FlightBooking: " + s.getFlightBooking());
 		}
 		response.getWriter().println("</ul>");
 	}
@@ -285,5 +292,21 @@ public class Test extends HttpServlet{
 		}
 		response.getWriter().println("</ul>");
     		
+	}
+	
+	private void testFlightBooking(HttpServletRequest request, HttpServletResponse response) throws IOException
+	{
+		List<FlightBooking> results = FlightBooking.getAllFlightBookings();
+		Iterator<FlightBooking> it = results.iterator();
+        // Print all FlightBookings in the datastore
+        response.getWriter().println("FlightBookings added: ");
+        response.getWriter().println("<ul>");
+        FlightBooking fb;
+		while (it.hasNext())
+		{
+			fb = it.next();
+			response.getWriter().println("<li>"+ fb.toString() +"</li>");
+		}
+		response.getWriter().println("</ul>");
 	}
 }
