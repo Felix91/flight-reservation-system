@@ -25,7 +25,6 @@ public class Customer extends User {
 		this.lastName = lastName;
 		this.loyaltyPoints = 0; // Every Customer starts with 0 loyalty points
 		this.flightBookings = new Vector<Key>();
-		flightBookings.add(KeyFactory.createKey(FlightBooking.class.getSimpleName(), "test"));
 		
 		PersistenceManager pm = PMF.get().getPersistenceManager();
 		try{
@@ -148,9 +147,13 @@ public class Customer extends User {
 		PersistenceManager pm= PMF.get().getPersistenceManager();
 		try
 		{
-			this.flightBookings.add(fbKey);
-			pm.makePersistent(this);
-		
+			//this.flightBookings.add(fbKey);
+			//pm.makePersistent(this);
+			// Apparently, the above 2 lines do not update the object in the datastore
+			// But getting a fresh copy and making that fresh copy persistent works. Oh well...
+			Customer c = (Customer)pm.getObjectById(Customer.class, this.getEmailAddr());
+			c.flightBookings.add(fbKey);
+			pm.makePersistent(c);
 		}finally
 		{
 			pm.close();
