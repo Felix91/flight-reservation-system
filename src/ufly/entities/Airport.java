@@ -1,5 +1,6 @@
 package ufly.entities;
 
+import java.util.Iterator;
 import java.util.List;
 import java.util.Vector;
 
@@ -160,6 +161,7 @@ public class Airport {
 		}
 	}
 	
+	
 	/**
 	 * 
 	 * @param k key that corresponds to an Airport
@@ -212,10 +214,16 @@ public class Airport {
 	 * @return a vector of departure flights from this
 	 */
 	//JDV 02/11/2012 Do we need these accessors? they require lots db work
-//	public Vector<Flight> getDepartingFlight()
-//	{
-//		return this.departures;
-//	}
+	public int getnumDepartures()
+	{
+		return this.departures.size();
+	}
+	
+	public int getnumArrivals()
+	{
+		return this.arrivals.size();
+	}
+	
 //	/**
 //	 * @return a vector of arrival flights from this
 //	 */

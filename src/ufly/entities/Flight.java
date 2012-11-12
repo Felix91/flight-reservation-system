@@ -471,6 +471,15 @@ public class Flight {
 	{
 		return SeatingArrangement.getSeatingArrangement(this.seatingArrangement);
 	}
+	/**
+	 * @return the number of booked flights
+	 */
+	public int getNumBookedFlights()
+	{
+		return flightBookings.size();
+	}
+	
+	
 	
 	@SuppressWarnings("deprecation")
 	@Override
