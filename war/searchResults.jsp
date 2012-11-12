@@ -51,8 +51,8 @@
 														<%=(String)flightAttributes.get("flightNo") %>
 													</label>
 												</td>
-												<td><%out.print(((Calendar)flightAttributes.get("departs")).getTime().toString()); %></td>
-												<td><%out.print(((Calendar)flightAttributes.get("arrives")).getTime().toString()); %></td>
+												<td><%out.print((String)flightAttributes.get("flightOrigin") +"<BR>" +((Calendar)flightAttributes.get("departs")).getTime().toString()); %></td>
+												<td><%out.print((String)flightAttributes.get("flightDesination") +"<BR>" +((Calendar)flightAttributes.get("arrives")).getTime().toString()); %></td>
 												<td><%out.print(flightAttributes.get("stops").toString()); %> </td>
 												<td><%
 													Long duration = (Long)flightAttributes.get("durationInMins");
