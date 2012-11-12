@@ -23,7 +23,7 @@ public class FlightBooking {
 	 * @param bookedBy
 	 * @param bookedFlight
 	 * @param bookedFlightClass	: The FlightBookiing's flight class. Must either be "first", "business", or "economy"
-	 * @param bookedSeat		: The FlightBooking's booked seat. In "<row#><columnChar>" format e.g. "3C"
+	 * @param bookedSeat		: The FlightBooking's booked seat. In "<row#><columnChar>" format e.g. "03C", "12D"
 	 * @param mealChoice		: The FlightBooking's meal choice. E.g. "beef"
 	 */
 	public FlightBooking(String bookedBy, String bookedFlight, String bookedFlightClass, String bookedSeat, String mealChoice)
@@ -53,8 +53,8 @@ public class FlightBooking {
 		}
 		
 		// Set seat
-		int rowNum = Character.getNumericValue(bookedSeat.charAt(0));
-		char colChar = bookedSeat.charAt(1);
+		int rowNum = Integer.parseInt(bookedSeat.substring(0, 2));
+		char colChar = bookedSeat.charAt(2);
 		SeatingArrangement sa = f.getSeatingArrangement();		
 		Vector<Seat> seats = sa.getSeats();
 		Iterator<Seat> seatsIt = seats.iterator();
