@@ -9,6 +9,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import sun.misc.Compare;
 import ufly.entities.Airport;
 import ufly.entities.Flight;
 
@@ -18,10 +19,7 @@ public class Search extends UflyServlet {
 	public void doGet(HttpServletRequest req, HttpServletResponse resp)
 			throws IOException ,ServletException
 	{
-		req.getRequestDispatcher("flightSearch.jsp")
-		.forward(req,resp);
-		
-		
+		doPost(req,resp);
 	}
 	public void doPost(HttpServletRequest req, HttpServletResponse resp)
 			throws IOException,ServletException {
@@ -44,7 +42,7 @@ public class Search extends UflyServlet {
 		if (origin != null && departureDate != null)
 		{
 			List<Flight> flights= Flight.getFlightsOriginDate(origin,departureDate);
-			Vector<Vector<HashMap<String,Object>>> flightsToPass = new Vector<Vector<HashMap<String,Object>>>();
+			List<Vector<HashMap<String,Object>>> flightsToPass = new Vector<Vector<HashMap<String,Object>>>();
 			Iterator<Flight> it = flights.iterator();
 			while(it.hasNext())
 			{
@@ -54,34 +52,53 @@ public class Search extends UflyServlet {
 				{
 					Vector trip = new Vector<HashMap<String,Object>>(1);
 					
-					HashMap flightAttributes = new HashMap<String,Object>();
-					flightAttributes.put("flightNo", f.getFlightNumber());
-					
-					flightAttributes.put("flightOrigin", f.getOrigin().getCity());
-					flightAttributes.put("flightDesination", f.getDestination().getCity());
-					
-					GregorianCalendar cald = new GregorianCalendar();
-					cald.setTime(f.getDeparture());
-					flightAttributes.put("departs", cald);
-					
-					GregorianCalendar cala = new GregorianCalendar();
-					cala.setTime(f.getArrival());
-					flightAttributes.put("arrives",cala);
-					
-					flightAttributes.put("stops", new Integer(1));
-					
-					long durationInMins = (cala.getTimeInMillis()-cald.getTimeInMillis())/1000/60;
-					flightAttributes.put("durationInMins", new Long(durationInMins));
-					
-					flightAttributes.put("Price", new Integer(-1));
+					HashMap flightAttributes = f.getHashMap();
 					trip.add(flightAttributes);
 					flightsToPass.add(trip);
+				}else {
+					/* This flight does not go directly there,check to see if there are any flights
+					 * going from it to our destination 
+					 */
+					List<Flight> connectingFlights= Flight.getFlightsConnectingDateTime(f.getDestination(),destination,f.getArrival());
+					Iterator<Flight> connIt = connectingFlights.iterator();
+					HashMap<String,Object> firstLegAttr = f.getHashMap();  
+					
+					while(connIt.hasNext())
+					{
+						Vector trip = new Vector<HashMap<String,Object>>(1);
+						trip.add(firstLegAttr);
+						trip.add(connIt.next().getHashMap());
+					}
 				}
 			}
-			req.setAttribute("trips", flightsToPass);
+			Collections.sort(flightsToPass,new TripDurationSort());
+			req.setAttribute("thereTrips", flightsToPass);
 			req.getRequestDispatcher("searchResults.jsp").forward(req,resp);
-			//resp.getWriter().println(flightsToPass.toString());
 		}
 		
 	}
+	private class TripDurationSort implements Comparator<Vector<HashMap<String,Object>>>
+	{
+		@Override
+		public int compare(Vector<HashMap<String, Object>> o1,
+				Vector<HashMap<String, Object>> o2) {
+			long firstDuration=getTotalDuration(o1);
+			long secondDuration=getTotalDuration(o2);
+			if(firstDuration<secondDuration)
+				return -1;
+			if(firstDuration>secondDuration)
+				return 1;
+			return 0;
+		}
+		private Long getTotalDuration(Vector<HashMap<String,Object>> arg)
+		{
+			long d=0;
+			Iterator<HashMap<String,Object>> it = arg.iterator();
+			while (it.hasNext())
+				d+=(Long)it.next().get("durationInMinutes");
+			return d;
+		}
+		
+	}
+
 }

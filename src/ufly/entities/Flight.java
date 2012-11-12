@@ -4,6 +4,7 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Vector;
@@ -22,8 +23,8 @@ import com.google.appengine.api.datastore.KeyFactory;
 import java.text.ParsePosition;
 
 @PersistenceCapable (detachable="true")
-public class Flight {
-	
+public class Flight extends SuperEntity{
+
 	/*------------ CONSTRUCTORS ------------*/
 	/**
 	 * Create a Flight object
@@ -34,40 +35,40 @@ public class Flight {
 	 * @param arrival					: The Flight's arrival date
 	 * @param allowableMealTypes		: A vector of Meals available on this Flight
 	 * @param seatingArrangementLayout	: The string which determines the Flight's SeatingArrangment instance
-	 * 
+	 *
 	 * Example initialization
 	 * JDV - Why are do we not pass objects Flight(string,Airport,Airport,Date,Date,Meal,Airplane)??
 	 * new Flight (	####
 	 * 				YVR
 	 * 				LAX
-	 * 				YYYY/MM/DD/HH
-	 * 				YYYY/MM/DD/HH
+	 * 				yyyy/MM/dd HH:mm
+	 * 				yyyy/MM/dd HH:mm
 	 * 				BF-CK-PK
 	 * 				BOEING_777
 	 */
 	public Flight(String flightNumber, String origin, String destination, String departure, String arrival, String allowableMealTypes, String aircraftModel)
 	{
 		/*
-		 *  Create a new flight - need to check error using iterator 
-		 * 
+		 *  Create a new flight - need to check error using iterator
+		 *
 		 */
-		
-		
-		//Hanks Modified 
+
+
+		//Hanks Modified
 		this.k = KeyFactory.createKey(Flight.class.getSimpleName(), flightNumber+departure);
 		//this.k = KeyFactory.createKey(Flight.class.getSimpleName(), "testkey");
-		
+
 		this.flightNumber = null;
 		this.origin = null;
 		this.destination = null;
 		this.departure = null;
 		this.arrival = null;
 		this.allowableMealTypes=null;
-		
+
 		this.flightNumber = flightNumber;
-		
+
 		Query q;
-		
+
 		// Query for origin Airport key
 		PersistenceManager pm = PMF.get().getPersistenceManager();
 		try
@@ -93,12 +94,12 @@ public class Flight {
 		}finally{
 			pm.close();
 		}
-		
+
 		// Retrieve detached Airport object for modifying
 		Airport tempOrigin = Airport.getAirport(this.origin);
 		// Add Flight's key to origin Airport
 		tempOrigin.addDepartingFlight(this.k);
-		
+
 		// Query for destination Airport key
 		pm = PMF.get().getPersistenceManager();
 		try
@@ -120,26 +121,26 @@ public class Flight {
 			{
 				System.out.println("NOT found destination Airport");
 				// TODO some error message here which redirects Customer back to search page
-				// RE: JDV - This is why we should be passing in an airport rather than a string, 
+				// RE: JDV - This is why we should be passing in an airport rather than a string,
 				// The constructor cannot redirect, we can throw an exception and redirect
 				// when we catch it.
 			}
 		}finally{
 			pm.close();
 		}
-		
+
 		// Retrieve detached Airport object for modifying
 		Airport tempDestination = Airport.getAirport(this.destination);
 		// Add Flight's key to destination Airport
 		tempDestination.addArrivalFlight(this.k);
-		
+
 		// TODO add minutes to Date
-		SimpleDateFormat convertToDate = new SimpleDateFormat("yyyy/MM/dd/HH");
+		SimpleDateFormat convertToDate = new SimpleDateFormat("yyyy/MM/dd HH:mm");
 		//Departure
 		this.departure = convertToDate.parse(departure, new ParsePosition(0));
 		//Arrival
 		this.arrival = convertToDate.parse(arrival, new ParsePosition(0));
-		
+
 		// Set available in-flight meals
 		//Format of the allowMeal vector input string: "CK-BF-PK"
 		Vector<Meal> thisFlightMeals = new Vector<Meal>();
@@ -147,27 +148,27 @@ public class Flight {
 			String firstChar = Character.toString(allowableMealTypes.charAt(i));
 			String seconChar = Character.toString(allowableMealTypes.charAt(i+1));
 			String mealType = firstChar + seconChar;
-			
+
 			if (mealType.equalsIgnoreCase("ck")) {
 				thisFlightMeals.add(Meal.chicken);
 			}
 			else if (mealType.equalsIgnoreCase("bf")) {
 				thisFlightMeals.add(Meal.beef);
-				
+
 			}
 			else if (mealType.equalsIgnoreCase("pk")) {
 				thisFlightMeals.add(Meal.pork);
 			}
 			else if (mealType.equalsIgnoreCase("FH")) {
 				thisFlightMeals.add(Meal.fish);
-				
+
 			}
 			else if (mealType.equalsIgnoreCase("VG")) {
 				thisFlightMeals.add(Meal.veggie);
-			}			
+			}
 
 		}
-		this.allowableMealTypes = thisFlightMeals; 
+		this.allowableMealTypes = thisFlightMeals;
 
 		// Create Flight's seating arrangement
 		SeatingArrangement sa = new SeatingArrangement(aircraftModel);
@@ -184,11 +185,11 @@ public class Flight {
 			System.out.println("[Flight] seating arrangement is null");
 		else
 			System.out.println("[Flight] seating arrangement is OK");*/
-		
+
 		// Initialise flightBookings
 		// TODO store Keys
 		flightBookings = new Vector<Key>();
-		
+
 		// Finally, add Flight to datastore
 		pm = PMF.get().getPersistenceManager();
 		try{
@@ -197,10 +198,27 @@ public class Flight {
 			pm.close();
 		}
 	}
-	
+
+	public Flight(String flightNumber,
+			Airport origin,
+			Airport destination, 
+			Date departure, 
+			Date arrival, 
+			Vector<Meal> allowableMealTypes, 
+			SeatingArrangement seatingArrangement)
+	{
+		this.flightNumber=flightNumber;
+		this.origin= origin.getKey();
+		this.destination=destination.getKey();
+		this.departure= departure;
+		this.arrival= arrival;
+		this.allowableMealTypes=allowableMealTypes;
+		this.seatingArrangement=seatingArrangement.getKey();
+		this.makePersistant();
+	}
 	/*------------ CLASS METHODS ------------*/
 	public static List<Flight> getAllFlights()
-	{   
+	{
 		PersistenceManager pm = PMF.get().getPersistenceManager();
 		try
 		{
@@ -212,7 +230,6 @@ public class Flight {
 			pm.close();
 		}
 	}
-	
 	public static Flight getFlight(String flightKey)
 	{
 		PersistenceManager pm = PMF.get().getPersistenceManager();
@@ -230,20 +247,21 @@ public class Flight {
 		}
 		return detached;
 	}
-	
-	@SuppressWarnings("deprecation")
-	public static List<Flight> getFlightsOriginDate(Airport origin,Date day) {
+
+	/**
+	 *
+	 * @param origin the airport to fly from,
+	 * @param day the o
+	 * @return list of flights departing from airport origin within 24 hours of dayTime
+	 */
+
+	public static List<Flight> getFlightsOriginDate(Airport origin,Date dayTime) {
+		final long TWENTYFOUR_HOURS =240000*3600;
 		/*get date stuff set up*/
 		List<Flight> toRet;
-		GregorianCalendar startDate = new GregorianCalendar();
-		GregorianCalendar endDate = new GregorianCalendar();
-		startDate.setTime(day);
-		startDate.set(Calendar.HOUR, 0);
-		startDate.set(Calendar.MINUTE, 0);
-		endDate.setTime(day);
-		endDate.set(Calendar.HOUR,23);
-		endDate.set(Calendar.MINUTE, 59);
 		
+		Date endTime = new Date(dayTime.getTime()+TWENTYFOUR_HOURS);
+
 		PersistenceManager pm = PMF.get().getPersistenceManager();
 		try{
 			Query q = pm.newQuery(Flight.class, "origin == originParam && " +
@@ -251,8 +269,8 @@ public class Flight {
 			q.declareImports("import com.google.appengine.api.datastore.Key;import java.util.Date" );
 			Object[] param = new Object[3];
 			param[0]=origin.getKey();
-			param[1]=startDate.getTime();
-			param[2]=endDate.getTime();
+			param[1]=dayTime;
+			param[2]=endTime;
 			q.declareParameters("Key originParam, Date startDateParam,Date endDateParam");
 			toRet=(List<Flight>)q.executeWithArray(param);
 			Iterator<Flight> it = toRet.iterator();
@@ -260,19 +278,40 @@ public class Flight {
 			{
 				pm.detachCopy(it.next());
 			}
-				
-		}catch( javax.jdo.JDOException e)
+
+		}/*catch( javax.jdo.JDOException x)
 		{
-			e.printStackTrace();
-			return Flight.getFlightsOriginDate(origin, day);
-		}
+			x.printStackTrace();
+			return Flight.getFlightsOriginDate(origin, dayTime);
+		}*/
 		finally{
 			pm.close();
 		}
 		return toRet;
-		
 	}
-	
+
+	public static List<Flight> getFlightsConnectingDateTime(Airport origin,Airport destination,Date dayTime)
+	{
+
+		final long HOUR_IN_MILLIS = 1000*3600;
+		final long MAX_STOPOVER_HOURS = 6;
+		List<Flight> toRet=new Vector<Flight>();
+		List<Flight>possibleFlights=Flight.getFlightsOriginDate(origin, dayTime);
+		Iterator<Flight> it = possibleFlights.iterator();
+		while (it.hasNext())
+		{
+			Flight f=it.next();
+			if(f.getDestination() == destination &&
+					f.getArrival().before(new Date(dayTime.getTime()+MAX_STOPOVER_HOURS*HOUR_IN_MILLIS)) &&
+					f.getDeparture().after(dayTime))
+			{
+				toRet.add(f);
+			}
+				
+		}
+		
+		return toRet;
+	}
 	/**
 	 * @param newMeals	: new list of meals to update to
 	 */
@@ -283,7 +322,7 @@ public class Flight {
 		{
 			this.allowableMealTypes=newMeals;
 			pm.makePersistent(this);
-		
+
 		}finally
 		{
 			pm.close();
@@ -299,13 +338,13 @@ public class Flight {
 		{
 			this.arrival=newArrival;
 			pm.makePersistent(this);
-		
+
 		}finally
 		{
 			pm.close();
 		}
 	}
-	
+
 	/**
 	 * @param newDeparture	: new departure date to update to
 	 */
@@ -316,13 +355,13 @@ public class Flight {
 		{
 			this.departure=newDeparture;
 			pm.makePersistent(this);
-		
+
 		}finally
 		{
 			pm.close();
 		}
 	}
-	
+
 	/**
 	 * @param dest	: new destination to update to
 	 */
@@ -333,13 +372,13 @@ public class Flight {
 		{
 			this.destination=dest.getKey();
 			pm.makePersistent(this);
-		
+
 		}finally
 		{
 			pm.close();
 		}
 	}
-	
+
 	/*------------ MODIFIERS ------------*/
 	/**
 	 * @param newFlightNumber	: new flight number to update to
@@ -351,13 +390,13 @@ public class Flight {
 		{
 			this.flightNumber=newFlightNumber;
 			pm.makePersistent(this);
-		
+
 		}finally
 		{
 			pm.close();
 		}
 	}
-	
+
 	/**
 	 * @param orig	: new origin to update to
 	 */
@@ -368,13 +407,13 @@ public class Flight {
 		{
 			this.origin=orig.getKey();
 			pm.makePersistent(this);
-		
+
 		}finally
 		{
 			pm.close();
 		}
 	}
-	
+
 	/**
 	 * @param newSeatingArrangement	: new seating arrangement to update to
 	 */
@@ -386,13 +425,13 @@ public class Flight {
 		{
 			this.seatingArrangement=newSeatingArrangement;
 			pm.makePersistent(this);
-		
+
 		}finally
 		{
 			pm.close();
 		}
 	}*/
-	
+
 	/**
 	 * @param newFlightNumber	: new flight number to update to
 	 */
@@ -403,13 +442,13 @@ public class Flight {
 		{
 			this.flightBookings.add(fbKey);
 			pm.makePersistent(this);
-		
+
 		}finally
 		{
 			pm.close();
 		}
 	}
-	
+
 	/**
 	 * @return the allowableMealTypes
 	 */
@@ -417,7 +456,28 @@ public class Flight {
 	{
 		return this.allowableMealTypes;
 	}
-	
+	public HashMap<String,Object> getHashMap()
+	{
+		HashMap flightAttributes = new HashMap<String,Object>();
+		flightAttributes.put("flightNo", this.getFlightNumber());
+		
+		flightAttributes.put("flightOrigin", this.getOrigin().getCity());
+		flightAttributes.put("flightDesination", this.getDestination().getCity());
+		
+		GregorianCalendar cald = new GregorianCalendar();
+		cald.setTime(this.getDeparture());
+		flightAttributes.put("departs", cald);
+		
+		GregorianCalendar cala = new GregorianCalendar();
+		cala.setTime(this.getArrival());
+		flightAttributes.put("arrives",cala);
+		
+		long durationInMins = (cala.getTimeInMillis()-cald.getTimeInMillis())/1000/60;
+		flightAttributes.put("durationInMins", new Long(durationInMins));
+		
+		flightAttributes.put("Price", new Integer(-1));
+		return flightAttributes;
+	}
 	/**
 	 * @return the arrival date
 	 */
@@ -425,7 +485,7 @@ public class Flight {
 	{
 		return this.arrival;
 	}
-	
+
 	/**
 	 * @return the departure date
 	 */
@@ -433,7 +493,7 @@ public class Flight {
 	{
 		return this.departure;
 	}
-	
+
 	/**
 	 * @return the destination airport
 	 */
@@ -441,7 +501,7 @@ public class Flight {
 	{
 		return Airport.getAirport(this.destination);
 	}
-	
+
 	/*------------ ACCESSORS ------------*/
 	/**
 	 * @return the flightNumber
@@ -450,12 +510,12 @@ public class Flight {
 	{
 		return this.flightNumber;
 	}
-	
+
 	public Key getKey()
 	{
 		return this.k;
 	}
-	
+
 	/**
 	 * @return the origin airport
 	 */
@@ -478,9 +538,9 @@ public class Flight {
 	{
 		return flightBookings.size();
 	}
-	
-	
-	
+
+
+
 	@SuppressWarnings("deprecation")
 	@Override
 	public String toString() {
