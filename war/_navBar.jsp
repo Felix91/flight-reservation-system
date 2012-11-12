@@ -9,16 +9,15 @@
           <a class="brand" href="/index.jsp">Canada Airlines</a>
             <div class="navbar-text dropdown pull-right">
               <a href="#" data-toggle="dropdown" class="navbar-link ">
-              Logged in as 
+              
               <% String username; 
               boolean loggedin = false;
               if (request.getAttribute("userEmailAddress")!= null)
             	  { username = (String)request.getAttribute("userEmailAddress");
-            	  	out.println(username);
+            	  	out.println("Logged in as " + username);
             	  	loggedin = true;
             	  }else{
-              username = "Anonymous";
-              out.println(username);            
+              		out.println("Not Logged in");            
               } %>
               </a>
               <% 
