@@ -277,13 +277,4 @@
 		<servlet-name>flightbookingTestPage</servlet-name>
 		<url-pattern>/flightbookingTest</url-pattern>
 	</servlet-mapping>
-	<!-- ADMIN STATS TEST PAGE -->
-	<servlet>
-		<servlet-name>adminStatsTestPage</servlet-name>
-		<servlet-class>ufly.frs_test.AdminStatsTest</servlet-class>
-	</servlet>
-	<servlet-mapping>
-		<servlet-name>adminStatsTestPage</servlet-name>
-		<url-pattern>/adminTest</url-pattern>
-	</servlet-mapping>
 </web-app>
