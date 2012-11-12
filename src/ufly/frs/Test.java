@@ -64,6 +64,11 @@ public class Test extends HttpServlet{
 		{
 			testFlightBooking(request, response);
 		}
+		
+		else if( test.equalsIgnoreCase("AdminStats") == true )
+		{
+			testAirportStats(request, response);
+		}
 		response.getWriter().println("</body></html>");
 	
     }
@@ -312,5 +317,39 @@ public class Test extends HttpServlet{
 			response.getWriter().println("<li>"+ fb.toString() +"</li>");
 		}
 		response.getWriter().println("</ul>");
+	}
+	
+	private void testAirportStats(HttpServletRequest request, HttpServletResponse response) throws IOException
+	{
+		List<Airport> results = Airport.getAllAirports();
+		List<Flight> results2 = Flight.getAllFlights();
+		Iterator<Airport> it =results.iterator();
+		Iterator<Flight> it2 = results2.iterator();
+		response.getWriter().println("Airports Flights: ");
+        response.getWriter().println("<ul>");
+        Airport aa;
+        while (it.hasNext())
+		{
+        	aa=it.next();
+			int dep = aa.getnumDepartures();
+			int arv = aa.getnumArrivals();
+			response.getWriter().println("<li>"+aa.toString()+"Departures" +dep+"  Arrivals"+arv +"</li>");
+		}
+		response.getWriter().println("</ul>");
+		
+		response.getWriter().println("Booked Flights: ");
+		response.getWriter().println("<ul>");
+		Flight ff;
+		while (it2.hasNext())
+		{
+        	ff=it2.next();
+			int bookedflights = ff.getNumBookedFlights();
+			response.getWriter().println("<li>"+ff.getKey()+"Number of booked flights" +bookedflights+"</li>");
+		}
+		response.getWriter().println("</ul>");
+		
+		
+
+       
 	}
 }
