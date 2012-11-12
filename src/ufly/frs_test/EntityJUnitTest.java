@@ -1,12 +1,13 @@
-package ufly.entities;
+package ufly.frs_test;
 
 import static org.junit.Assert.*;
 
-import javax.jdo.annotations.PersistenceCapable;
-
+import org.junit.After;
+import org.junit.Before;
 import org.junit.Test;
 import ufly.entities.Airport;
-
+import com.google.appengine.tools.development.testing.LocalDatastoreServiceTestConfig;
+import com.google.appengine.tools.development.testing.LocalServiceTestHelper;
 
 /* JUnit Test Cases for determining functionality of primitive user-defined classes
  * for the uFly Flight Booking Reservation System.
@@ -23,15 +24,28 @@ import ufly.entities.Airport;
 
 public class EntityJUnitTest {
 
+	private final LocalServiceTestHelper helper =
+	        new LocalServiceTestHelper(new LocalDatastoreServiceTestConfig());
+	
+	@Before 
+    public void setUp() { 
+        helper.setUp(); 
+    } 
+
+	@After 
+    public void tearDown() { 
+        helper.tearDown(); 
+    } 
+	
 	/**
 	 * Testing Airport.java
 	 */
 	@Test
 	public void testAirport() {
+	
 		try {
 			// Constructors
 			Airport a = new Airport("YYZ", "Toronto");
-			fail("test");
 			//Airport YVR = new Airport("YVR", "Vancouver");
 			//Airport YCC = new Airport("YCC", "Calgary");
 			
