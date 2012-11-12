@@ -1,6 +1,9 @@
 package ufly.entities;
 
 import static org.junit.Assert.*;
+
+import javax.jdo.annotations.PersistenceCapable;
+
 import org.junit.Test;
 import ufly.entities.Airport;
 
@@ -27,7 +30,8 @@ public class EntityJUnitTest {
 	public void testAirport() {
 		try {
 			// Constructors
-			new Airport("YYZ", "Toronto");
+			Airport a = new Airport("YYZ", "Toronto");
+			fail("test");
 			//Airport YVR = new Airport("YVR", "Vancouver");
 			//Airport YCC = new Airport("YCC", "Calgary");
 			
