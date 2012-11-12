@@ -92,6 +92,19 @@
 		<servlet-name>adminFlights_create</servlet-name>
 		<url-pattern>/adminProfile/addFlights</url-pattern>
 	</servlet-mapping>
+	<!-- ADMIN EDIT FLIGHTS PAGE -->
+	<servlet>
+		<servlet-name>adminFlights_edit</servlet-name>
+		<servlet-class>ufly.frs.AdminFlights</servlet-class>
+		<init-param>
+	            <param-name>action</param-name>
+	            <param-value>edit</param-value>
+	    </init-param>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>adminFlights_edit</servlet-name>
+		<url-pattern>/adminProfile/editFlights</url-pattern>
+	</servlet-mapping>
 	<!-- ADMIN AIRPORTS PAGE -->
 	<servlet>
 		<servlet-name>adminAirports</servlet-name>

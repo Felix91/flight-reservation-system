@@ -25,6 +25,16 @@ public class AdminFlights extends UflyServlet {
 		{
 			req.getRequestDispatcher("/adminFlights_create.jsp")
 			.forward(req,resp);
+		}else if (pageToInclude.equals("edit") )
+		{
+			String flightKey = req.getParameter("flightKey");
+			
+			Flight editFlight = Flight.getFlight(flightKey);
+			if(editFlight != null){
+				//req.setAttribute("editFlight", editFlight);
+				req.getRequestDispatcher("/adminFlights_edit.jsp")
+					.include(req,resp);
+			}
 		}else{
 		
 		List<Flight> allFlights = Flight.getAllFlights();
