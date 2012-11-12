@@ -57,6 +57,9 @@ public class Search extends UflyServlet {
 					HashMap flightAttributes = new HashMap<String,Object>();
 					flightAttributes.put("flightNo", f.getFlightNumber());
 					
+					flightAttributes.put("flightOrigin", f.getOrigin().getCity());
+					flightAttributes.put("flightDesination", f.getDestination().getCity());
+					
 					GregorianCalendar cald = new GregorianCalendar();
 					cald.setTime(f.getDeparture());
 					flightAttributes.put("departs", cald);
