@@ -22,12 +22,14 @@
 									<table class="table table-striped">
 										<thead>
 											<tr>
-												<th>Flight</th>
-												<th>Departs</th>
-												<th>Arrive</th>
-												<th>Stops</th>
-												<th>Duration</th>
-												<th>Price</th>
+												<th>Flight No.</th>
+		                                        <th>Departure Date</th>
+		                                        <th>Departure Time</th>
+		                                        <th>Arrival Date</th>
+		                                        <th>Arrival Time</th>
+		                                        <th>Stops/Transit</th>
+		                                        <th>Duration</th>
+		                                        <th>Price</th>
 											</tr>
 										</thead>
 										<tbody>
@@ -79,6 +81,8 @@
 												<td>test4</td>
 												<td>test5</td>
 												<td>test6</td>
+												<td>test7</td>
+												<td>test8</td>
 	                                       </tr>
 										</tbody>
 									</table>
@@ -92,10 +96,12 @@
 									<table class="table table-striped">
 										<thead>
 		                                	<tr>
-		                                    	<th>Flight</th>
-		                                        <th>Departs</th>
-		                                        <th>Arrive</th>
-		                                        <th>Stops</th>
+		                                    	<th>Flight No.</th>
+		                                        <th>Departure Date</th>
+		                                        <th>Departure Time</th>
+		                                        <th>Arrival Date</th>
+		                                        <th>Arrival Time</th>
+		                                        <th>Stops/Transit</th>
 		                                        <th>Duration</th>
 		                                        <th>Price</th>
 		                                    </tr>
@@ -113,6 +119,8 @@
 		                                        <td>test4</td>
 		                                        <td>test5</td>
 		                                        <td>test6</td>
+		                                        <td>test7</td>
+		                                        <td>test8</td>
 		                                   </tr>
 		                                   <tr>
 		                                   		<td>
@@ -126,6 +134,8 @@
 		                                        <td>test4</td>
 		                                        <td>test5</td>
 		                                        <td>test6</td>
+		                                        <td>test7</td>
+		                                        <td>test8</td>
 		                                   </tr>
 		                               </tbody>
 									</table>
