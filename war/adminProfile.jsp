@@ -27,8 +27,8 @@
 						<p>Stat goes here</p>						
 					</div>
 					<div id="flightbookings" class="tab-pane fade">				
-						<jsp:include page="/_adminFlightbookings.jsp" />
-						<a href="#"><button class="btn btn-primary">Add Flightbookings</button></a>
+						<jsp:include page="/_adminFlightbookings" />
+						<a href="/adminProfile/addFlightbookings"><button class="btn btn-primary">Add Flightbookings</button></a>
 					</div>
 					<div id="airports" class="tab-pane fade">				
 						<jsp:include page="/_adminAirports" />

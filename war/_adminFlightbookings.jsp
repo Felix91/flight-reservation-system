@@ -1,4 +1,4 @@
-<%@ page import="java.util.*" %>
+<%@ page import="java.util.*, ufly.entities.FlightBooking, ufly.entities.FlightClass, ufly.entities.Seat" %>
 
 
 <div class="row-fluid">
@@ -18,6 +18,22 @@
 						</tr>
 					</thead>
 					<tbody>
+						<% 
+                    	List<FlightBooking> allFlightbookings = (List<FlightBooking>) request.getAttribute("allFlightbookings");
+						
+						Iterator<FlightBooking> iterator = allFlightbookings.iterator();
+						while (iterator.hasNext()) {
+							FlightBooking nextFlightbooking = iterator.next();
+							out.println("<tr>");
+							out.println("<td>"+nextFlightbooking.getConfirmationNumber().toString()+"</td>");
+							out.println("<td>+nextFlightbooking.getBookedBy().getFirstName() + nextFlightbooking.getBookedBy().getLastName() </td>");
+							out.println("<td>+nextFlightbooking.getBookedFlight().getFlightNumber()+</td>");
+							out.println("<td>+nextFlightbooking.getBookedFlightClass().toString()+</td>");
+							out.println("<td>+nextFlightbooking.getBookedSeat().toString()+</td>");
+							out.println("<td><a href=\"/adminProfile/editFlightbookings?confirmationNumber="+ nextFlightbooking.getConfirmationNumber().toString() + "\">Edit</a></td>");
+							out.println("</tr>");
+						}
+						%>
 						<tr>
 							<td>1</td>
 							<td>John</td>
