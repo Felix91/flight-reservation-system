@@ -89,7 +89,7 @@ public class Customer extends User {
 	/**
 	 * @param newLastName	: new last name to update to
 	 */
-	public void changeLastName(Customer c,String newLastName)
+	public void changeLastName(String newLastName)
 	{
 		PersistenceManager pm= PMF.get().getPersistenceManager();
 		//TODO: Implement a check to see this operation is legal

@@ -35,7 +35,7 @@
               </div> <!--span6-->
               <div class="span4">
                   <ul class="unstyled">
-                  	<li><h4><a href="#">Edit Profile</a></h4></li>
+                  	<li><h4><a href="/customerProfile/edit">Edit Profile</a></h4></li>
                     <li><h4><a href='#'>Check Loyalty Points</a></h4></li>
                   </ul>
               </div>
