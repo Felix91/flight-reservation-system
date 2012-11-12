@@ -19,13 +19,13 @@
                             <h2>Search for Flights</h2>
                       		<form class="form-horizontal" action="/search" method="post">
 	                        	<div class="control-group">
-	                            	<label class="control-label" for="in_from">Leaving From</label>
+	                            	<label class="control-label" for="in_from">From</label>
 	                            	<div class="controls">
 	                                	<input name="origin" type="text" id="in_from" placeholder="Enter your Departure City">
 	                            	</div>
 	                        	</div>
 	                        	<div class="control-group">
-	                            	<label class="control-label" for="in_to">Leaving To</label>
+	                            	<label class="control-label" for="in_to">To</label>
 	                            	<div class="controls">
 	                                	<input name="destination" type="text" id="in_to" placeholder="Enter your Destination City">
 	                            	</div>

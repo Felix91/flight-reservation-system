@@ -1,10 +1,14 @@
-<form action="listings.html" class="form-inline">
+<form action="/search" class="form-inline" method="post">
 						<fieldset>
 							<div class="row-fluid">
 								<div class="span12">
 									<div class="control-group">
+										<label class="control-label span3" for="focusedInput">From</label>
+										<input type="text" class="span9" placeholder="City or Airport" name="origin">
+									</div>
+									<div class="control-group">
 										<label class="control-label span3" for="focusedInput">To</label>
-										<input type="text" class="span9 toCity" value="YVR" placeholder="City or Airport" data-items="4" data-provide="typeahead">
+										<input type="text" class="span9 toCity" value="YVR" placeholder="City or Airport" data-items="4" data-provide="typeahead" name="destination">
 										<script>
 											var city = ["Alabama","Alaska","Arizona","Arkansas","California","Colorado","Connecticut","Delaware","Florida","Georgia","Hawaii","Idaho","Illinois","Indiana","Iowa","Kansas","Kentucky","Louisiana","Maine","Maryland","Massachusetts","Michigan","Minnesota","Mississippi","Missouri","Montana","Nebraska","Nevada","New Hampshire","New Jersey","New Mexico","New York","North Dakota","North Carolina","Ohio","Oklahoma","Oregon","Pennsylvania","Rhode Island","South Carolina","South Dakota","Tennessee","Texas","Utah","Vermont","Virginia","Washington","West Virginia","Wisconsin","Wyoming"];
 											$('.toCity').typeahead({
@@ -35,12 +39,8 @@
 										</script>
 									</div>
 									<div class="control-group">
-										<label class="control-label span3" for="focusedInput">From</label>
-										<input type="text" class="span9" placeholder="City or Airport">
-									</div>
-									<div class="control-group">
-                	                    <label class="control-label span3" for="focusedInput">Depart</label>
-										<input type="text" id="dp1" placeholder="Depart Date" class="span9">
+                	                    <label class="control-label span5" for="focusedInput">Depart Date</label>
+										<input type="text" id="dp1" placeholder="Depart Date" class="span7" name="departureDate">
         								<script>
         									$('#dp1').datepicker({
 												format: 'mm-dd-yyyy'
@@ -56,8 +56,8 @@
 										</script>
                                     </div>
 									<div class="control-group">
-                	                    <label class="control-label span3" for="focusedInput">Return</label>
-                                        <input type="text" id="dp2" placeholder="Return Date" class="span9">
+                	                    <label class="control-label span5" for="focusedInput">Return Date</label>
+                                        <input type="text" id="dp2" placeholder="Return Date" class="span7" name="returnDate">
                                         <script>
                                         	$('#dp2').datepicker({
        		                                	format: 'mm-dd-yyyy'
