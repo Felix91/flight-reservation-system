@@ -40,6 +40,7 @@
 		<servlet-name>signedUpPage</servlet-name>
 		<url-pattern>/signedup</url-pattern>
 	</servlet-mapping>
+	<!-- SEARCH -->
 	<servlet>
 	   <servlet-name>flightSearch</servlet-name>
 	   <servlet-class>ufly.frs.Search</servlet-class>
@@ -47,6 +48,15 @@
 	<servlet-mapping>
 	   <servlet-name>flightSearch</servlet-name>
 	   <url-pattern>/search</url-pattern>
+	</servlet-mapping>
+	<!-- BOOK -->
+	<servlet>
+	   <servlet-name>flightbook</servlet-name>
+	   <servlet-class>ufly.frs.Book</servlet-class>
+	</servlet>
+	<servlet-mapping>
+	   <servlet-name>flightbook</servlet-name>
+	   <url-pattern>/book</url-pattern>
 	</servlet-mapping>
 	<!-- CUSTOMER PROFILE PAGE -->
 	<servlet>

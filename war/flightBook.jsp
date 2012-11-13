@@ -2,22 +2,44 @@
 
 <html>
 <head>	
-	<title>uFly Reservation System</title>
-	<link href="/stylesheets/logincss.css" type="text/css" rel="stylesheet" />
+	<jsp:include page="/_header" />
 </head>
 <body>
-	
-	<div id="container">
-	<div id="header">
-    	<jsp:include page="/_header" />
-    </div>
-    <div id="content">
-	<!-- Add content here -->
-    </div>
-    <div id="footer">
-    	<jsp:include page="/_footer" />
-    </div>
+	<jsp:include page="/_navbar" />
+	<div class="container-fluid">
+		<div id="content"><!-- start content -->
+			<!-- Add content here -->
+    		<%	Vector<HashMap> flights=(Vector)request.getAttribute("flightInfo");
+    			for(int i=0;i<flights.size();i++){
+    				HashMap<String,Object>flight=flights.get(i);
+    			
+    		%>
+    		FlightNo=<%=(String)flight.get("flightNo")%><br>
+    		<input type="hidden" name="flightNo[<%=i %>]" value=<%=(String)flight.get("flightNo") %>>
+    		Date=<%=(Date)flight.get("Date")%><br>
+    		<input type="hidden" name="Date[<%=i %>]" value=<%=(Date)flight.get("Date") %>>
+    		
+    		PassName=<input name="PassName[<%=i %>]" >
+			
+    		
+    		<select name="seat[<%=i %>]">
+    		<%
+    				String[] seats=(String[])flight.get("seats");
+	    			for(int j=0;j<seats.length;j++)
+	    			{
+	    	%>
+	    			<option value="<%=seats[j] %>"><%=seats[j] %></option>
+	    	<%		
+	    			}
+    			}
+    		%>
+    		</select>
+    	</div><!-- end content -->
+    
+    	<div id="footer"><!-- start footer -->
+    		<jsp:include page="/_footer" />
+    	</div><!-- end footer -->
 	</div>
-		<!-- page generated at: <% //out.print(request.getAttribute("date")); %>-->
-	</body>
+	
+</body>
 </html>
