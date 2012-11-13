@@ -16,6 +16,8 @@ import javax.jdo.annotations.PersistenceCapable;
 import javax.jdo.annotations.Persistent;
 import javax.jdo.annotations.PrimaryKey;
 
+import org.datanucleus.api.jpa.annotations.Extension;
+
 
 import com.google.appengine.api.datastore.Key;
 import com.google.appengine.api.datastore.KeyFactory;
@@ -255,6 +257,7 @@ public class Flight extends SuperEntity{
 	 * @return list of flights departing from airport origin within 24 hours of dayTime
 	 */
 
+	@SuppressWarnings("unchecked")
 	public static List<Flight> getFlightsOriginDate(Airport origin,Date dayTime) {
 		final long TWENTYFOUR_HOURS =240000*3600;
 		/*get date stuff set up*/
@@ -263,15 +266,22 @@ public class Flight extends SuperEntity{
 		Date endTime = new Date(dayTime.getTime()+TWENTYFOUR_HOURS);
 
 		PersistenceManager pm = PMF.get().getPersistenceManager();
+		Query q = pm.newQuery(Flight.class, "origin == originParam && " +
+								"departure >  startDateParam && departure < endDateParam" );
+		q.declareImports("import com.google.appengine.api.datastore.Key;import java.util.Date" );
+		Object[] param = new Object[3];
+		param[0]=origin.getKey();
+		param[1]=dayTime;
+		param[2]=endTime;
+		
+		SimpleDateFormat convertToDate = new SimpleDateFormat("yyyy/MM/dd HH:mm");
+		//Departure
+		param[1] = convertToDate.parse("2012/11/11 00:00", new ParsePosition(0));
+		//Arrival
+		param[2] = convertToDate.parse("2012/11/21 00:00", new ParsePosition(0));
+		
+		q.declareParameters("Key originParam, Date startDateParam,Date endDateParam");
 		try{
-			Query q = pm.newQuery(Flight.class, "origin == originParam && " +
-												"departure >  startDateParam && departure < endDateParam" );
-			q.declareImports("import com.google.appengine.api.datastore.Key;import java.util.Date" );
-			Object[] param = new Object[3];
-			param[0]=origin.getKey();
-			param[1]=dayTime;
-			param[2]=endTime;
-			q.declareParameters("Key originParam, Date startDateParam,Date endDateParam");
 			toRet=(List<Flight>)q.executeWithArray(param);
 			Iterator<Flight> it = toRet.iterator();
 			while (it.hasNext())
@@ -285,6 +295,7 @@ public class Flight extends SuperEntity{
 			return Flight.getFlightsOriginDate(origin, dayTime);
 		}*/
 		finally{
+			q.closeAll();
 			pm.close();
 		}
 		return toRet;
@@ -562,8 +573,10 @@ public class Flight extends SuperEntity{
 	@Persistent
 	private Key destination;					// The Flight's place of destination. Note a new Airport entity should not be created.
 	@Persistent
+	@Extension(vendorName = "datanucleus", key = "is-second-class", value="false")
 	private Date departure;							// The Flight's departure date (defined with year, month, date, hrs, min)
 	@Persistent
+	@Extension(vendorName = "datanucleus", key = "is-second-class", value="false")
 	private Date arrival;							// The Flight's arrival date (defined with year, month, date, hrs, min)
 	@Persistent
 	private Vector<Meal> allowableMealTypes;		// The meals available on this Flight
