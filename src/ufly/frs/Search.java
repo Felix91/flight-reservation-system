@@ -9,7 +9,6 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import sun.misc.Compare;
 import ufly.entities.Airport;
 import ufly.entities.Flight;
 
@@ -65,9 +64,10 @@ public class Search extends UflyServlet {
 					
 					while(connIt.hasNext())
 					{
-						Vector trip = new Vector<HashMap<String,Object>>(1);
+						Vector trip = new Vector<HashMap<String,Object>>(2);
 						trip.add(firstLegAttr);
 						trip.add(connIt.next().getHashMap());
+						flightsToPass.add(trip);
 					}
 				}
 			}

@@ -1,7 +1,6 @@
 package ufly.entities;
 
 import java.text.SimpleDateFormat;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.HashMap;
@@ -258,8 +257,8 @@ public class Flight extends SuperEntity{
 	public static List<Flight> getFlightsOriginDate(Airport origin,Date dayTime) {
 		final long TWENTYFOUR_HOURS =240000*3600;
 		/*get date stuff set up*/
-		List<Flight> toRet;
-		
+		List<Flight> toRet=null;
+		Date startTime = new Date(dayTime.getTime());
 		Date endTime = new Date(dayTime.getTime()+TWENTYFOUR_HOURS);
 
 		PersistenceManager pm = PMF.get().getPersistenceManager();
@@ -269,7 +268,7 @@ public class Flight extends SuperEntity{
 			q.declareImports("import com.google.appengine.api.datastore.Key;import java.util.Date" );
 			Object[] param = new Object[3];
 			param[0]=origin.getKey();
-			param[1]=dayTime;
+			param[1]=startTime;
 			param[2]=endTime;
 			q.declareParameters("Key originParam, Date startDateParam,Date endDateParam");
 			toRet=(List<Flight>)q.executeWithArray(param);
@@ -281,8 +280,10 @@ public class Flight extends SuperEntity{
 
 		}/*catch( javax.jdo.JDOException x)
 		{
-			x.printStackTrace();
-			return Flight.getFlightsOriginDate(origin, dayTime);
+			
+			//x.printStackTrace();
+			
+			//return Flight.getFlightsOriginDate(origin, dayTime);
 		}*/
 		finally{
 			pm.close();
@@ -301,7 +302,8 @@ public class Flight extends SuperEntity{
 		while (it.hasNext())
 		{
 			Flight f=it.next();
-			if(f.getDestination() == destination &&
+
+			if(f.getDestination().equals(destination) &&
 					f.getArrival().before(new Date(dayTime.getTime()+MAX_STOPOVER_HOURS*HOUR_IN_MILLIS)) &&
 					f.getDeparture().after(dayTime))
 			{
@@ -462,7 +464,7 @@ public class Flight extends SuperEntity{
 		flightAttributes.put("flightNo", this.getFlightNumber());
 		
 		flightAttributes.put("flightOrigin", this.getOrigin().getCity());
-		flightAttributes.put("flightDesination", this.getDestination().getCity());
+		flightAttributes.put("flightDestination", this.getDestination().getCity());
 		
 		GregorianCalendar cald = new GregorianCalendar();
 		cald.setTime(this.getDeparture());
