@@ -1,6 +1,7 @@
 package ufly.entities;
 
 
+import javax.jdo.PersistenceManager;
 import javax.jdo.annotations.Inheritance;
 import javax.jdo.annotations.InheritanceStrategy;
 import javax.jdo.annotations.NotPersistent;
@@ -67,6 +68,7 @@ public abstract class User {
 	 */
 	public void changePw(String newPw)
 	{
+		this.session=session;
 		this.setPassword(newPw);
 	}
 	
@@ -102,6 +104,12 @@ public abstract class User {
 	public void setPassword(String password)
 	{
 		this.password = new UflyPassword(password);
+		PersistenceManager pm = PMF.get().getPersistenceManager();
+        try {
+            pm.makePersistent(this);
+        } finally {
+            pm.close();
+        }
 	}
 	
 	

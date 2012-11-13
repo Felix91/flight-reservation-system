@@ -26,56 +26,65 @@ public class Search extends UflyServlet {
 		Date departureDate = null;
 		Airport origin = null;
 		//String directOrConnect = req.getParameter("directOrConnect");
-		//String returnDate= req.getParameter("returnDate");
+		Date returnDate= null;
 		//String numPax	= req.getParameter("numPax");
 		Airport destination = null;
-		String a = req.getParameter("departureDate");
 		SimpleDateFormat convertToDate = new SimpleDateFormat("MM-dd-yyyy");
-		if ( a != null ){
-			departureDate = convertToDate.parse(a, new ParsePosition(0));
+		if ( req.getParameter("departureDate") != null ){
+			departureDate = convertToDate.parse(req.getParameter("departureDate"), new ParsePosition(0));
+		}if(req.getParameter("returnDate") != null){
+			returnDate=convertToDate.parse(req.getParameter("returnDate"), new ParsePosition(0));
 		}if(req.getParameter("origin")!=null){
 			origin = Airport.getAirportByCallSign(req.getParameter("origin"));
 		}if(req.getParameter("destination") != null){
 			destination = Airport.getAirportByCallSign(req.getParameter("destination"));
 		}
-		if (origin != null && departureDate != null)
+		if(origin!= null)
 		{
-			List<Flight> flights= Flight.getFlightsOriginDate(origin,departureDate);
-			List<Vector<HashMap<String,Object>>> flightsToPass = new Vector<Vector<HashMap<String,Object>>>();
-			Iterator<Flight> it = flights.iterator();
-			while(it.hasNext())
-			{
-				Flight f = it.next();
-				if(f.getDestination().equals(destination))
-				//this flight goes right to the destination
-				{
-					Vector trip = new Vector<HashMap<String,Object>>(1);
-					
-					HashMap flightAttributes = f.getHashMap();
-					trip.add(flightAttributes);
-					flightsToPass.add(trip);
-				}else {
-					/* This flight does not go directly there,check to see if there are any flights
-					 * going from it to our destination 
-					 */
-					List<Flight> connectingFlights= Flight.getFlightsConnectingDateTime(f.getDestination(),destination,f.getArrival());
-					Iterator<Flight> connIt = connectingFlights.iterator();
-					HashMap<String,Object> firstLegAttr = f.getHashMap();  
-					
-					while(connIt.hasNext())
-					{
-						Vector trip = new Vector<HashMap<String,Object>>(2);
-						trip.add(firstLegAttr);
-						trip.add(connIt.next().getHashMap());
-						flightsToPass.add(trip);
-					}
-				}
-			}
-			Collections.sort(flightsToPass,new TripDurationSort());
-			req.setAttribute("thereTrips", flightsToPass);
+			Vector trips = getFlightsFromOrigToDestOnDate(origin,destination,departureDate);
+			req.setAttribute("thereTrips", trips);
+			trips= getFlightsFromOrigToDestOnDate(destination,origin,returnDate);
+			req.setAttribute("returnTrips", trips);
 			req.getRequestDispatcher("searchResults.jsp").forward(req,resp);
 		}
 		
+	}
+	private Vector<Vector<HashMap<String,Object>>> getFlightsFromOrigToDestOnDate(Airport origin, Airport destination,Date departureDate)
+	{
+
+		List<Flight> flights= Flight.getFlightsOriginDate(origin,departureDate);
+		Vector<Vector<HashMap<String,Object>>> toRet = new Vector<Vector<HashMap<String,Object>>>();
+		Iterator<Flight> it = flights.iterator();
+		while(it.hasNext())
+		{
+			Flight f = it.next();
+			if(f.getDestination().equals(destination))
+			//this flight goes right to the destination
+			{
+				Vector trip = new Vector<HashMap<String,Object>>(1);
+				
+				HashMap flightAttributes = f.getHashMap();
+				trip.add(flightAttributes);
+				toRet.add(trip);
+			}else {
+				/* This flight does not go directly there,check to see if there are any flights
+				 * going from it to our destination 
+				 */
+				List<Flight> connectingFlights= Flight.getFlightsConnectingDateTime(f.getDestination(),destination,f.getArrival());
+				Iterator<Flight> connIt = connectingFlights.iterator();
+				HashMap<String,Object> firstLegAttr = f.getHashMap();  
+				
+				while(connIt.hasNext())
+				{
+					Vector trip = new Vector<HashMap<String,Object>>(2);
+					trip.add(firstLegAttr);
+					trip.add(connIt.next().getHashMap());
+					toRet.add(trip);
+				}
+			}
+		}
+		Collections.sort(toRet,new TripDurationSort());
+		return toRet;
 	}
 	private class TripDurationSort implements Comparator<Vector<HashMap<String,Object>>>
 	{
