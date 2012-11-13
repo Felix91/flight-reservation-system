@@ -52,10 +52,27 @@
 	<servlet>
 		<servlet-name>customerProfile</servlet-name>
 		<servlet-class>ufly.frs.CustomerProfile</servlet-class>
+		<init-param>
+	            <param-name>action</param-name>
+	            <param-value>index</param-value>
+	    </init-param>
 	</servlet>
 	<servlet-mapping>
 		<servlet-name>customerProfile</servlet-name>
 		<url-pattern>/customerProfile</url-pattern>
+	</servlet-mapping>
+	<!-- CUSTOMER PROFILE EDIT PAGE -->
+	<servlet>
+		<servlet-name>customerProfile_edit</servlet-name>
+		<servlet-class>ufly.frs.CustomerProfile</servlet-class>
+		<init-param>
+	            <param-name>action</param-name>
+	            <param-value>edit</param-value>
+	    </init-param>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>customerProfile_edit</servlet-name>
+		<url-pattern>/customerProfile/edit</url-pattern>
 	</servlet-mapping>
 	<!-- ADMIN PAGE -->
 	<servlet>

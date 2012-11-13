@@ -10,7 +10,6 @@ import javax.jdo.annotations.PersistenceCapable;
 import javax.jdo.annotations.Persistent;
 
 import com.google.appengine.api.datastore.Key;
-import com.google.appengine.api.datastore.KeyFactory;
 
 
 
@@ -89,7 +88,7 @@ public class Customer extends User {
 	/**
 	 * @param newLastName	: new last name to update to
 	 */
-	public void changeLastName(Customer c,String newLastName)
+	public void changeLastName(String newLastName)
 	{
 		PersistenceManager pm= PMF.get().getPersistenceManager();
 		//TODO: Implement a check to see this operation is legal
