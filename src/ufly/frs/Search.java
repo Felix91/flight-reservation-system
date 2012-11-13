@@ -34,7 +34,11 @@ public class Search extends UflyServlet {
 			departureDate = convertToDate.parse(req.getParameter("departureDate"), new ParsePosition(0));
 		}if(req.getParameter("returnDate") != null){
 			returnDate=convertToDate.parse(req.getParameter("returnDate"), new ParsePosition(0));
-		}if(req.getParameter("origin")!=null){
+		}if(returnDate==null)
+		{
+			returnDate=(Date) departureDate.clone();
+		}
+		if(req.getParameter("origin")!=null){
 			origin = Airport.getAirportByCallSign(req.getParameter("origin"));
 		}if(req.getParameter("destination") != null){
 			destination = Airport.getAirportByCallSign(req.getParameter("destination"));
