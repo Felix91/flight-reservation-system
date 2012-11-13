@@ -7,7 +7,15 @@
 <body>
 	<jsp:include page="/_navbar" />
 	<div class="container-fluid">
-		<div id="content"><!-- start content -->
+		<div id="content">
+			<!-- start content -->
+			
+
+			<select name=seat>
+			<%
+				for(String s : request.getAttribute("Seats"))	
+			%>
+			</select>
 			<!-- Add content here -->
     	</div><!-- end content -->
     
