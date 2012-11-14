@@ -22,10 +22,14 @@ public class Search extends UflyServlet {
 	}
 	public void doPost(HttpServletRequest req, HttpServletResponse resp)
 			throws IOException,ServletException {
-		//printParam(req,resp);
-		req.setAttribute("numPassengers", req.getParameter("numPassengers"));
-		if(req.getParameter("oneWayOrReturn").equals("return"))		
-			req.setAttribute("return", true);
+		printParam(req,resp);
+		req.setAttribute("origin", req.getParameter("origin"));
+		req.setAttribute("destination", req.getParameter("destination"));
+		req.setAttribute("departureDate", req.getParameter("departureDate"));
+		req.setAttribute("returnDate", req.getParameter("returnDate"));
+		req.setAttribute("oneWayOrReturn", req.getParameter("oneWayOrReturn"));
+		req.setAttribute("numPassengers", (String)req.getParameter("numPassengers"));
+		System.out.println("_"+(String)req.getParameter("numPassengers")+"_");
 		Date departureDate = null;
 		Airport origin = null;
 		//String directOrConnect = req.getParameter("directOrConnect");

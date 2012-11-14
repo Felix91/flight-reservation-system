@@ -105,7 +105,7 @@
 									</table>
 								</div><!-- span10 -->
 							</div><!--/span row-->
-							<% if(request.getAttribute("return")!=null){%>
+							<% if(request.getAttribute("oneWayOrReturn")=="return"){%>
 							<h2>Return Flight Option</h2>
 							
 	                    	<div class="row-fluid">
