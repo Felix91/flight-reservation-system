@@ -45,7 +45,7 @@ public class Flight extends SuperEntity{
 	 * 				BF-CK-PK
 	 * 				BOEING_777
 	 */
-	public Flight(String flightNumber, String origin, String destination, String departure, String arrival, String allowableMealTypes, String aircraftModel)
+	public Flight(String flightNumber, String origin, String destination, String departure, String arrival, String allowableMealTypes, String aircraftModel,Integer priceInCents)
 	{
 		/*
 		 *  Create a new flight - need to check error using iterator
@@ -53,9 +53,7 @@ public class Flight extends SuperEntity{
 		 */
 
 
-		//Hanks Modified
 		this.k = KeyFactory.createKey(Flight.class.getSimpleName(), flightNumber+departure);
-		//this.k = KeyFactory.createKey(Flight.class.getSimpleName(), "testkey");
 
 		this.flightNumber = null;
 		this.origin = null;
@@ -63,7 +61,7 @@ public class Flight extends SuperEntity{
 		this.departure = null;
 		this.arrival = null;
 		this.allowableMealTypes=null;
-
+		this.priceInCents=priceInCents;
 		this.flightNumber = flightNumber;
 
 		Query q;
@@ -87,8 +85,7 @@ public class Flight extends SuperEntity{
 			}
 			if( this.origin == null )
 			{
-				System.out.println("NOT found origin Airport");
-				// TODO some error message here which redirects Customer back to search page
+				throw new NullPointerException();
 			}
 		}finally{
 			pm.close();
@@ -118,11 +115,7 @@ public class Flight extends SuperEntity{
 			}
 			if( this.destination == null )
 			{
-				System.out.println("NOT found destination Airport");
-				// TODO some error message here which redirects Customer back to search page
-				// RE: JDV - This is why we should be passing in an airport rather than a string,
-				// The constructor cannot redirect, we can throw an exception and redirect
-				// when we catch it.
+				throw new NullPointerException();
 			}
 		}finally{
 			pm.close();
@@ -133,7 +126,7 @@ public class Flight extends SuperEntity{
 		// Add Flight's key to destination Airport
 		tempDestination.addArrivalFlight(this.k);
 
-		// TODO add minutes to Date
+
 		SimpleDateFormat convertToDate = new SimpleDateFormat("yyyy/MM/dd HH:mm");
 		//Departure
 		this.departure = convertToDate.parse(departure, new ParsePosition(0));
@@ -186,7 +179,6 @@ public class Flight extends SuperEntity{
 			System.out.println("[Flight] seating arrangement is OK");*/
 
 		// Initialise flightBookings
-		// TODO store Keys
 		flightBookings = new Vector<Key>();
 
 		// Finally, add Flight to datastore
@@ -229,7 +221,38 @@ public class Flight extends SuperEntity{
 			pm.close();
 		}
 	}
-	public static Flight getFlight(String flightKey)
+	/**
+	 * Get flight by number and departing time
+	 * @param flightNumber String
+	 * @param departure String Date (yyyy/MM/dd HH:mm)
+	 * @return
+	 */
+	public static Flight getFlight(String flightNumber,Date departure)
+	{
+		Flight toRet= null;
+		Date dayTime =  (Date) departure.clone();
+		PersistenceManager pm = PMF.get().getPersistenceManager();
+		try{
+			Query q = pm.newQuery(Flight.class, "flightNumber == FlightNoParam && " +
+												"departure ==  DateParam" );
+			q.declareImports("import java.util.Date" );
+			Object[] param = new Object[2];
+			param[0]=flightNumber;
+			param[1]=dayTime;
+			q.declareParameters("String FlightNoParam,Date DateParam");
+			List<Flight> result=(List<Flight>)q.executeWithArray(param);
+			if (result.size() >0)
+			{
+				toRet=result.get(0);
+			}			
+		}
+		finally{
+			pm.close();
+		}
+		return toRet;
+	}
+	
+	public static Flight getFlight(Key flightKey)
 	{
 		PersistenceManager pm = PMF.get().getPersistenceManager();
 		Flight f, detached = null;
@@ -240,6 +263,20 @@ public class Flight extends SuperEntity{
 		catch( javax.jdo.JDOException e)
 		{
 			e.printStackTrace();
+		}
+		finally {
+			pm.close();
+		}
+		return detached;
+	}
+	public static Flight getFlight(String flightKey)
+	//TODO: this should be merged into getFlight(Key flightKey)
+	{
+		PersistenceManager pm = PMF.get().getPersistenceManager();
+		Flight f, detached = null;
+		try{
+		    	f = pm.getObjectById(Flight.class, flightKey);
+		        detached = pm.detachCopy(f);
 		}
 		finally {
 			pm.close();
@@ -398,7 +435,23 @@ public class Flight extends SuperEntity{
 			pm.close();
 		}
 	}
+	/**
+	 * 
+	 * @param newFlightNumber
+	 */
+	public void changePrice(Integer priceInCents)
+	{
+		PersistenceManager pm= PMF.get().getPersistenceManager();
+		try
+		{
+			this.priceInCents=priceInCents;
+			pm.makePersistent(this);
 
+		}finally
+		{
+			pm.close();
+		}
+	}
 	/**
 	 * @param orig	: new origin to update to
 	 */
@@ -477,7 +530,12 @@ public class Flight extends SuperEntity{
 		long durationInMins = (cala.getTimeInMillis()-cald.getTimeInMillis())/1000/60;
 		flightAttributes.put("durationInMins", new Long(durationInMins));
 		
-		flightAttributes.put("Price", new Integer(-1));
+		//TOD0: remove this when all flights have a price
+		if (this.priceInCents== null)
+		{
+			this.changePrice(50000);
+		}
+		flightAttributes.put("price", new Integer(this.priceInCents));
 		return flightAttributes;
 	}
 	/**
@@ -540,7 +598,10 @@ public class Flight extends SuperEntity{
 	{
 		return flightBookings.size();
 	}
-
+	public Integer getPriceInCents()
+	{
+		return priceInCents;
+	}
 
 
 	@SuppressWarnings("deprecation")
@@ -571,7 +632,8 @@ public class Flight extends SuperEntity{
 	private Vector<Meal> allowableMealTypes;		// The meals available on this Flight
 	@Persistent
 	private Key seatingArrangement;					// Each Flight will have one seating arrangement layout
-
+	@Persistent
+	private Integer priceInCents;					//Price for the flight
 	@Persistent
 	private Vector<Key> flightBookings;	// The bookings made on this Flight
 }

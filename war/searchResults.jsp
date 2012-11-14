@@ -50,8 +50,18 @@
 														}%>" checked>
 												</label>
 												</td >
-												<td rowspan="<%out.print(stops);%>">
-													Price
+												<td rowspan="<%out.print(stops);%>">$
+													<%
+														Integer price=0;
+														for(HashMap<String,Object> flight:trip){
+															price+=(Integer)flight.get("rice");
+														}
+														out.print(price/100);//Dollars
+														out.print(".");
+														if (price%100 <10)
+															out.print("0");
+														out.print(price%100);
+													%>
 												</td>
 												<td rowspan="<%out.print(stops);%>">
 													<%	
