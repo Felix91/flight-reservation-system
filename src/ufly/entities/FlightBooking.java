@@ -116,6 +116,8 @@ public class FlightBooking {
 	
 	public static FlightBooking getFlightBooking(Key confirmationNumber)
 	{
+		if (confirmationNumber == null)
+			return null;
 		PersistenceManager pm = PMF.get().getPersistenceManager();
 		FlightBooking fb, detached = null;
 		try{

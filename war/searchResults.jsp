@@ -54,7 +54,7 @@
 													<%
 														Integer price=0;
 														for(HashMap<String,Object> flight:trip){
-															price+=(Integer)flight.get("rice");
+															price+=(Integer)flight.get("price");
 														}
 														out.print(price/100);//Dollars
 														out.print(".");

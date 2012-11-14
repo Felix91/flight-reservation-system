@@ -72,7 +72,22 @@ public class SeatingArrangement {
 		//System.out.println("Number of elements in Seats: " + this.seats.size());
 	}
 	/*------------ACCESSORS--------------*/
-	
+	/**
+	 * 
+	 * @return return the set of seats that are available
+	 */
+	public Vector<Seat> getAvailableSeats()
+	{
+		Vector<Seat> toRet=new Vector<Seat>();
+		for(Seat seat : getSeats())
+		{
+			if (seat.getFlightBooking() == null)
+			{
+				toRet.add(seat);
+			}
+		}
+		return toRet;
+	}
 	/**
 	 * @return the key of seating arrangement
 	 */

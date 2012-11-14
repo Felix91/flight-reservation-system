@@ -59,23 +59,7 @@ public class Seat {
 		}
 	}
 	
-	public static Seat getSeat(String id)
-	{
-		PersistenceManager pm = PMF.get().getPersistenceManager();
-		Seat s, detached = null;
-		try{
-		    	s = pm.getObjectById(Seat.class, id);
-		        detached = pm.detachCopy(s);
-		    }
-		catch( javax.jdo.JDOException e)
-		{
-			e.printStackTrace();
-		}
-		finally {
-			pm.close();
-		}
-		return detached;
-	}
+
 	
 	/*------------ACCESSORS------------*/
 	
