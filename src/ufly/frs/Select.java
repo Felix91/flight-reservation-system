@@ -16,7 +16,7 @@ import javax.servlet.http.HttpSession;
 import ufly.entities.*;
 
 @SuppressWarnings("serial")
-public class Book extends UflyServlet {
+public class Select extends UflyServlet {
 	public void doGet(HttpServletRequest req, HttpServletResponse resp)
 			throws IOException,ServletException
 	{

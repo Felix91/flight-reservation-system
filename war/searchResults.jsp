@@ -17,7 +17,7 @@
 			  		<div class="row-fluid">
 		                <div class="span12">
 	                        <h2>Departure Flight Option</h2>
-	                        <form method="post" action="/book">
+	                        <form method="post" action="/select">
 							<input type="hidden" name="numPassengers" value="<%=request.getAttribute("numPassengers") %>">
 							<div class="row-fluid">
 								<div class="span10">

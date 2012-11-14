@@ -282,7 +282,7 @@ public class Flight extends SuperEntity{
 		}
 		return detached;
 	}
-
+	
 	/**
 	 *
 	 * @param origin the airport to fly from,
@@ -535,6 +535,13 @@ public class Flight extends SuperEntity{
 			seats[i]=row.toString()+" "+col;
 		}
 		flightAttributes.put("availableSeats",seats);
+		StringBuffer allowableMeals=new StringBuffer();
+		for(Meal m:this.getAllowableMeals())
+		{
+			allowableMeals.append(m.toString());
+			allowableMeals.append("|");
+		}
+		flightAttributes.put("allowableMeals",allowableMeals.toString());
 		return flightAttributes;
 	}
 	/**
