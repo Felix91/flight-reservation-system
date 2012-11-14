@@ -105,7 +105,7 @@
 									</table>
 								</div><!-- span10 -->
 							</div><!--/span row-->
-							
+							<% if(request.getAttribute("return")!=null){%>
 							<h2>Return Flight Option</h2>
 							
 	                    	<div class="row-fluid">
@@ -194,10 +194,11 @@
 									</table>
 	                  			</div><!-- span10 -->
 	            			</div><!--/span row-->
-	            			
+	            			<%}//If returnFlight %>
 	            			<div class="row-fluid">
 								<div class="span10">
-									<button class="btn pull-right" type="submit">Book Flight</button>
+									
+									<button class="btn pull-right" type="submit">TODO:use JS to make sure a flight is selected</button>
 								</div>
 							</div>
 	            			</form> <!-- Return flight option -->

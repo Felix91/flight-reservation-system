@@ -66,6 +66,7 @@
 	                                	<label class="radio">
 	                                    	<input name="oneWayOrReturn" type="radio" name="flightOpt" value="return"> Return
 	                                	</label>
+	                                	Get JS to make sure required fields are populated
 	                                	<button type="submit" class="btn">Search for Flights</button>
 	                            	</div>
 	                        	</div>

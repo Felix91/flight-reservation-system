@@ -31,9 +31,11 @@ public class Book extends UflyServlet {
 		{
 			departopt=(String) session.getAttribute("departopt");
 			returnopt=(String) session.getAttribute("returnopt");
+			Integer numPass = (Integer) session.getAttribute("numPass");
 			session.setAttribute("departopt",null);
 			session.setAttribute("returnopt", null);
-			buildPage(departopt,returnopt,req,resp);
+			session.setAttribute("numPass", null);
+			buildPage(departopt,returnopt,numPass,req,resp);
 		}
 		
 	}
@@ -57,6 +59,7 @@ public class Book extends UflyServlet {
 			HttpSession session= req.getSession();
 			session.setAttribute("departopt",req.getParameter("departopt") );
 			session.setAttribute("returnopt", req.getParameter("returnopt"));
+			session.setAttribute("numPass", Integer.parseInt((String)req.getParameter("numPassengers")));
 			resp.sendRedirect("/login?message=cantBookWithoutUser");
 			return;
 		}
@@ -65,11 +68,12 @@ public class Book extends UflyServlet {
 		 */
 		String departopt= req.getParameter("departopt");
 		String returnopt=req.getParameter("returnopt");
-		buildPage(departopt,returnopt,req,resp);
+		Integer numPass=Integer.parseInt((String)req.getParameter("numPassengers"));
+		buildPage(departopt,returnopt,numPass,req,resp);
 		
 	}
 
-	private void buildPage(String departopt,String returnopt,HttpServletRequest req, HttpServletResponse resp)
+	private void buildPage(String departopt,String returnopt,Integer numPass,HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException
 	{
 		List<Flight> FlightList=new Vector<Flight>();
@@ -83,7 +87,10 @@ public class Book extends UflyServlet {
 		for(Flight f:FlightList)
 		{
 			HashMap<String,Object> hm = f.getHashMap();
-			allFlightsInfo.add(hm);
+			//add this flight for every passenger
+			for(int i=0;i<numPass;i++){
+				allFlightsInfo.add(hm);
+			}
 		}
 		req.setAttribute("flightInfo", allFlightsInfo);
 		req.getRequestDispatcher("flightBook.jsp").forward(req, resp);

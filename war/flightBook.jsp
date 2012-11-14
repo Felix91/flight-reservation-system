@@ -41,6 +41,10 @@
 		    	<%		
 	    			}
 	    		%>
+	    		<label>
+	    			CreditCardNumber
+		    		<input name=creditCart>
+	    		</label>
 	    		<input type="submit" value="Submit">
 			</form>    		
     	</div><!-- end content -->

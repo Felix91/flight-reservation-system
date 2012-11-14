@@ -24,6 +24,8 @@ public class Search extends UflyServlet {
 			throws IOException,ServletException {
 		//printParam(req,resp);
 		req.setAttribute("numPassengers", req.getParameter("numPassengers"));
+		if(req.getParameter("oneWayOrReturn").equals("return"))		
+			req.setAttribute("return", true);
 		Date departureDate = null;
 		Airport origin = null;
 		//String directOrConnect = req.getParameter("directOrConnect");
