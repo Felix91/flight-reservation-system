@@ -55,16 +55,16 @@
 	                        	<div class="control-group">
 	                            	<label class="control-label" for="in_psgr">Number of Passangers</label>
 	                            	<div class="controls">
-	                                	<input name="numPax" type="text" id="in_psgr" placeholder="Number of Passangers">
+	                                	<input name="numPassengers" type="text" id="in_psgr" placeholder="Number of Passangers">
 	                            	</div>
 	                        	</div>
 	                        	<div class="control-group">
 	                            	<div class="controls">
 	                                	<label class="radio">
-	                                    	<input name="directOrConnect" type="radio" name="flightOpt" value="direct" checked> Direct Flight
+	                                    	<input name="oneWayOrReturn" type="radio" name="flightOpt" value="oneWay" checked> One Way
 	                                	</label>
 	                                	<label class="radio">
-	                                    	<input name="directOrConnect" type="radio" name="flightOpt" value="connect"> Connecting Flight
+	                                    	<input name="oneWayOrReturn" type="radio" name="flightOpt" value="return"> Return
 	                                	</label>
 	                                	<button type="submit" class="btn">Search for Flights</button>
 	                            	</div>

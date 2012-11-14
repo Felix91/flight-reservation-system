@@ -519,23 +519,23 @@ public class Flight extends SuperEntity{
 		flightAttributes.put("flightOrigin", this.getOrigin().getCity());
 		flightAttributes.put("flightDestination", this.getDestination().getCity());
 		
-		GregorianCalendar cald = new GregorianCalendar();
-		cald.setTime(this.getDeparture());
-		flightAttributes.put("departs", cald);
+		flightAttributes.put("departs", this.getDeparture());
 		
-		GregorianCalendar cala = new GregorianCalendar();
-		cala.setTime(this.getArrival());
-		flightAttributes.put("arrives",cala);
+		flightAttributes.put("arrives",this.getArrival());
 		
-		long durationInMins = (cala.getTimeInMillis()-cald.getTimeInMillis())/1000/60;
+		long durationInMins = (this.getArrival().getTime()-this.getDeparture().getTime())/1000/60;
 		flightAttributes.put("durationInMins", new Long(durationInMins));
 		
-		//TOD0: remove this when all flights have a price
-		if (this.priceInCents== null)
-		{
-			this.changePrice(50000);
-		}
 		flightAttributes.put("price", new Integer(this.priceInCents));
+		Vector<Seat> seatObjs=this.getSeatingArrangement().getAvailableSeats();
+		String[] seats=new String[seatObjs.size()];
+		for(int i=0;i<seatObjs.size();i++)
+		{
+			Integer row = seatObjs.get(i).getRowNumber();
+			Character col = seatObjs.get(i).getColumn();
+			seats[i]=row.toString()+" "+col;
+		}
+		flightAttributes.put("availableSeats",seats);
 		return flightAttributes;
 	}
 	/**

@@ -23,6 +23,7 @@ public class Search extends UflyServlet {
 	public void doPost(HttpServletRequest req, HttpServletResponse resp)
 			throws IOException,ServletException {
 		//printParam(req,resp);
+		req.setAttribute("numPassengers", req.getParameter("numPassengers"));
 		Date departureDate = null;
 		Airport origin = null;
 		//String directOrConnect = req.getParameter("directOrConnect");

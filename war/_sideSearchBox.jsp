@@ -73,11 +73,11 @@
 								<label class="control-label span4" for="focusedInput">Passengers</label>
 								<div class="controls span8">
 									<select class="input-medium focused">
-										<option>1</option>
-										<option>2</option>
-										<option>3</option>
-										<option>4</option>
-										<option>5</option>
+										<%	
+											Integer selNumPax = Integer.parseInt((String)request.getAttribute("numPassengers"));
+											for(Integer numPax=1;numPax<20;numPax++){ %>
+										<option <%if(numPax==selNumPax)out.print("selected="); %>><%=numPax %></option>
+										<%} %>
 									</select>
 								</div>
 						</div>

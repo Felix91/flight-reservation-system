@@ -1,4 +1,5 @@
 <%@ page import="java.util.*" %>
+<%@ page import="java.text.SimpleDateFormat" %>
 
 <html>
 <head>	
@@ -11,6 +12,8 @@
 			<!-- Add content here -->
     		<form action="/createBooking" method="post">
 	    		<%	Vector<HashMap> flights=(Vector)request.getAttribute("flightInfo");
+	    			SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm");
+				
 	    			for(int i=0;i<flights.size();i++){
 	    				HashMap<String,Object>flight=flights.get(i);
 	    			
@@ -18,15 +21,14 @@
 	    		
 	    		<b>FlightNo=<%=(String)flight.get("flightNo")%></b><br>
 	    		<input type="hidden" name="flightNo[<%=i %>]" value=<%=(String)flight.get("flightNo") %>>
-	    		Date=<%=(Date)flight.get("Date")%><br>
-	    		<input type="hidden" name="Date[<%=i %>]" value=<%=(Date)flight.get("Date") %>>
+	    		Date=<%=dateFormat.format(flight.get("departs"))%><br>
+	    		<input type="hidden" name="Date[<%=i %>]" value=<%=dateFormat.format((Date)flight.get("departs")) %>>
 	    		
 	    		PassName=<input name="PassName[<%=i %>]" >
 				<br>
-	    		
 	    		SeatNo.=<select name="seat[<%=i %>]">
 	    		<%
-	    				String[] seats=(String[])flight.get("seats");
+	    				String[] seats=(String[])flight.get("availableSeats");
 		    			for(int j=0;j<seats.length;j++)
 		    			{
 		    	%>
