@@ -22,6 +22,14 @@ public class BookCreate extends UflyServlet {
 		printParam(req,resp);
 //		String CreditCardNo = (String)req.getParameter("creditCard");
 		Integer numberOfFlights= Integer.parseInt((String)req.getParameter("numberOfFlights"));
+		
+		//check to see if there is a user logged in
+		Customer localUser = (Customer) getLoggedInUser(req.getSession());
+		if (localUser==null)
+		{
+			//should not happen
+			throw new NullLoginUser();
+		}
 		for(Integer i=0;i<numberOfFlights;i++)
 		{
 			//Parse all the Posted values
@@ -34,12 +42,7 @@ public class BookCreate extends UflyServlet {
 			Flight f=Flight.getFlight(FlightNo, departureDate);
 			Seat seat=f.getSeatingArrangement().getSeatByRowCol(Integer.parseInt(seatStr[0]),seatStr[1].charAt(0) );
 			
-			Customer localUser = (Customer) getLoggedInUser(req.getSession());
-			if (localUser==null)
-			{
-				login("email",req.getSession());
-				localUser=Customer.getCustomer("email");
-			}
+			
 			FlightBooking fb= new FlightBooking(localUser,f,seat,meal);
 			//Now associate this flightbooking with a 
 			seat.setFlightBooking(fb.getConfirmationNumber());
