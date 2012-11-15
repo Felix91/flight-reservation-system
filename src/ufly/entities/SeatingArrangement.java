@@ -135,7 +135,35 @@ public class SeatingArrangement {
 	{
 		return this.numRowsEconomyClass;
 	}
-	
+	/**
+	 * get the flight class of seat
+	 * @param seat
+	 * @return the flight class of seat
+	 */
+	public FlightClass getFlightClass(Seat seat)
+	{
+		int seatrow=seat.getRowNumber();
+		int curRow=this.getNumRowsFirstClass();
+		if (seatrow<=curRow){
+			return FlightClass.first;
+		}
+		curRow+=this.getNumRowsBusinessClass();
+		if(seatrow <= curRow){
+			return FlightClass.business;
+		}
+		return FlightClass.economy;
+	}
+	/**
+	 * return an individual seat.
+	 * @param row
+	 * @param col
+	 * @return
+	 */
+	public Seat getSeatByRowCol(Integer row,Character col)
+	{
+		int index = (row-1)*this.getNumColumns()+Character.getNumericValue(col)-Character.getNumericValue('A');
+		return this.getSeats().get(index);
+	}
 	/**
 	 * Get seats vector
 	 * @return the vector containing all the Seats in this SeatingArrangement

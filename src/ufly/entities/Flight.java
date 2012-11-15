@@ -313,14 +313,7 @@ public class Flight extends SuperEntity{
 			{
 				pm.detachCopy(it.next());
 			}
-
-		}/*catch( javax.jdo.JDOException x)
-		{
-			
-			//x.printStackTrace();
-			
-			//return Flight.getFlightsOriginDate(origin, dayTime);
-		}*/
+		}
 		finally{
 			pm.close();
 		}

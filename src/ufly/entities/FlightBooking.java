@@ -15,7 +15,7 @@ import javax.jdo.annotations.PrimaryKey;
 import com.google.appengine.api.datastore.Key;
 
 @PersistenceCapable
-public class FlightBooking {
+public class FlightBooking extends SuperEntity {
 	
 	/*------------ CONSTRUCTORS ------------*/
 	/**
@@ -71,8 +71,7 @@ public class FlightBooking {
 		}
 		if( this.bookedSeat == null )
 		{
-			// TODO some error handling here
-			System.out.println("Could not find Seat");
+			throw new NullPointerException();
 		}
 		else
 		{
@@ -98,7 +97,27 @@ public class FlightBooking {
 		// Occupy Seat
 		s.setFlightBooking(this.getConfirmationNumber());
 	}
-	
+	/**
+	 * 
+	 * Create a FlightBooking, does NOT add this booking to flight,seat, or customer 
+	 * It is recommended that you do that
+	 * 
+	 * @param bookedByUser User assosiated with this booking
+	 * @param flight	   flight to book
+	 * @param fclass       class of booking ie first, business,economy
+	 * @param bookedSeat   seat that will be booked
+	 * @param mealChoice   choice of meal for this booking
+	 */
+	public FlightBooking(Customer bookedByUser,Flight flight, Seat bookedSeat,Meal mealChoice)
+	{
+		this.bookedBy=bookedByUser.getEmailAddr();
+		this.bookedFlight=flight.getKey();
+		FlightClass fclass =flight.getSeatingArrangement().getFlightClass(bookedSeat);
+		this.bookedFlightClass=fclass;
+		this.bookedSeat=bookedSeat.getKey();
+		this.mealChoice=mealChoice;
+		this.makePersistant();
+	}
 	/*------------ CLASS METHODS ------------*/
 	public static List<FlightBooking> getAllFlightBookings()
 	{

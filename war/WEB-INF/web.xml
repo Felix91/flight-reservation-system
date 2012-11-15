@@ -49,14 +49,23 @@
 	   <servlet-name>flightSearch</servlet-name>
 	   <url-pattern>/search</url-pattern>
 	</servlet-mapping>
-	<!-- BOOK -->
+	<!-- SELECT FLIGHT -->
 	<servlet>
-	   <servlet-name>flightbook</servlet-name>
-	   <servlet-class>ufly.frs.Book</servlet-class>
+	   <servlet-name>flightSelect</servlet-name>
+	   <servlet-class>ufly.frs.Select</servlet-class>
 	</servlet>
 	<servlet-mapping>
-	   <servlet-name>flightbook</servlet-name>
-	   <url-pattern>/book</url-pattern>
+	   <servlet-name>flightSelect</servlet-name>
+	   <url-pattern>/select</url-pattern>
+	</servlet-mapping>
+	<!-- BOOK -->
+	<servlet>
+	   <servlet-name>bookCreate</servlet-name>
+	   <servlet-class>ufly.frs.BookCreate</servlet-class>
+	</servlet>
+	<servlet-mapping>
+	   <servlet-name>bookCreate</servlet-name>
+	   <url-pattern>/createBooking</url-pattern>
 	</servlet-mapping>
 	<!-- CUSTOMER PROFILE PAGE -->
 	<servlet>

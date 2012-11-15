@@ -106,7 +106,7 @@ public class Customer extends User {
 	/**
 	 * @param loyaltypoints	: add loyalty points
 	 */
-	public void addLoyaltyPoints(Customer c,int loyaltypoints)
+	public void addLoyaltyPoints(int loyaltypoints)
 	{
 		PersistenceManager pm= PMF.get().getPersistenceManager();
 
@@ -205,7 +205,12 @@ public class Customer extends User {
 	{
 		return this.lastName;
 	}
-	
+
+	@Override
+	public String getDisplayName()
+	{
+		return this.getFirstName()+" "+this.getLastName();
+	}
 	/**
 	 * @return loyalty points
 	 */
