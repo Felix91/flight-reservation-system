@@ -527,6 +527,7 @@ public class Flight extends SuperEntity{
 			Character col = seatObjs.get(i).getColumn();
 			seats[i]=row.toString()+" "+col;
 		}
+		flightAttributes.put("seatingArrangement",this.getSeatingArrangement().getHashMap());
 		flightAttributes.put("availableSeats",seats);
 		StringBuffer allowableMeals=new StringBuffer();
 		for(Meal m:this.getAllowableMeals())

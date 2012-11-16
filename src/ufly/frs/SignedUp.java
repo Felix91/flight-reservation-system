@@ -36,7 +36,7 @@ public class SignedUp extends UflyServlet {
 		 */
 		if(req.getSession().getAttribute("departopt")!=null )
 		{
-			resp.sendRedirect("/book");
+			resp.sendRedirect("/select");
 		}else{
 			resp.sendRedirect("/");
 		}
