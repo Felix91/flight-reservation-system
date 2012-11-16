@@ -17,7 +17,7 @@
 			  		<div class="row-fluid">
 		                <div class="span12">
 	                        <h2>Departure Flight Option</h2>
-	                        <form method="post" action="/select">
+	                        <form id="flightSelect" method="post" action="/select">
 							<input type="hidden" name="numPassengers" value="<%=request.getAttribute("numPassengers") %>">
 							<div class="row-fluid">
 								<div class="span10">
@@ -105,7 +105,7 @@
 									</table>
 								</div><!-- span10 -->
 							</div><!--/span row-->
-							<% if(request.getAttribute("oneWayOrReturn")=="return"){%>
+							<% if(request.getAttribute("oneWayOrReturn").equals("return")){%>
 							<h2>Return Flight Option</h2>
 							
 	                    	<div class="row-fluid">
@@ -197,8 +197,23 @@
 	            			<%}//If returnFlight %>
 	            			<div class="row-fluid">
 								<div class="span10">
-									
-									<button class="btn pull-right" type="submit">TODO:use JS to make sure a flight is selected</button>
+									<div id="flightNotSelected" class="text-required pull-right" style="display:none">Please select a flight</div>
+									<button class="btn pull-right" type="submit">Select Flight(s)</button>
+									<script type="text/javascript">
+									$('#flightSelect').submit(function(){
+										
+										var departSelected = $('input[name="departopt"]:checked')!=[]
+										var returnSelected = true;
+										//if return opt exists but not selected
+										if( $('input[name="returnopt"]')!=[] && $('input[name="returnopt"]:checked')==[] )
+											var returnSelected = false;
+										if (departSelected && returnSelected){
+											$('#flightNotSelected').show()
+											return false
+										}return true
+										  
+									})
+									</script>
 								</div>
 							</div>
 	            			</form> <!-- Return flight option -->

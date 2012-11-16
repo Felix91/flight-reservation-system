@@ -15,6 +15,7 @@ import javax.servlet.http.HttpSession;
 
 import ufly.entities.*;
 
+
 @SuppressWarnings("serial")
 public class Select extends UflyServlet {
 	public void doGet(HttpServletRequest req, HttpServletResponse resp)
@@ -51,11 +52,11 @@ public class Select extends UflyServlet {
 		
 		if(loggedInUser == null)
 		{
-		//DEBUGGING	--remove when done
-			//if no user logged in, log user in
-			login("email",req.getSession());
-		}else if (false){
-		//ENDDEBUGGING
+//		//DEBUGGING	--remove when done
+//			//if no user logged in, log user in
+//			login("email",req.getSession());
+//		}else if (false){
+//		//ENDDEBUGGING
 			HttpSession session= req.getSession();
 			session.setAttribute("departopt",req.getParameter("departopt") );
 			session.setAttribute("returnopt", req.getParameter("returnopt"));

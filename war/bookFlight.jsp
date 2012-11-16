@@ -66,6 +66,7 @@
 										<option value="business">Business</option>
 										<option value="economy">Economy</option>
 									</select>
+									<input type="hidden" name="selectedSeat" id="seatSelect">
 							</dl>
 							<input type="submit" class="btn btn-primary" value="Display Available Seats">							
 							</form>
@@ -87,11 +88,11 @@
 						}
 						
 						if( flight.equals("first") ){%>
-					 		<jsp:include page="/flightlayoutcustf.jsp"/>
+					 		<jsp:include page="/flightLayoutCustF.jsp"/>
 					<%	}else if( flight.equals("business")){%>
-							<jsp:include page="/flightlayoutcustb.jsp"/> 
+							<jsp:include page="/flightLayoutCustB.jsp"/> 
 					<% 	}else if( flight.equals("economy")){%>
-							<jsp:include page="/flightlayoutcust.jsp"/>
+							<jsp:include page="/flightLayoutCust.jsp"/>
 					<%  }%>								
 							
 						 
@@ -102,6 +103,12 @@
 					<a href="/searchresults.jsp"><button class="btn btn-small" type="button">Redo Search</button></a>
 			</div> <!-- span12 -->
 		</div> <!-- row fluid -->
+		<script>
+					$("button").click(function()
+						$(this).toggleClass("active");
+						$("#selectSeat").value($(this).value())
+					})
+		</script>
 	</div><!-- container -->
  	<div id="footer"><!-- start footer -->
     		<jsp:include page="/_footer" />

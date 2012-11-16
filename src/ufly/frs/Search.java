@@ -27,6 +27,8 @@ public class Search extends UflyServlet {
 		req.setAttribute("destination", req.getParameter("destination"));
 		req.setAttribute("departureDate", req.getParameter("departureDate"));
 		req.setAttribute("returnDate", req.getParameter("returnDate"));
+		String s = req.getParameter("oneWayOrReturn").toString();
+		s.toString();
 		req.setAttribute("oneWayOrReturn", req.getParameter("oneWayOrReturn"));
 		req.setAttribute("numPassengers", (String)req.getParameter("numPassengers"));
 		
@@ -112,11 +114,10 @@ public class Search extends UflyServlet {
 		}
 		private Long getTotalDuration(Vector<HashMap<String,Object>> arg)
 		{
-			long d=0;
-			Iterator<HashMap<String,Object>> it = arg.iterator();
-			while (it.hasNext())
-				d+=(Long)it.next().get("durationInMinutes");
-			return d;
+			
+			return ((Date)arg.lastElement().get("arrives")).getTime() - 
+				   ((Date)arg.firstElement().get("departs")).getTime();
+
 		}
 		
 	}
