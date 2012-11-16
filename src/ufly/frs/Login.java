@@ -41,7 +41,7 @@ public class Login extends UflyServlet {
 			login(email,req.getSession());
 			if(req.getSession().getAttribute("departopt")!=null )
 			{
-				resp.sendRedirect("/book");
+				resp.sendRedirect("/select");
 			}else{
 				resp.sendRedirect("/");
 			}

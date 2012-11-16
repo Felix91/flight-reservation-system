@@ -202,12 +202,12 @@
 									<script type="text/javascript">
 									$('#flightSelect').submit(function(){
 										
-										var departSelected = $('input[name="departopt"]:checked')!=[]
+										var departSelected = $('input[name="departopt"]:checked').length>0
 										var returnSelected = true;
 										//if return opt exists but not selected
 										if( $('input[name="returnopt"]')!=[] && $('input[name="returnopt"]:checked')==[] )
 											var returnSelected = false;
-										if (departSelected && returnSelected){
+										if (!(departSelected && returnSelected)){
 											$('#flightNotSelected').show()
 											return false
 										}return true

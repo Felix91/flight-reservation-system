@@ -88,13 +88,12 @@ public class Select extends UflyServlet {
 		for(Flight f:FlightList)
 		{
 			HashMap<String,Object> hm = f.getHashMap();
-			//add this flight for every passenger
-			for(int i=0;i<numPass;i++){
-				allFlightsInfo.add(hm);
-			}
+			allFlightsInfo.add(hm);
+
 		}
 		req.setAttribute("flightInfo", allFlightsInfo);
-		req.getRequestDispatcher("flightBook.jsp").forward(req, resp);
+		req.setAttribute("numPassengers", numPass);
+		req.getRequestDispatcher("bookFlightNew.jsp").forward(req, resp);
 
 	}
 	

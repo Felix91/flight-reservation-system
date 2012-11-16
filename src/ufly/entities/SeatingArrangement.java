@@ -1,5 +1,6 @@
 package ufly.entities;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Vector;
 
@@ -103,7 +104,18 @@ public class SeatingArrangement {
 	{
 		return this.numRows;
 	}
-	
+	/**
+	 * get a HashMap of the fields
+	 */
+	public HashMap<String,Integer> getHashMap(){
+		HashMap toRet=new HashMap() ;
+		toRet.put("numRows", this.numRows);
+		toRet.put("numColumns", this.numColumns);
+		toRet.put("numRowsFirstClass", this.numRowsFirstClass);
+		toRet.put("numRowsBusinessClass",this.numRowsBusinessClass);
+		toRet.put("numRowsEconomyClass", this.numRowsEconomyClass);
+		return toRet;
+	}
 	/**
 	 * @return the total number of columns
 	 */

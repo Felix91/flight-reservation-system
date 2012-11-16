@@ -1,11 +1,16 @@
-<%@ page import="java.util.*" %>
+<%@ page import="java.util.*"%>
+<%@ page import="java.text.SimpleDateFormat"%>
 
 <html>
-<head>	
-	<jsp:include page="/_header" />
-	<script>
+<head>
+<jsp:include page="/_header" />
+<link rel="stylesheet"
+	href="http://code.jquery.com/ui/1.9.1/themes/base/jquery-ui.css" />
+<script src="http://code.jquery.com/jquery-1.8.2.js"></script>
+<script src="http://code.jquery.com/ui/1.9.1/jquery-ui.js"></script>
+<script>
 		function popSubmit(formid){
-			var target = window.open('seatselect.jsp','tgt','width=1080,height=600,scrollbars=yes,status=yes');
+			var target = window.open('/seatSelect.jsp','tgt','width=1080,height=600,scrollbars=yes,status=yes');
 			target.focus();
 			//document.getElementById(formid).submit();
 			return false;
@@ -14,143 +19,266 @@
 			//var seatno = document.getElementById("seat").value;
 			document.getElementById('seatout').innerHTML="hai";
 		}
-	</script>	
-	
-
+		function openDialog(paxNo,flightNo){
+			$('#Flight'+paxNo+'_'+flightNo).dialog('open')
+		}
+		function seatSelect(seat,flight,pass){
+			seatName="Seat"+seat+"Flight"+flight
+			$('[name="'+seatName+'"]').addClass('disabled');
+			
+			seatInputId="Seat"+pass+"_"+flight
+			$('#'+seatInputId).val(seat)
+			$('label[for="'+seatInputId+'"]').html(seat);
+			$('#Flight'+pass+'_'+flight).dialog('close')
+			$('[name="'+"SeatButton"+pass+"_"+flight+'"]').addClass('disabled');
+		}
+		function onFormSubmit()
+		{
+			var passengerNameFilled=true;
+			$("[name^=passengerName]").each(function(index){
+				if(passengerNameFilled){
+					passengerNameFilled=$(this).val()!=""
+				}
+			})
+			if(!passengerNameFilled){
+				$("#requiredError").html("Make sure all passengers are named")
+				return false
+			}
+			var seatSelected=true;
+			$('input[name^=Seat]').each(function(){
+				if(seatSelected){
+					seatSelected=$(this).val()!=""
+				}
+				
+			})
+			if(!seatSelected){
+				$("#requiredError").html("Select a seat for all flights")
+				return false
+			}
+			return true;
+		}
+		$(function(){
+			$('form').submit(onFormSubmit)
+		})
+	</script>
 </head>
 <body>
 	<jsp:include page="/_navbar" />
 	<div class="container">
 		<div class="row-fluid">
+		<form action="/createBooking" method=Post>
 			<div class="span12">
 				<h2>Booking Confirmation</h2>
-					<legend>Passenger1</legend>
-					<div class="row-fluid">
-						<div class="span4 well" style="min-height:400px;">
-							<h4>Departure Flight Options</h4>
-							<dl>
-								<dt>Flight Number</dt>
-								<dd>CA2012</dd>
-								<dt>Origin</dt>
-								<dd>Vancouver (YVR)</dd>
-								<dt>Destination</dt>
-								<dd>Toronto (YYZ)</dd>
-								<dt>Departure Date</dt>
-								<dd>19 Dec 2012</dd>
-								<dt>Departure Time</dt>
-								<dd>09:15</dd>
-								<dt>Arrival Time (destination time)</dt>
-								<dd>12:15</dd>												
-							</dl>
-						</div>
-						<div class="span4 well" style="min-height:400px;">
-						<h4>Return Flight Options</h4>
-							<dl>
-								<dt>Flight Number</dt>
-								<dd>CA2012</dd>
-								<dt>Origin</dt>
-								<dd>Vancouver (YVR)</dd>
-								<dt>Destination</dt>
-								<dd>Toronto (YYZ)</dd>
-								<dt>Departure Date</dt>
-								<dd>19 Dec 2012</dd>
-								<dt>Departure Time</dt>
-								<dd>09:15</dd>
-								<dt>Arrival Time (destination time)</dt>
-								<dd>12:15</dd>												
-							</dl>
-						</div>
-						<div class="span4 well" style="min-height:400px;">
-						<h4>In-Flight Options</h4>
-							 <!-- <form id="flightopt" action="seatselect.jsp" target="tgt"> --> 
-								<dl>																							
-									<dt>Seat Choice</dt>
-									<!--  <input type="text" class="disabled" value="haha">-->
-									<button type="button" class="btn btn-primary" onclick="popSubmit('flightopt')">Display Seats</button>		
-								</dl>		
-								
-								<input type="hidden" name="seat" value="">	
-								<!--  <button type="button" class="btn" onclick="seat()">SHOW THE VALUE</button>	
-								<p id="seatout">haha</p> -->											
-							<!--   </form> 						-->
-							
-							<dl>
-								<dt>Meal Preference</dt>
-									<select name="meal">
-										<option value="nopref">No Preference</option>
-										<option value="chicken">Chicken Rice</option>
-										<option value="beef">Beef Noodle</option>
-									</select>
-							</dl>
-							
-							
-						</div><!-- span 4 flight opt -->
-					</div><!-- rowfluid -->
-					
-					<div class="row-fluid">				
-					<legend>Passenger2</legend>
-					<div class="row-fluid">
-						<div class="span4 well" style="min-height:400px;">
-							<h4>Departure Flight Options</h4>
-							<dl>
-								<dt>Flight Number</dt>
-								<dd>CA2012</dd>
-								<dt>Origin</dt>
-								<dd>Vancouver (YVR)</dd>
-								<dt>Destination</dt>
-								<dd>Toronto (YYZ)</dd>
-								<dt>Departure Date</dt>
-								<dd>19 Dec 2012</dd>
-								<dt>Departure Time</dt>
-								<dd>09:15</dd>
-								<dt>Arrival Time (destination time)</dt>
-								<dd>12:15</dd>												
-							</dl>
-						</div>
-						<div class="span4 well" style="min-height:400px;">
-						<h4>Return Flight Options</h4>
-							<dl>
-								<dt>Flight Number</dt>
-								<dd>CA2012</dd>
-								<dt>Origin</dt>
-								<dd>Vancouver (YVR)</dd>
-								<dt>Destination</dt>
-								<dd>Toronto (YYZ)</dd>
-								<dt>Departure Date</dt>
-								<dd>19 Dec 2012</dd>
-								<dt>Departure Time</dt>
-								<dd>09:15</dd>
-								<dt>Arrival Time (destination time)</dt>
-								<dd>12:15</dd>												
-							</dl>
-						</div>
-						<div class="span4 well" style="min-height:400px;">
-						<h4>In-Flight Options</h4>
-							<form id="flightopt2" action="seatselect.jsp" target="tgt">
-								<dl>																							
-									<dt>Seat Choice</dt>
-									<button type="button" class="btn btn-primary" onclick="popSubmit('flightopt2')">Display Seats</button>		
-								</dl>
-								
-							</form>							
-							
-							<dl>
-								<dt>Meal Preference</dt>
-										<select name="meal">
-											<option value="nopref">No Preference</option>
-											<option value="chicken">Chicken Rice</option>
-											<option value="beef">Beef Noodle</option>
-										</select>
-							</dl>
-												
-						</div><!-- span 4 flight opt -->
+				<%
+					SimpleDateFormat dateFormat = new SimpleDateFormat("EEE, MMM d, yyyy");
+					SimpleDateFormat timeFormat = new SimpleDateFormat("HH:mm");
+					SimpleDateFormat fullDateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm");
+					Vector<HashMap> Flights = (Vector) request
+							.getAttribute("flightInfo");
+				%>
+				<input type="hidden" name="numberOfFlights" value="<%=Flights.size()%>">
+				<input type="hidden" name="numberOfPassengers" value="<%=(Integer) request
+							.getAttribute("numPassengers")%>">
+				<%
+					for (int numPax = 0; numPax < (Integer) request
+							.getAttribute("numPassengers"); numPax++) {
+				%>
+				<legend>
+					Passenger<%=numPax+1%></legend>
+				<div class="row-fluid">
+					<%
+						
+							for (int numFlight = 0; numFlight < Flights.size(); numFlight++) {
+								HashMap<String, Object> flight = Flights.get(numFlight);
+					%>
+					<div class="span4 well" style="min-height: 400px;">
+						<h4>Departure Flight Options</h4>
+						<input type="hidden" name="FlightNo<%=numPax%>_<%=numFlight%>" value="<%=(String) flight.get("flightNo") %>">
+						<input type="hidden" name="Date<%=numPax%>_<%=numFlight%>" value="<%=fullDateFormat.format((Date)flight.get("departs")) %>">
+						<input type="hidden" id="Seat<%=numPax%>_<%=numFlight%>" name="Seat<%=numPax%>_<%=numFlight%>" >
+						<dl>
+							<dt>Flight Number</dt>
+							<dd>
+								<%
+									out.print((String) flight.get("flightNo"));
+								%>
+							</dd>
+							<dt>Origin</dt>
+							<dd>
+								<%
+									out.print((String) flight.get("flightOrigin"));
+								%>
+							</dd>
+							<dt>Destination</dt>
+							<dd>
+								<%
+									out.print((String) flight.get("flightDestination"));
+								%>
+							</dd>
+							<dt>Departure Date</dt>
+							<dd><%=dateFormat.format((Date) flight.get("departs"))%></dd>
+							<dt>Departure Time</dt>
+							<dd><%=timeFormat.format((Date) flight.get("departs"))%></dd>
+							<dt>Arrival Time (destination time)</dt>
+							<dd><%=timeFormat.format((Date) flight.get("arrives"))%></dd>
+							<dt >Meal Preference</dt>
+							<dd>
+						    	<select name="meal<%=numPax%>_<%=numFlight%>">
+						    	<%
+						    		String[] allowableMeals=((String)flight.get("allowableMeals")).split("\\|");	
+						    		for(int j=0;j<allowableMeals.length;j++)
+						    		{
+						    			if(!allowableMeals[j].equals(""))
+						    			{
+						    	%>
+						    		<option value="<%=allowableMeals[j]%>"><%=allowableMeals[j]%></option>
+						    	<%
+						    			}
+						    		}
+						    	%>
+						    	</select>
+							</dd>
+							<dt>Seat Choice</dt>
+							<dd>
+							<label for="Seat<%=numPax%>_<%=numFlight%>">Please Choose a Seat </label>
+								<button type="button" name="SeatButton<%=numPax%>_<%=numFlight%>" class="btn btn-primary"
+									onclick='openDialog(<%=numPax%>,<%=numFlight%>)'>Display
+									Seats</button>
+							</dd>
+
+						</dl>
 					</div>
-			</div> <!-- span12 -->
-		</div> <!-- row fluid -->
-	</div> <!-- container -->
-	
-	<div id="footer"><!-- start footer -->
-    		<jsp:include page="/_footer" />
-    </div><!-- end footer -->
+
+					<%
+						}//foreach flight
+					%>
+
+					<div class="span4 well" style="min-height: 400px;">
+						<h4>In-Flight Options</h4>
+						<input type="hidden" name="seat" value="">
+						<dl>
+							<dt>Passenger Name</dt>
+							<dd><input name=passengerName<%=numPax %>> </dd>
+							
+						</dl>
+					</div>
+					<!-- span 4 flight opt -->
+				</div>
+				<!-- rowfluid -->
+				<%
+					}//for numPax
+				%>
+				<div id=requiredError class="text-required"></div>
+				<input type=submit value=submit>
+			</form>
+			</div>
+			<!-- row fluid -->
+			
+			<%
+				for (int numPax = 0; numPax < (Integer) request
+							.getAttribute("numPassengers"); numPax++) {
+							for (int numFlight = 0; numFlight < Flights.size(); numFlight++) {
+								HashMap<String, Object> flight = Flights.get(numFlight);
+					%>
+										<div id="Flight<%=numPax%>_<%=numFlight%>"
+							class="container-fluid seatDialog">
+							<div class="row-fluid">
+								<div class="span12">
+									<h2>Seat Selections</h2>
+									<button class="btn btn-mini btn-primary" type="button">&nbsp;</button>
+									First Class
+									<button class="btn btn-mini btn-info" type="button">&nbsp;</button>
+									Business Class
+									<button class="btn btn-mini btn-success" type="button">&nbsp;</button>
+									Economy Class
+									<button class="btn btn-mini btn-success disabled" type="button">&nbsp;</button>
+									Unavailable Seat
+									<hr />
+									<table class="table table-bordered table-condensed">
+										<%
+											int numRows = (Integer) ((HashMap) flight
+															.get("seatingArrangement")).get("numRows");
+													int numCols = (Integer) ((HashMap) flight
+															.get("seatingArrangement")).get("numColumns");
+													int numFirstClass = (Integer) ((HashMap) flight
+															.get("seatingArrangement"))
+															.get("numRowsFirstClass");
+													int numBusinessClass = (Integer) ((HashMap) flight
+															.get("seatingArrangement"))
+															.get("numRowsBusinessClass");
+													int numEconomyClass = (Integer) ((HashMap) flight
+															.get("seatingArrangement"))
+															.get("numRowsEconomyClass");
+
+													List availableSeats = Arrays.asList((String[]) flight
+															.get("availableSeats"));
+										%>
+										<thead>
+											<th>#</th>
+											<%
+												for (int row = 1; row <= numRows; row++) {
+											%>
+											<th><%=row%></th>
+											<%
+												}
+											%>
+										</thead>
+										<tbody>
+											<%
+												char a = (char) numCols;
+														a += 'A';
+														for (Character Col = 'A'; Col < a; Col++) {
+											%>
+											<tr>
+												<th><%=Col%></th>
+												<%
+												for (Integer row = 1; row <= numRows; row++) {
+													String flightClass;
+													if(row<=numFirstClass){
+														flightClass="btn-primary";
+													}else if (row<=(numFirstClass+numBusinessClass)){
+														flightClass="btn-info";
+													}else{
+														flightClass="btn-success";
+													}
+												%>
+												<td>
+													<button
+														class="btn btn-mini <%=flightClass %>
+												  		<%if (availableSeats.indexOf(row.toString() + " "
+																+ Col) < 0) {%>disabled<%}%>"
+														type="button"
+														name="Seat<%=row%> <%=Col%>Flight<%=numFlight%>"
+														onclick="seatSelect('<%=row%> <%=Col%>',<%=numFlight%>,<%=numPax %>)"
+														value="<%=row%> <%=Col%>">&nbsp;</button>
+												</td>
+												<%
+													}
+												%>
+											</tr>
+											<%
+												}
+											%>
+										</tbody>
+									</table>
+								</div>
+							</div>
+						</div>
+						<script>
+							$(function(){
+								$(".seatDialog").dialog({autoOpen:false,modal:true,minWidth:1000,minHeight:500})
+							})
+							</script>
+			<%		}
+				}
+			%>
+		</div>
+		<!-- container -->
+
+		<div id="footer">
+			<!-- start footer -->
+			<jsp:include page="/_footer" />
+		</div>
+		<!-- end footer -->
 </body>
 </html>
