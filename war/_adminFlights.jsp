@@ -28,7 +28,7 @@
 							out.println("<td>"+nextFlight.getDestination().getCity()+"</td>");
 							out.println("<td>"+nextFlight.getDeparture().toString()+"</td>");
 							out.println("<td>"+nextFlight.getArrival().toString()+"</td>");
-							out.println("<td><a href=\"/adminProfile/editFlights?flightKey="+ nextFlight.getFlightNumber() + "\">Edit</a></td>");
+							out.println("<td><a href=\"/adminProfile/editFlights?flightKey="+ nextFlight.getKey().getName() + "\">Edit</a></td>");
 							out.println("</tr>");
 						}
 						%>

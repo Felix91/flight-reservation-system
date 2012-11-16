@@ -31,7 +31,7 @@ public class AdminFlights extends UflyServlet {
 			
 			Flight editFlight = Flight.getFlight(flightKey);
 			if(editFlight != null){
-				//req.setAttribute("editFlight", editFlight);
+				req.setAttribute("editFlight", editFlight);
 				req.getRequestDispatcher("/adminFlights_edit.jsp")
 					.include(req,resp);
 			}
