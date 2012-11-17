@@ -295,10 +295,11 @@ public class FlightBooking extends SuperEntity {
 	/**
 	 * @return the customer object
 	 */
-	/*public Customer getBookedBy()
+	public Customer getBookedBy()
 	{
-		return this.bookedBy;
-	}*/
+		Customer c = Customer.getCustomer(this.bookedBy);
+		return c;
+	}
 	
 	/**
 	 * @return the flight booked by customer
