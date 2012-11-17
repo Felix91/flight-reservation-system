@@ -266,6 +266,22 @@ public class FlightBooking extends SuperEntity {
 		}
 	}
 	
+	/**
+	 * Check in FlightBooking
+	 */
+	public void checkIn()
+	{
+		PersistenceManager pm= PMF.get().getPersistenceManager();
+		try
+		{
+			this.checkedIn = true;
+			pm.makePersistent(this);
+		}finally
+		{
+			pm.close();
+		}
+	}
+	
 	
 	/*------------ACCESSORS--------------*/
 	/**
@@ -316,6 +332,14 @@ public class FlightBooking extends SuperEntity {
 		return this.mealChoice;
 	}
 	
+	/**
+	 * @return the checked-in status
+	 */
+	public boolean getCheckedIn()
+	{
+		return this.checkedIn;
+	}
+	
 	/*------------ VARIABLES ------------*/
 	@PrimaryKey
 	@Persistent(valueStrategy = IdGeneratorStrategy.IDENTITY) // automatically generate a numeric ID
@@ -330,5 +354,7 @@ public class FlightBooking extends SuperEntity {
 	private Key bookedSeat;				// The FlightBooking's booked seat
 	@Persistent
 	private Meal mealChoice;				// The FlightBooking's meal choice
+	@Persistent
+	private boolean checkedIn;
 	
 }
