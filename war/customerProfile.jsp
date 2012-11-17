@@ -57,7 +57,7 @@
               <div class="span4">
                   <ul class="unstyled">
                   	<li><h4><a href="#">Modify Flight</a></h4></li>
-                    <li><h4><a href="#">View More Flights</a></h4></li>
+                    <li><h4><a href="/customerFlightbookings">View More Flights</a></h4></li>
                     <li><h4><a href="#">Print</a></h4></li>
                   </ul>
               </div>
