@@ -30,6 +30,15 @@ public class SignedUp extends UflyServlet {
 		}
 		User newUser = new Customer(emailAddr, newPw,firstName,lastName); 
 		newUser.login(req.getSession());
-		resp.sendRedirect("/");
+		/**
+		 * if we interupted a booking to create a user, resume booking
+		 * else redirect to homepage
+		 */
+		if(req.getSession().getAttribute("departopt")!=null )
+		{
+			resp.sendRedirect("/select");
+		}else{
+			resp.sendRedirect("/");
+		}
 	}
 }

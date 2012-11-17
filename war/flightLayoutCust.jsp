@@ -1,6 +1,6 @@
 
 	<table class="table table-bordered table-condensed">
-		<thead> <!-- Boeing 777 -->
+		<thead id = "b777economy"> <!-- Boeing 777 economy -->
 			<tr>
 				<th>#</th>
 				<th>1</th>
@@ -19,29 +19,29 @@
 		<tbody>
 			<tr>
 				<th>J</th>
-				<td>1</td>
-				<td>2</td>
-				<td>3</td>
-				<td>4</td>
-				<td>5</td>
-				<td>6</td>
-				<td>7</td>
-				<td>8</td>
-				<td>9</td>
-				<td>10</td>
+				<td><button class="btn btn-mini btn-success" type="button">Available</button></td>
+				<td><button class="btn btn-mini btn-success" type="button">Available</button></td>
+				<td><button class="btn btn-mini btn-success" type="button">Available</button></td>
+				<td><button class="btn btn-mini btn-success" type="button">Available</button></td>
+				<td><button class="btn btn-mini btn-success" type="button">Available</button></td>
+				<td><button class="btn btn-mini btn-success" type="button">Available</button></td>
+				<td><button class="btn btn-mini btn-success" type="button">Available</button></td>
+				<td><button class="btn btn-mini btn-success" type="button">Available</button></td>
+				<td><button class="btn btn-mini btn-success" type="button">Available</button></td>
+				<td><button class="btn btn-mini btn-success" type="button">Available</button></td>
 			</tr>
 			<tr>
 				<th>H</th>
-				<td>1</td>
-				<td>2</td>
-				<td>3</td>
-				<td>4</td>
-				<td>5</td>
-				<td>6</td>
-				<td>7</td>
-				<td>8</td>
-				<td>9</td>
-				<td>10</td>
+				<td><button class="btn btn-mini btn-success" type="button">Available</button></td>
+				<td><button class="btn btn-mini btn-success" type="button">Available</button></td>
+				<td><button class="btn btn-mini btn-success" type="button">Available</button></td>
+				<td><button class="btn btn-mini btn-success" type="button">Available</button></td>
+				<td><button class="btn btn-mini btn-success" type="button">Available</button></td>
+				<td><button class="btn btn-mini btn-success" type="button">Available</button></td>
+				<td><button class="btn btn-mini btn-success" type="button">Available</button></td>
+				<td><button class="btn btn-mini btn-success" type="button">Available</button></td>
+				<td><button class="btn btn-mini btn-success" type="button">Available</button></td>
+				<td><button class="btn btn-mini btn-success" type="button">Available</button></td>
 			</tr>
 			<tr>
 				<td>Walkway</td>
@@ -49,68 +49,68 @@
 			</tr>
 			<tr>
 				<th>G</th>
-				<td>1</td>
-				<td>2</td>
-				<td>3</td>
-				<td>4</td>
-				<td>5</td>
-				<td>6</td>
-				<td>7</td>
-				<td>8</td>
-				<td>9</td>
-				<td>10</td>
+				<td><button class="btn btn-mini btn-success" type="button">Available</button></td>
+				<td><button class="btn btn-mini btn-success" type="button">Available</button></td>
+				<td><button class="btn btn-mini btn-success" type="button">Available</button></td>
+				<td><button class="btn btn-mini btn-success" type="button">Available</button></td>
+				<td><button class="btn btn-mini btn-success" type="button">Available</button></td>
+				<td><button class="btn btn-mini btn-success" type="button">Available</button></td>
+				<td><button class="btn btn-mini btn-success" type="button">Available</button></td>
+				<td><button class="btn btn-mini btn-success" type="button">Available</button></td>
+				<td><button class="btn btn-mini btn-success" type="button">Available</button></td>
+				<td><button class="btn btn-mini btn-success" type="button">Available</button></td>
 			</tr>
 			<tr>
 				<th>F</th>
-				<td>1</td>
-				<td>2</td>
-				<td>3</td>
-				<td>4</td>
-				<td>5</td>
-				<td>6</td>
-				<td>7</td>
-				<td>8</td>
-				<td>9</td>
-				<td>10</td>
+				<td><button class="btn btn-mini btn-success" type="button">Available</button></td>
+				<td><button class="btn btn-mini btn-success" type="button">Available</button></td>
+				<td><button class="btn btn-mini btn-success" type="button">Available</button></td>
+				<td><button class="btn btn-mini btn-success" type="button">Available</button></td>
+				<td><button class="btn btn-mini btn-success" type="button">Available</button></td>
+				<td><button class="btn btn-mini btn-success" type="button">Available</button></td>
+				<td><button class="btn btn-mini btn-success" type="button">Available</button></td>
+				<td><button class="btn btn-mini btn-success" type="button">Available</button></td>
+				<td><button class="btn btn-mini btn-success" type="button">Available</button></td>
+				<td><button class="btn btn-mini btn-success" type="button">Available</button></td>
 			</tr>
 			<tr>
 				<th>E</th>
-				<td>1</td>
-				<td>2</td>
-				<td>3</td>
-				<td>4</td>
-				<td>5</td>
-				<td>6</td>
-				<td>7</td>
-				<td>8</td>
-				<td>9</td>
-				<td>10</td>
+				<td><button class="btn btn-mini btn-success" type="button">Available</button></td>
+				<td><button class="btn btn-mini btn-success" type="button">Available</button></td>
+				<td><button class="btn btn-mini btn-success" type="button">Available</button></td>
+				<td><button class="btn btn-mini btn-success" type="button">Available</button></td>
+				<td><button class="btn btn-mini btn-success" type="button">Available</button></td>
+				<td><button class="btn btn-mini btn-success" type="button">Available</button></td>
+				<td><button class="btn btn-mini btn-success" type="button">Available</button></td>
+				<td><button class="btn btn-mini btn-success" type="button">Available</button></td>
+				<td><button class="btn btn-mini btn-success" type="button">Available</button></td>
+				<td><button class="btn btn-mini btn-success" type="button">Available</button></td>
 			</tr>
 			<tr>
 				<th>D</th>
-				<td>1</td>
-				<td>2</td>
-				<td>3</td>
-				<td>4</td>
-				<td>5</td>
-				<td>6</td>
-				<td>7</td>
-				<td>8</td>
-				<td>9</td>
-				<td>10</td>
+				<td><button class="btn btn-mini btn-success" type="button">Available</button></td>
+				<td><button class="btn btn-mini btn-success" type="button">Available</button></td>
+				<td><button class="btn btn-mini btn-success" type="button">Available</button></td>
+				<td><button class="btn btn-mini btn-success" type="button">Available</button></td>
+				<td><button class="btn btn-mini btn-success" type="button">Available</button></td>
+				<td><button class="btn btn-mini btn-success" type="button">Available</button></td>
+				<td><button class="btn btn-mini btn-success" type="button">Available</button></td>
+				<td><button class="btn btn-mini btn-success" type="button">Available</button></td>
+				<td><button class="btn btn-mini btn-success" type="button">Available</button></td>
+				<td><button class="btn btn-mini btn-success" type="button">Available</button></td>
 			</tr>
 			<tr>
 				<th>C</th>
-				<td>1</td>
-				<td>2</td>
-				<td>3</td>
-				<td>4</td>
-				<td>5</td>
-				<td>6</td>
-				<td>7</td>
-				<td>8</td>
-				<td>9</td>
-				<td>10</td>
+				<td><button class="btn btn-mini btn-success" type="button">Available</button></td>
+				<td><button class="btn btn-mini btn-success" type="button">Available</button></td>
+				<td><button class="btn btn-mini btn-success" type="button">Available</button></td>
+				<td><button class="btn btn-mini btn-success" type="button">Available</button></td>
+				<td><button class="btn btn-mini btn-success" type="button">Available</button></td>
+				<td><button class="btn btn-mini btn-success" type="button">Available</button></td>
+				<td><button class="btn btn-mini btn-success" type="button">Available</button></td>
+				<td><button class="btn btn-mini btn-success" type="button">Available</button></td>
+				<td><button class="btn btn-mini btn-success" type="button">Available</button></td>
+				<td><button class="btn btn-mini btn-success" type="button">Available</button></td>
 			</tr>
 			<tr>
 				<td>Walkway</td>
@@ -118,29 +118,29 @@
 			</tr>
 			<tr>
 				<th>B</th>
-				<td>1</td>
-				<td>2</td>
-				<td>3</td>
-				<td>4</td>
-				<td>5</td>
-				<td>6</td>
-				<td>7</td>
-				<td>8</td>
-				<td>9</td>
-				<td>10</td>
+				<td><button class="btn btn-mini btn-success" type="button">Available</button></td>
+				<td><button class="btn btn-mini btn-success" type="button">Available</button></td>
+				<td><button class="btn btn-mini btn-success" type="button">Available</button></td>
+				<td><button class="btn btn-mini btn-success" type="button">Available</button></td>
+				<td><button class="btn btn-mini btn-success" type="button">Available</button></td>
+				<td><button class="btn btn-mini btn-success" type="button">Available</button></td>
+				<td><button class="btn btn-mini btn-success" type="button">Available</button></td>
+				<td><button class="btn btn-mini btn-success" type="button">Available</button></td>
+				<td><button class="btn btn-mini btn-success" type="button">Available</button></td>
+				<td><button class="btn btn-mini btn-success" type="button">Available</button></td>
 			</tr>
 			<tr>
 				<th>A</th>
-				<td>1</td>
-				<td>2</td>
-				<td>3</td>
-				<td>4</td>
-				<td>5</td>
-				<td>6</td>
-				<td>7</td>
-				<td>8</td>
-				<td>9</td>
-				<td>10</td>
+				<td><button class="btn btn-mini btn-success" type="button">Available</button></td>
+				<td><button class="btn btn-mini btn-success" type="button">Available</button></td>
+				<td><button class="btn btn-mini btn-success" type="button">Available</button></td>
+				<td><button class="btn btn-mini btn-success" type="button">Available</button></td>
+				<td><button class="btn btn-mini btn-success" type="button">Available</button></td>
+				<td><button class="btn btn-mini btn-success" type="button">Available</button></td>
+				<td><button class="btn btn-mini btn-success" type="button">Available</button></td>
+				<td><button class="btn btn-mini btn-success" type="button">Available</button></td>
+				<td><button class="btn btn-mini btn-success" type="button">Available</button></td>
+				<td><button class="btn btn-mini btn-success" type="button">Available</button></td>
 			</tr>
 		</tbody>
 	</table>

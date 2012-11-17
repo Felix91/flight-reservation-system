@@ -1,4 +1,5 @@
 <%@ page import="java.util.*" %>
+<%@ page import="java.text.SimpleDateFormat" %>
 
 <html>
 <head>	
@@ -9,31 +10,62 @@
 	<div class="container-fluid">
 		<div id="content"><!-- start content -->
 			<!-- Add content here -->
-    		<%	Vector<HashMap> flights=(Vector)request.getAttribute("flightInfo");
-    			for(int i=0;i<flights.size();i++){
-    				HashMap<String,Object>flight=flights.get(i);
-    			
-    		%>
-    		FlightNo=<%=(String)flight.get("flightNo")%><br>
-    		<input type="hidden" name="flightNo[<%=i %>]" value=<%=(String)flight.get("flightNo") %>>
-    		Date=<%=(Date)flight.get("Date")%><br>
-    		<input type="hidden" name="Date[<%=i %>]" value=<%=(Date)flight.get("Date") %>>
-    		
-    		PassName=<input name="PassName[<%=i %>]" >
-			
-    		
-    		<select name="seat[<%=i %>]">
-    		<%
-    				String[] seats=(String[])flight.get("seats");
-	    			for(int j=0;j<seats.length;j++)
-	    			{
-	    	%>
-	    			<option value="<%=seats[j] %>"><%=seats[j] %></option>
-	    	<%		
+    		<form action="/createBooking" method="post">
+	    		
+	    		<%	Vector<HashMap> flights=(Vector)request.getAttribute("flightInfo");
+	    		%>
+	    		<input type="hidden" name="numberOfFlights" value="<%=flights.size()%>">
+	    		<%	SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm");
+					
+	    			for(int i=0;i<flights.size();i++){
+	    				HashMap<String,Object>flight=flights.get(i);
+	    			
+	    		%>
+	    		
+	    		<b>FlightNo=<%=(String)flight.get("flightNo")%></b><br>
+	    		<input type="hidden" name="flightNo[<%=i %>]" value="<%=(String)flight.get("flightNo") %>">
+	    		Date=<%=dateFormat.format(flight.get("departs"))%><br>
+	    		<input type="hidden" name="Date[<%=i %>]" value="<%=dateFormat.format((Date)flight.get("departs")) %>" >
+	    		
+	    		PassName=<input name="PassName[<%=i %>]" >
+				<br>
+	    		SeatNo.=<select name="seat[<%=i %>]">
+	    		<%
+	    				String[] seats=(String[])flight.get("availableSeats");
+		    			for(int j=0;j<seats.length;j++)
+		    			{
+		    	%>
+		    			<option value="<%=seats[j] %>"><%=seats[j] %></option>
+		    	<%		
+		    			}
+		    	%>
+		    	</select>
+		    	<br>
+		    	Meal=<select name="meal[<%=i %>]">
+		    	<%
+		    		String[] allowableMeals=((String)flight.get("allowableMeals")).split("\\|");	
+		    		for(int j=0;j<allowableMeals.length;j++)
+		    		{
+		    			if(!allowableMeals[j].equals(""))
+		    			{
+		    	%>
+		    		<option value="<%=allowableMeals[j]%>"><%=allowableMeals[j]%></option>
+		    	<%
+		    			}
+		    		}
+		    	%>
+		    	</select>
+		    	
+		    	<br>
+		    	<%		
 	    			}
-    			}
-    		%>
-    		</select>
+	    		%>
+	    		<label>
+	    			CreditCardNumber
+		    		<input name=creditCard>
+	    		</label>
+	    		<input type="submit" value="Submit">
+			</form>    		
     	</div><!-- end content -->
     
     	<div id="footer"><!-- start footer -->

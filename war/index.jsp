@@ -17,60 +17,65 @@
           			<div class="row-fluid">
                     	<div class="span7">
                             <h2>Search for Flights</h2>
-                      		<form class="form-horizontal" action="/search" method="post">
+                      		<form id="flightSearch"class="form-horizontal" action="/search" method="post">
 	                        	<div class="control-group">
-	                            	<label class="control-label" for="in_from">From</label>
+	                            	<label class="control-label" for="in_from">From *</label>
 	                            	<div class="controls">
-	                                	<input name="origin" type="text" id="in_from" placeholder="Enter your Departure City">
+	                                	<input name="origin"  class="required" type="text" id="in_from" placeholder="Enter your Departure City">
 	                            	</div>
 	                        	</div>
 	                        	<div class="control-group">
-	                            	<label class="control-label" for="in_to">To</label>
+	                            	<label class="control-label" for="in_to">To *</label>
 	                            	<div class="controls">
-	                                	<input name="destination" type="text" id="in_to" placeholder="Enter your Destination City">
+	                                	<input name="destination" class="required" type="text" id="in_to" placeholder="Enter your Destination City">
 	                            	</div>
 	                        	</div>
 	                        	<div class="control-group">
-	                            	<label class="control-label" for="in_depart">Date of Departure</label>
+	                            	<label class="control-label" for="in_depart">Date of Departure *</label>
 	                            	<div class="controls">
-	                               		<input name="departureDate" type="text" id="in_depart" placeholder="Enter Date of Departure">
+	                               		<input name="departureDate" class="required" type="text" id="in_depart" placeholder="Enter Date of Departure">
 	                               		<script>
                                         	$('#in_depart').datepicker({
        		                                	format: 'mm-dd-yyyy'
- 	                                    	});     
+ 	                                    	}).on('changeDate', function(ev){								
+												$('#in_depart').datepicker('hide');
+											});     
                                         </script>
 	                           		</div>
 	                        	</div>
-	                        	<div class="control-group">
-	                            	<label class="control-label" for="in_return">Date of Return</label>
+	                        	<div class="control-group" id="returnDate">
+	                            	<label class="control-label" for="in_return">Date of Return *</label>
 	                            	<div class="controls">
-	                                	<input name="returnDate" type="text" id="in_return" placeholder="Enter Date of Return">
+	                                	<input name="returnDate" class="required" type="text" id="in_return" placeholder="Enter Date of Return">
 	                                	<script>
                                         	$('#in_return').datepicker({
        		                                	format: 'mm-dd-yyyy'
- 	                                    	});     
+ 	                                    	}).on('changeDate', function(ev){								
+												$('#in_return').datepicker('hide');
+											});      
                                         </script>
 	                            	</div>
 	                        	</div>
 	                        	<div class="control-group">
-	                            	<label class="control-label" for="in_psgr">Number of Passangers</label>
+	                            	<label class="control-label" for="in_psgr">Number of Passangers *</label>
 	                            	<div class="controls">
-	                                	<input name="numPax" type="text" id="in_psgr" placeholder="Number of Passangers">
+	                                	<input name="numPassengers" class="required" type="text" id="in_psgr" placeholder="Number of Passangers">
 	                            	</div>
 	                        	</div>
 	                        	<div class="control-group">
 	                            	<div class="controls">
 	                                	<label class="radio">
-	                                    	<input name="directOrConnect" type="radio" name="flightOpt" value="direct" checked> Direct Flight
+	                                    	<input name="oneWayOrReturn" type="radio" name="flightOpt" value="oneWay" > One Way
 	                                	</label>
 	                                	<label class="radio">
-	                                    	<input name="directOrConnect" type="radio" name="flightOpt" value="connect"> Connecting Flight
+	                                    	<input name="oneWayOrReturn" type="radio" name="flightOpt" value="return" checked> Return
 	                                	</label>
+	                                	Get JS to make sure required fields are populated
 	                                	<button type="submit" class="btn">Search for Flights</button>
 	                            	</div>
 	                        	</div>
                     	</form> <!-- Close the form -->
-                    
+
                  	</div><!--/span7-->
                     <div class="span5">
                     	<h2>Promotions</h2>

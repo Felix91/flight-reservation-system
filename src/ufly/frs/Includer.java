@@ -27,7 +27,8 @@ public class Includer extends UflyServlet {
 			User u = getLoggedInUser(req.getSession());
 			if ( u != null)
 			{
-				req.setAttribute("userEmailAddress", u.getEmailAddr());
+				String name=u.getDisplayName();
+				req.setAttribute("userName", name);
 			}
 			req.getRequestDispatcher("/_navBar.jsp")
 				.include(req,resp);

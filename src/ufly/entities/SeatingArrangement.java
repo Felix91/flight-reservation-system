@@ -1,5 +1,6 @@
 package ufly.entities;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Vector;
 
@@ -72,7 +73,22 @@ public class SeatingArrangement {
 		//System.out.println("Number of elements in Seats: " + this.seats.size());
 	}
 	/*------------ACCESSORS--------------*/
-	
+	/**
+	 * 
+	 * @return return the set of seats that are available
+	 */
+	public Vector<Seat> getAvailableSeats()
+	{
+		Vector<Seat> toRet=new Vector<Seat>();
+		for(Seat seat : getSeats())
+		{
+			if (seat.getFlightBooking() == null)
+			{
+				toRet.add(seat);
+			}
+		}
+		return toRet;
+	}
 	/**
 	 * @return the key of seating arrangement
 	 */
@@ -88,7 +104,18 @@ public class SeatingArrangement {
 	{
 		return this.numRows;
 	}
-	
+	/**
+	 * get a HashMap of the fields
+	 */
+	public HashMap<String,Integer> getHashMap(){
+		HashMap toRet=new HashMap() ;
+		toRet.put("numRows", this.numRows);
+		toRet.put("numColumns", this.numColumns);
+		toRet.put("numRowsFirstClass", this.numRowsFirstClass);
+		toRet.put("numRowsBusinessClass",this.numRowsBusinessClass);
+		toRet.put("numRowsEconomyClass", this.numRowsEconomyClass);
+		return toRet;
+	}
 	/**
 	 * @return the total number of columns
 	 */
@@ -120,7 +147,35 @@ public class SeatingArrangement {
 	{
 		return this.numRowsEconomyClass;
 	}
-	
+	/**
+	 * get the flight class of seat
+	 * @param seat
+	 * @return the flight class of seat
+	 */
+	public FlightClass getFlightClass(Seat seat)
+	{
+		int seatrow=seat.getRowNumber();
+		int curRow=this.getNumRowsFirstClass();
+		if (seatrow<=curRow){
+			return FlightClass.first;
+		}
+		curRow+=this.getNumRowsBusinessClass();
+		if(seatrow <= curRow){
+			return FlightClass.business;
+		}
+		return FlightClass.economy;
+	}
+	/**
+	 * return an individual seat.
+	 * @param row
+	 * @param col
+	 * @return
+	 */
+	public Seat getSeatByRowCol(Integer row,Character col)
+	{
+		int index = (row-1)*this.getNumColumns()+Character.getNumericValue(col)-Character.getNumericValue('A');
+		return this.getSeats().get(index);
+	}
 	/**
 	 * Get seats vector
 	 * @return the vector containing all the Seats in this SeatingArrangement

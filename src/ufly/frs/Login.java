@@ -19,8 +19,9 @@ public class Login extends UflyServlet {
 		}
 		else if (getLoggedInUser(req.getSession())!=null)
 		{
-			resp.sendRedirect("/search");
+			resp.sendRedirect("/");
 		}
+		
 		req.setAttribute("date", new java.util.Date());
 		req.getRequestDispatcher("loginnew.jsp")
 			.forward(req,resp);
@@ -34,10 +35,16 @@ public class Login extends UflyServlet {
 		String Password= req.getParameter("password");
 		
 		Customer localUser = Customer.getCustomer(email);
+		
 		if (localUser != null && localUser.checkPassword(Password))
 		{
 			login(email,req.getSession());
-			resp.sendRedirect("/");
+			if(req.getSession().getAttribute("departopt")!=null )
+			{
+				resp.sendRedirect("/select");
+			}else{
+				resp.sendRedirect("/");
+			}
 		}
 		else
 		{

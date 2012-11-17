@@ -59,7 +59,13 @@ public abstract class User {
 		this.session.setAttribute("loggedInUser",null);
 		return this;
 	} 
-	
+	/**
+	 * get name to display on website
+	 */
+	public String getDisplayName()
+	{
+		return this.emailAddr;
+	}
 	/*------------ MODIFIERS ------------*/
 	// TODO: All modifiers: need to modify datastore object, not local copy
 	/**
@@ -68,7 +74,6 @@ public abstract class User {
 	 */
 	public void changePw(String newPw)
 	{
-		this.session=session;
 		this.setPassword(newPw);
 	}
 	

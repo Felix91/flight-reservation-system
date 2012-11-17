@@ -12,8 +12,8 @@
               
               <% String username; 
               boolean loggedin = false;
-              if (request.getAttribute("userEmailAddress")!= null)
-            	  { username = (String)request.getAttribute("userEmailAddress");
+              if (request.getAttribute("userName")!= null)
+            	  { username = (String)request.getAttribute("userName");
             	  	out.println("Logged in as " + username);
             	  	loggedin = true;
             	  }else{

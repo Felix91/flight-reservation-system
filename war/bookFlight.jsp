@@ -52,26 +52,50 @@
 						</div> <!-- span4 mid-->
 						<div class="span4 well" style="min-height:400px;">
 							<h4>In-Flight Options</h4>
+							<form name="flightopt" method="get" action="/bookflight.jsp">
 							<dl>																	
 								<dt>Meal Preference</dt>
-									<select>
-										<option>No Preference</option>
-										<option>Chicken Rice</option>
-										<option>Beef Noodle</option>
+									<select name="meal">
+										<option value="nopref">No Preference</option>
+										<option value="chicken">Chicken Rice</option>
+										<option value="beef">Beef Noodle</option>
 									</select>
 								<dt>Class</dt>
-									<select>
-										<option>First</option>
-										<option>Business</option>
-										<option>Economy</option>
+									<select name="flightclass" value="first">
+										<option value="first">First</option>
+										<option value="business">Business</option>
+										<option value="economy">Economy</option>
 									</select>
+									<input type="hidden" name="selectedSeat" id="seatSelect">
 							</dl>
+							<input type="submit" class="btn btn-primary" value="Display Available Seats">							
+							</form>
+							
 						</div> <!-- span4 right-->
 					</div> <!-- row fluid -->
+					
 					<div class="row-fluid">
 						<div class="span12 well">
 						<h3>Seat Preference</h3>
-						<jsp:include page="/flightLayoutCust.jsp"/>
+						
+					<%
+						String flight;
+						if(request.getParameter("flightclass") == null){
+							flight="first";
+						}
+						else{
+							flight = request.getParameter("flightclass");
+						}
+						
+						if( flight.equals("first") ){%>
+					 		<jsp:include page="/flightLayoutCustF.jsp"/>
+					<%	}else if( flight.equals("business")){%>
+							<jsp:include page="/flightLayoutCustB.jsp"/> 
+					<% 	}else if( flight.equals("economy")){%>
+							<jsp:include page="/flightLayoutCust.jsp"/>
+					<%  }%>								
+							
+						 
 						</div>
 					</div>
 					
@@ -79,6 +103,12 @@
 					<a href="/searchresults.jsp"><button class="btn btn-small" type="button">Redo Search</button></a>
 			</div> <!-- span12 -->
 		</div> <!-- row fluid -->
+		<script>
+					$("button").click(function()
+						$(this).toggleClass("active");
+						$("#selectSeat").value($(this).value())
+					})
+		</script>
 	</div><!-- container -->
  	<div id="footer"><!-- start footer -->
     		<jsp:include page="/_footer" />

@@ -135,7 +135,8 @@ public class Test extends HttpServlet{
 			response.getWriter().println("</ul>");
         		
 		}else{
-			new Flight(flightno, origin, destination, departure, arrival, mealTypes, aircraftModel);
+			
+			new Flight(flightno, origin, destination, departure, arrival, mealTypes, aircraftModel,37500);
 			
 			response.sendRedirect("/entityTest?test=Flight");
 		}

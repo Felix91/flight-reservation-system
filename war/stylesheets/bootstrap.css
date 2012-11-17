@@ -613,7 +613,9 @@ cite {
 .text-warning {
   color: #c09853;
 }
-
+.text-required{
+	color:red
+}
 .text-error {
   color: #b94a48;
 }

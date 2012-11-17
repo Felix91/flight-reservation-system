@@ -18,11 +18,20 @@ public class Search extends UflyServlet {
 	public void doGet(HttpServletRequest req, HttpServletResponse resp)
 			throws IOException ,ServletException
 	{
-		doPost(req,resp);
+		resp.sendRedirect("/");
 	}
 	public void doPost(HttpServletRequest req, HttpServletResponse resp)
 			throws IOException,ServletException {
 		//printParam(req,resp);
+		req.setAttribute("origin", req.getParameter("origin"));
+		req.setAttribute("destination", req.getParameter("destination"));
+		req.setAttribute("departureDate", req.getParameter("departureDate"));
+		req.setAttribute("returnDate", req.getParameter("returnDate"));
+		String s = req.getParameter("oneWayOrReturn").toString();
+		s.toString();
+		req.setAttribute("oneWayOrReturn", req.getParameter("oneWayOrReturn"));
+		req.setAttribute("numPassengers", (String)req.getParameter("numPassengers"));
+		
 		Date departureDate = null;
 		Airport origin = null;
 		//String directOrConnect = req.getParameter("directOrConnect");
@@ -105,11 +114,10 @@ public class Search extends UflyServlet {
 		}
 		private Long getTotalDuration(Vector<HashMap<String,Object>> arg)
 		{
-			long d=0;
-			Iterator<HashMap<String,Object>> it = arg.iterator();
-			while (it.hasNext())
-				d+=(Long)it.next().get("durationInMinutes");
-			return d;
+			
+			return ((Date)arg.lastElement().get("arrives")).getTime() - 
+				   ((Date)arg.firstElement().get("departs")).getTime();
+
 		}
 		
 	}

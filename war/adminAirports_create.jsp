@@ -16,11 +16,11 @@
 	        			<form action = "/airportTest" method="post">
 	        				<div class="control-group">
 		                    	<label class="control-label span2" for="city">city</label>
-								<input type="text" name="bookedBy">
+								<input type="text" name="city">
 							</div>
 							<div class="control-group">
-		                    	<label class="control-label span2" for="Callsign">Callsign</label>
-		                    	<input type="text" name="Callsign">
+		                    	<label class="control-label span2" for="callsign">callsign</label>
+		                    	<input type="text" name="callsign">
 		                    </div>
 							<input type="submit" value="Submit">
 						</form>

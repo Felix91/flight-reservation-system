@@ -17,7 +17,8 @@
 			  		<div class="row-fluid">
 		                <div class="span12">
 	                        <h2>Departure Flight Option</h2>
-	                        <form method="post" action="/book">
+	                        <form id="flightSelect" method="post" action="/select">
+							<input type="hidden" name="numPassengers" value="<%=request.getAttribute("numPassengers") %>">
 							<div class="row-fluid">
 								<div class="span10">
 									<table class="table table-striped">
@@ -46,12 +47,22 @@
 													<input type="radio" name="departopt" id="optionsRadios1" value="<% 
 														for(HashMap<String,Object> flight:trip){
 															out.print(flight.get("flightNo")+"_");
-															out.print(dateFormat.format(((Calendar)flight.get("departs")).getTime())+"|");
-														}%>" checked>
+															out.print(dateFormat.format(flight.get("departs"))+"|");
+														}%>" >
 												</label>
 												</td >
-												<td rowspan="<%out.print(stops);%>">
-													Price
+												<td rowspan="<%out.print(stops);%>">$
+													<%
+														Integer price=0;
+														for(HashMap<String,Object> flight:trip){
+															price+=(Integer)flight.get("price");
+														}
+														out.print(price/100);//Dollars
+														out.print(".");
+														if (price%100 <10)
+															out.print("0");
+														out.print(price%100);
+													%>
 												</td>
 												<td rowspan="<%out.print(stops);%>">
 													<%	
@@ -78,12 +89,12 @@
 														<td>
 															<%out.print((String)flight.get("flightOrigin"));%>
 															<br>
-															<% out.print(dateFormat.format(((Calendar)flight.get("departs")).getTime()));%>
+															<% out.print(dateFormat.format(flight.get("departs")));%>
 														</td>
 														<td>
 															<%out.print((String)flight.get("flightDestination"));%>
 															<br>
-															<% out.print(dateFormat.format(((Calendar)flight.get("arrives")).getTime()));%>
+															<% out.print(dateFormat.format(flight.get("arrives")));%>
 														</td>
 													<%if(i<trip.size()-1){ out.print("</tr>");}%>
 													<!-- this is the end of all the rows except the last row -->
@@ -94,7 +105,7 @@
 									</table>
 								</div><!-- span10 -->
 							</div><!--/span row-->
-							
+							<% if(request.getAttribute("oneWayOrReturn").equals("return")){%>
 							<h2>Return Flight Option</h2>
 							
 	                    	<div class="row-fluid">
@@ -111,6 +122,7 @@
 											</tr>
 										</thead>
 										<tbody>
+
 											<% 
 												trips=(Vector)request.getAttribute("returnTrips");
 												for(Vector<HashMap<String,Object>> trip:(Vector<Vector>)trips)
@@ -121,15 +133,25 @@
 											<tr>
 												<td rowspan="<%out.print(stops);%>" >
                                             	<label class="radio">
-													<input type="radio" name="departopt" id="optionsRadios1" value="<% 
+													<input type="radio" name="returnopt" id="optionsRadios1" value="<% 
 														for(HashMap<String,Object> flight:trip){
 															out.print(flight.get("flightNo")+"_");
-															out.print(dateFormat.format(((Calendar)flight.get("departs")).getTime())+"|");
-														}%>" checked>
+															out.print(dateFormat.format(flight.get("departs"))+"|");
+														}%>" >
 												</label>
 												</td >
 												<td rowspan="<%out.print(stops);%>">
-													Price
+													<%
+														Integer price=0;
+														for(HashMap<String,Object> flight:trip){
+															price+=(Integer)flight.get("price");
+														}
+														out.print(price/100);//Dollars
+														out.print(".");
+														if (price%100 <10)
+															out.print("0");
+														out.print(price%100);
+													%>
 												</td>
 												<td rowspan="<%out.print(stops);%>">
 													<%	
@@ -156,12 +178,12 @@
 														<td>
 															<%out.print((String)flight.get("flightOrigin"));%>
 															<br>
-															<% out.print(dateFormat.format(((Calendar)flight.get("departs")).getTime()));%>
+															<% out.print(dateFormat.format(flight.get("departs")));%>
 														</td>
 														<td>
 															<%out.print((String)flight.get("flightDestination"));%>
 															<br>
-															<% out.print(dateFormat.format(((Calendar)flight.get("arrives")).getTime()));%>
+															<% out.print(dateFormat.format(flight.get("arrives")));%>
 														</td>
 													<%if(i<trip.size()-1){ out.print("</tr>");}%>
 													<!-- this is the end of all the rows except the last row -->
@@ -172,10 +194,26 @@
 									</table>
 	                  			</div><!-- span10 -->
 	            			</div><!--/span row-->
-	            			
+	            			<%}//If returnFlight %>
 	            			<div class="row-fluid">
 								<div class="span10">
-									<button class="btn pull-right" type="submit">Book Flight</button>
+									<div id="flightNotSelected" class="text-required pull-right" style="display:none">Please select a flight</div>
+									<button class="btn pull-right" type="submit">Select Flight(s)</button>
+									<script type="text/javascript">
+									$('#flightSelect').submit(function(){
+										
+										var departSelected = $('input[name="departopt"]:checked').length>0
+										var returnSelected = true;
+										//if return opt exists but not selected
+										if( $('input[name="returnopt"]')!=[] && $('input[name="returnopt"]:checked')==[] )
+											var returnSelected = false;
+										if (!(departSelected && returnSelected)){
+											$('#flightNotSelected').show()
+											return false
+										}return true
+										  
+									})
+									</script>
 								</div>
 							</div>
 	            			</form> <!-- Return flight option -->

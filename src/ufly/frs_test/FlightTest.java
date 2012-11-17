@@ -26,7 +26,7 @@ public class FlightTest extends HttpServlet {
 		String allowableMealTypes = req.getParameter("allowableMealTypes");
 		String seatingArrangementLayout = req.getParameter("seatingArrangementLayout");		
 		
-		new Flight(flightNumber, origin,destination,departure,arrival,allowableMealTypes,seatingArrangementLayout); // TODO: create Customer once User has proven to work
+		new Flight(flightNumber, origin,destination,departure,arrival,allowableMealTypes,seatingArrangementLayout,37500); // TODO: create Customer once User has proven to work
 		// Flight's constructor will automaticallly make object persistent
 		/*PersistenceManager pm = PMF.get().getPersistenceManager();
 		try {
