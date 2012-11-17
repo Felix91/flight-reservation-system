@@ -12,7 +12,14 @@ import javax.servlet.http.HttpServletResponse;
 import ufly.entities.*;
 @SuppressWarnings("serial")
 public class BookCreate extends UflyServlet {
-
+	public void doGet(HttpServletRequest req, HttpServletResponse resp){
+		try {
+			resp.sendRedirect("/");
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
 	public void doPost(HttpServletRequest req, HttpServletResponse resp)
 			throws IOException,ServletException
 	{

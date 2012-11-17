@@ -37,6 +37,8 @@ public class Select extends UflyServlet {
 			session.setAttribute("returnopt", null);
 			session.setAttribute("numPass", null);
 			buildPage(departopt,returnopt,numPass,req,resp);
+		}else{
+			resp.sendRedirect("/");
 		}
 		
 	}
