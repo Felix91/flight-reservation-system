@@ -254,19 +254,32 @@ public class FlightBooking extends SuperEntity {
 	/**
 	 * @param newSeat	: new seat booking to change to
 	 */
-	/*public void changeSeat(Seat newSeat)
+	public void changeSeat(Seat newSeat)
 	{
 		PersistenceManager pm= PMF.get().getPersistenceManager();
 		try
 		{
-			this.bookedSeat=newSeat;
+			// Empty old Seat
+			Seat.getSeat(this.bookedSeat).clearFlightBooking();
+			
+			// Occupy new Seat
+			newSeat.setFlightBooking(this.getConfirmationNumber());
+			
+			// Update key for Seat
+			this.bookedSeat = newSeat.getKey();
+			
+			// Update Flight Class
+			Flight f = Flight.getFlight(this.bookedFlight);
+			FlightClass fclass = f.getSeatingArrangement().getFlightClass(newSeat);
+			this.bookedFlightClass = fclass;
+			
 			pm.makePersistent(this);
 		
 		}finally
 		{
 			pm.close();
 		}
-	}*/
+	}
 	
 	/**
 	 * @param newMeal	: new meal choice to change to
