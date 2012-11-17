@@ -153,6 +153,26 @@ public class FlightBooking extends SuperEntity {
 		return detached;
 	}
 	
+	public static FlightBooking getFlightBooking(Long confirmationNumber)
+	{
+		if (confirmationNumber == null)
+			return null;
+		PersistenceManager pm = PMF.get().getPersistenceManager();
+		FlightBooking fb, detached = null;
+		try{
+		    	fb = pm.getObjectById(FlightBooking.class, confirmationNumber);
+		        detached = pm.detachCopy(fb);
+		    }
+		catch( javax.jdo.JDOException e)
+		{
+			e.printStackTrace();
+		}
+		finally {
+			pm.close();
+		}
+		return detached;
+	}
+	
 	@Override
 	public String toString() 
 	{
