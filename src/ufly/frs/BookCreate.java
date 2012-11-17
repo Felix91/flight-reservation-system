@@ -26,7 +26,7 @@ public class BookCreate extends UflyServlet {
 		//printParam(req,resp)
 		SimpleDateFormat convertToDate = new SimpleDateFormat("yyyy/MM/dd HH:mm");
 		printParam(req,resp);
-//		String CreditCardNo = (String)req.getParameter("creditCard");
+		String creditCardNo = (String)req.getParameter("creditCard");
 		Integer numberOfFlights= Integer.parseInt(req.getParameter("numberOfFlights"));
 		Integer numberOfPassengers= Integer.parseInt(req.getParameter("numberOfPassengers"));
 		//check to see if there is a user logged in
@@ -49,7 +49,7 @@ public class BookCreate extends UflyServlet {
 				Date departureDate = convertToDate.parse(departureStr, new ParsePosition(0));
 				Flight f=Flight.getFlight(FlightNo, departureDate);
 				Seat seat=f.getSeatingArrangement().getSeatByRowCol(Integer.parseInt(seatStr[0]),seatStr[1].charAt(0) );
-				FlightBooking fb= new FlightBooking(localUser,f,seat,meal);
+				FlightBooking fb= new FlightBooking(localUser,f,seat,meal,creditCardNo);
 				//Now associate this flightbooking with a 
 				seat.setFlightBooking(fb.getConfirmationNumber());
 				f.addFlightBooking(fb.getConfirmationNumber());

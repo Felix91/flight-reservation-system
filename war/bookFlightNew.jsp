@@ -9,28 +9,21 @@
 <script src="http://code.jquery.com/jquery-1.8.2.js"></script>
 <script src="http://code.jquery.com/ui/1.9.1/jquery-ui.js"></script>
 <script>
-		function popSubmit(formid){
-			var target = window.open('/seatSelect.jsp','tgt','width=1080,height=600,scrollbars=yes,status=yes');
-			target.focus();
-			//document.getElementById(formid).submit();
-			return false;
-		}
-		function seat(){
-			//var seatno = document.getElementById("seat").value;
-			document.getElementById('seatout').innerHTML="hai";
-		}
+
 		function openDialog(paxNo,flightNo){
 			$('#Flight'+paxNo+'_'+flightNo).dialog('open')
 		}
 		function seatSelect(seat,flight,pass){
 			seatName="Seat"+seat+"Flight"+flight
-			$('[name="'+seatName+'"]').addClass('disabled');
+			$('[name="'+seatName+'"]').addClass('disabled').attr("onclick","");
 			
 			seatInputId="Seat"+pass+"_"+flight
 			$('#'+seatInputId).val(seat)
 			$('label[for="'+seatInputId+'"]').html(seat);
 			$('#Flight'+pass+'_'+flight).dialog('close')
-			$('[name="'+"SeatButton"+pass+"_"+flight+'"]').addClass('disabled');
+			
+			$('[name="'+"SeatButton"+pass+"_"+flight+'"]').addClass('disabled')
+			.attr("onclick","");
 		}
 		function onFormSubmit()
 		{
@@ -59,6 +52,8 @@
 		}
 		$(function(){
 			$('form').submit(onFormSubmit)
+			$('.disabled').attr("onclick","")
+	
 		})
 	</script>
 </head>
@@ -83,8 +78,7 @@
 					for (int numPax = 0; numPax < (Integer) request
 							.getAttribute("numPassengers"); numPax++) {
 				%>
-				<legend>
-					Passenger<%=numPax+1%></legend>
+				Passenger<%=numPax+1%>
 				<div class="row-fluid">
 					<%
 						
@@ -168,12 +162,36 @@
 				<%
 					}//for numPax
 				%>
+
+				</div>
+				<div id=PaymentInfo>
+					<label>
+						Credit Card:
+						<input type="text" name=CreditCard placeholder="Credit Card #">	
+					</label>
+					<label>
+						Expiration Date:
+						<input name="ccExpDate" placeholder="Expiration date">  
+					</label>
+					<label>
+						Card holder:
+						<input name="cardHolder" placeholder="Cardholder Name">
+					</label>
+					<label>
+						Address Line1:
+						<input name="addrLine1" placeholder="address line 1">
+					</label>
+					<label>
+						Address Line2:
+						<input name="addrLine2" placeholder="address line 2">
+					</label>
+				</div>
 				<div id=requiredError class="text-required"></div>
 				<input type=submit value=submit>
 			</form>
 			</div>
 			<!-- row fluid -->
-			
+			<div id=SeatSelectHiddenDiv>
 			<%
 				for (int numPax = 0; numPax < (Integer) request
 							.getAttribute("numPassengers"); numPax++) {
@@ -214,14 +232,12 @@
 															.get("availableSeats"));
 										%>
 										<thead>
-											<th>#</th>
-											<%
-												for (int row = 1; row <= numRows; row++) {
-											%>
-											<th><%=row%></th>
-											<%
-												}
-											%>
+											<tr>
+												<th>#</th>
+												<%for(int row=1; row<=numRows; row++){%>
+												<th><%=row%></th>
+												<%}%>
+											</tr>
 										</thead>
 										<tbody>
 											<%
@@ -268,10 +284,11 @@
 							$(function(){
 								$(".seatDialog").dialog({autoOpen:false,modal:true,minWidth:1000,minHeight:500})
 							})
-							</script>
+						</script>
 			<%		}
 				}
 			%>
+			</div>
 		</div>
 		<!-- container -->
 
