@@ -108,8 +108,9 @@ public class FlightBooking extends SuperEntity {
 	 * @param bookedSeat   seat that will be booked
 	 * @param mealChoice   choice of meal for this booking
 	 */
-	public FlightBooking(Customer bookedByUser,Flight flight, Seat bookedSeat,Meal mealChoice,String creditCardNo)
+	public FlightBooking(String passengerName, Customer bookedByUser,Flight flight, Seat bookedSeat,Meal mealChoice,String creditCardNo)
 	{
+		this.passengerName=passengerName;
 		this.bookedBy=bookedByUser.getEmailAddr();
 		this.bookedFlight=flight.getKey();
 		FlightClass fclass =flight.getSeatingArrangement().getFlightClass(bookedSeat);
@@ -203,38 +204,6 @@ public class FlightBooking extends SuperEntity {
 			pm.close();
 		}
 	}
-	/**
-	 * @param newCustomer	: new customer to change to
-	 */
-	/*public void changeCustomer(Customer newCustomer)
-	{
-		PersistenceManager pm= PMF.get().getPersistenceManager();
-		try
-		{
-			this.bookedBy=newCustomer;
-			pm.makePersistent(this);
-
-		}finally
-		{
-			pm.close();
-		}
-	}*/
-	/**
-	 * @param newFlight	: new flight booked to change to
-	 */
-	/*public void changeFlight(Flight newFlight)
-	{
-		PersistenceManager pm= PMF.get().getPersistenceManager();
-		try
-		{
-			this.bookedFlight=newFlight;
-			pm.makePersistent(this);
-
-		}finally
-		{
-			pm.close();
-		}
-	}*/
 
 	/**
 	 * @param newFlightClass	: new fight class to change to
@@ -379,6 +348,8 @@ public class FlightBooking extends SuperEntity {
 	@PrimaryKey
 	@Persistent(valueStrategy = IdGeneratorStrategy.IDENTITY) // automatically generate a numeric ID
 	private Key confirmationNumber;			// The FlightBooking's confirmation number. Note that since FlightBooking is a child class of entity relationships, its key must either be a Key or a Key value encoded as a string.
+	@Persistent
+	private String passengerName;
 	@Persistent
 	private String bookedBy;				// The FlightBooking's owner
 	@Persistent

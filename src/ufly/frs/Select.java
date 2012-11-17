@@ -87,16 +87,26 @@ public class Select extends UflyServlet {
 		}
 		
 		Vector<HashMap<String,Object>> allFlightsInfo = new Vector<HashMap<String,Object>>(); 
+		Integer priceInCents=0;
 		for(Flight f:FlightList)
 		{
 			HashMap<String,Object> hm = f.getHashMap();
 			allFlightsInfo.add(hm);
-
+			priceInCents=f.getPriceInCents();
 		}
+		String price="$"+new Integer(priceInCents/100).toString()+".";
+		priceInCents%=100;
+		if(priceInCents<10){
+			price+="0";
+		}
+		Customer loggedInUser = (Customer)getLoggedInUser(req.getSession());
+		price+=priceInCents.toString();
+		req.setAttribute("TotalCostString",price);
+		req.setAttribute("loyaltyPoints",loggedInUser.getLoyaltyPoints());
 		req.setAttribute("flightInfo", allFlightsInfo);
 		req.setAttribute("numPassengers", numPass);
 		req.getRequestDispatcher("bookFlightNew.jsp").forward(req, resp);
-
+		
 	}
 	
 	private void addFlightsToFlightList(List<Flight> flightList,

@@ -53,6 +53,8 @@
 		$(function(){
 			$('form').submit(onFormSubmit)
 			$('.disabled').attr("onclick","")
+			//for safety:
+			$('input[name^=Seat]').val("")
 	
 		})
 	</script>
@@ -165,6 +167,12 @@
 
 				</div>
 				<div id=PaymentInfo>
+					Total Cost= <%=request.getAttribute("TotalCostString") %><br>
+					User has $<%=((Integer)request.getAttribute("loyaltyPoints"))/10 %> worth of loyalty points how much would you like to use
+					<label>
+						Loyalty points:
+						<input type="text" name=loyaltyPointsUsed placeholder="Loyalty Points">
+					</label>
 					<label>
 						Credit Card:
 						<input type="text" name=CreditCard placeholder="Credit Card #">	
