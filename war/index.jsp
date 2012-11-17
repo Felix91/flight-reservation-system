@@ -37,7 +37,9 @@
 	                               		<script>
                                         	$('#in_depart').datepicker({
        		                                	format: 'mm-dd-yyyy'
- 	                                    	});     
+ 	                                    	}).on('changeDate', function(ev){								
+												$('#in_depart').datepicker('hide');
+											});     
                                         </script>
 	                           		</div>
 	                        	</div>
@@ -48,7 +50,9 @@
 	                                	<script>
                                         	$('#in_return').datepicker({
        		                                	format: 'mm-dd-yyyy'
- 	                                    	});     
+ 	                                    	}).on('changeDate', function(ev){								
+												$('#in_return').datepicker('hide');
+											});      
                                         </script>
 	                            	</div>
 	                        	</div>
