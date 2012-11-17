@@ -22,7 +22,7 @@ public class AirportTest extends HttpServlet {
 		throws IOException,ServletException
 	{
 		String city = req.getParameter("city");
-		String callsign = req.getParameter("Callsign");
+		String callsign = req.getParameter("callsign");
 		
 		new Airport(callsign, city);
 		resp.sendRedirect("/entityTest?test=Airport");
