@@ -132,6 +132,19 @@
 		<servlet-name>customerFlightbookings_show</servlet-name>
 		<url-pattern>/customerProfile/showFlightbookings</url-pattern>
 	</servlet-mapping>
+	<!-- CUSTOMER FLIGHTBOOKINGS CHECK IN PAGE -->
+	<servlet>
+		<servlet-name>customerFlightbookings_checkin</servlet-name>
+		<servlet-class>ufly.frs.CustomerFlightbookings</servlet-class>
+		<init-param>
+	            <param-name>action</param-name>
+	            <param-value>check-in</param-value>
+	    </init-param>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>customerFlightbookings_checkin</servlet-name>
+		<url-pattern>/customerProfile/checkinFlightbookings</url-pattern>
+	</servlet-mapping>
 	<!-- ADMIN PAGE -->
 	<servlet>
 		<servlet-name>adminProfile</servlet-name>

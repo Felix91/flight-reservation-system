@@ -29,9 +29,23 @@
 		                		out.print("</div>");
 							}
 						%>
-						<form action = "" method="post">
-						<input type="submit" value="Check In">
-						</form>
+						<%
+						// if customer has not checked in yet
+						if(request.getAttribute("showFlightbooking") != null){
+							FlightBooking showFlightbooking = (FlightBooking) request.getAttribute("showFlightbooking");
+							
+							if(!showFlightbooking.getCheckedIn() ){
+								out.print("<form action = \"/customerProfile/checkinFlightbookings\" method=\"post\">");
+								out.print("<input type=\"submit\" value=\"Check In\">");
+								out.print("<input type=\"hidden\" name=\"confirmationNumber\" value=\"" + showFlightbooking.getConfirmationNumber().getId() +  "\">");
+								out.print("</form>");
+							}else{
+								// else show manifest details
+								out.print("Already Checked In");
+							}
+						
+						}
+						%>
 					</div><!--/span row-->
 				</div><!--/span12-->
 			</div><!--/row-->

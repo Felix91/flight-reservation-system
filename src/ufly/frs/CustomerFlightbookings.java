@@ -53,7 +53,8 @@ public class CustomerFlightbookings extends UflyServlet {
 				}
 			}
 			
-		}else{
+		}
+		else{
 		
 		List<FlightBooking> allFlightbookings = FlightBooking.getAllFlightBookings();
 		req.setAttribute("allFlightbookings", allFlightbookings);
@@ -70,7 +71,22 @@ public class CustomerFlightbookings extends UflyServlet {
 		throws IOException,ServletException
 	{
 		resp.setContentType("text/plain");
+		String pageToInclude= getServletConfig().getInitParameter("action");
 		
+		if (pageToInclude.equals("check-in") )
+		{
+			String confirmationNumber = (String) req.getParameter("confirmationNumber");
+			Long confirmNumber = Long.valueOf(confirmationNumber);
+			if(confirmNumber != null){
+				FlightBooking showFlightbooking = FlightBooking.getFlightBooking(confirmNumber);
+				if(showFlightbooking != null){
+					showFlightbooking.checkIn();
+					req.setAttribute("showFlightbooking", showFlightbooking);
+					req.getRequestDispatcher("/customerFlightbookings_show.jsp")
+					.forward(req,resp);
+				}
+			}
+		}
 		
 	}
 }
