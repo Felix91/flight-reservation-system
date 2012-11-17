@@ -5,6 +5,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
+import java.util.StringTokenizer;
 import java.util.Vector;
 
 import javax.jdo.PersistenceManager;
@@ -134,7 +135,30 @@ public class Flight extends SuperEntity{
 
 		// Set available in-flight meals
 		//Format of the allowMeal vector input string: "CK-BF-PK"
+		StringTokenizer st = new StringTokenizer(allowableMealTypes, "-");
 		Vector<Meal> thisFlightMeals = new Vector<Meal>();
+		while (st.hasMoreTokens())
+		{
+	         String mealType = st.nextToken();
+	         if (mealType.equalsIgnoreCase("ck")) {
+					thisFlightMeals.add(Meal.chicken);
+				}
+				else if (mealType.equalsIgnoreCase("bf")) {
+					thisFlightMeals.add(Meal.beef);
+
+				}
+				else if (mealType.equalsIgnoreCase("pk")) {
+					thisFlightMeals.add(Meal.pork);
+				}
+				else if (mealType.equalsIgnoreCase("FH")) {
+					thisFlightMeals.add(Meal.fish);
+
+				}
+				else if (mealType.equalsIgnoreCase("VG")) {
+					thisFlightMeals.add(Meal.veggie);
+				}
+	     }
+		/*Vector<Meal> thisFlightMeals = new Vector<Meal>();
 		for (int i = 0; i < allowableMealTypes.length(); i+=2) {
 			String firstChar = Character.toString(allowableMealTypes.charAt(i));
 			String seconChar = Character.toString(allowableMealTypes.charAt(i+1));
@@ -158,7 +182,7 @@ public class Flight extends SuperEntity{
 				thisFlightMeals.add(Meal.veggie);
 			}
 
-		}
+		}*/
 		this.allowableMealTypes = thisFlightMeals;
 
 		// Create Flight's seating arrangement
@@ -518,6 +542,10 @@ public class Flight extends SuperEntity{
 		long durationInMins = (this.getArrival().getTime()-this.getDeparture().getTime())/1000/60;
 		flightAttributes.put("durationInMins", new Long(durationInMins));
 		
+		if (this.priceInCents == null)
+		{
+			this.changePrice(500000);
+		}
 		flightAttributes.put("price", new Integer(this.priceInCents));
 		Vector<Seat> seatObjs=this.getSeatingArrangement().getAvailableSeats();
 		String[] seats=new String[seatObjs.size()];
