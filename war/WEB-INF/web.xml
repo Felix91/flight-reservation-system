@@ -280,6 +280,15 @@
 		<servlet-name>adminAirports_create</servlet-name>
 		<url-pattern>/flightManagerProfile/addAirports</url-pattern>
 	</servlet-mapping>
+		<!-- ADMIN STATS PAGE -->
+	<servlet>
+		<servlet-name>adminStats</servlet-name>
+		<servlet-class>ufly.frs.AdminStats</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>adminStats</servlet-name>
+		<url-pattern>/_adminStats</url-pattern>
+	</servlet-mapping>
 	<!-- HEADER -->
 	<servlet>
 		<servlet-name>_header</servlet-name>

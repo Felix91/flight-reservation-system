@@ -21,9 +21,9 @@ public class AdminStats extends UflyServlet {
 		//	req.setAttribute("customerFirstName", loggedInCustomer.getFirstName());
 		//	req.setAttribute("customerLastName", loggedInCustomer.getLastName());
 			List<Airport> la = Airport.getAllAirports();
-			//req.setAttribute("allAirports", la);
-			//req.getRequestDispatcher("/_adminStats.jsp")
-			//	.include(req,resp);
+			req.setAttribute("allAirports", la);
+			req.getRequestDispatcher("/_adminStats.jsp")
+				.include(req,resp);
 		//}
 		//else{
 		//	resp.sendRedirect("/");
