@@ -21,6 +21,7 @@
 										<th>Flight Number</th>
 										<th>Flight Class</th>
 										<th>Seat</th>
+										<th>World Map</th>
 										<th>Action</th>
 									</tr>
 								</thead>
@@ -37,6 +38,9 @@
 											out.println("<td>"+nextFlightbooking.getBookedFlight().getFlightNumber()+"</td>");
 											out.println("<td>"+nextFlightbooking.getBookedFlightClass().toString()+"</td>");
 											out.println("<td>"+nextFlightbooking.getBookedSeat().toString()+"</td>");
+								            String originCoor = nextFlightbooking.getBookedFlight().getOrigin().getCoordinates();
+											String destinationCoor = nextFlightbooking.getBookedFlight().getDestination().getCoordinates();
+											out.println("<td><a href=\"http://maps.google.com/maps?saddr="+originCoor+"&daddr="+destinationCoor+"\" target=\"_blank\" >View on Map</a><td>");
 											out.println("<td>");
 												out.println("<a href=\"/customerProfile/showFlightbookings?confirmationNumber="+ nextFlightbooking.getConfirmationNumber().getId() + "\">Show</a>");
 												if(!nextFlightbooking.getCheckedIn() ){
