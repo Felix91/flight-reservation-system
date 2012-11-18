@@ -10,6 +10,7 @@ import com.google.appengine.api.datastore.Key;
 import com.google.appengine.api.datastore.KeyFactory;
 
 import ufly.entities.FlightBooking;
+import ufly.entities.Meal;
 
 @SuppressWarnings("serial")
 public class CustomerFlightbookings extends UflyServlet {
@@ -42,7 +43,20 @@ public class CustomerFlightbookings extends UflyServlet {
 					.forward(req,resp);
 				}
 			}
-		}else if (pageToInclude.equals("show") )
+		}else if (pageToInclude.equals("delete") )
+		{
+			String confirmationNumber = (String) req.getParameter("confirmationNumber");
+			Long confirmNumber = Long.valueOf(confirmationNumber);
+			if(confirmNumber != null){
+				FlightBooking deleteFlightbooking = FlightBooking.getFlightBooking(confirmNumber);
+				if(deleteFlightbooking != null){
+					deleteFlightbooking.deleteFlightBooking();
+					req.getRequestDispatcher("/customerFlightbookings")
+					.forward(req,resp);
+				}
+			}
+		}
+		else if (pageToInclude.equals("show") )
 		{
 			String confirmationNumber = (String) req.getParameter("confirmationNumber");
 			Long confirmNumber = Long.valueOf(confirmationNumber);
@@ -95,6 +109,8 @@ public class CustomerFlightbookings extends UflyServlet {
 			if(confirmNumber != null){
 				FlightBooking editFlightbooking = FlightBooking.getFlightBooking(confirmNumber);
 				if(editFlightbooking != null){
+					Meal newMeal = Meal.valueOf(req.getParameter("meal"));
+					editFlightbooking.changeMealChoice(newMeal);
 					req.setAttribute("editFlightbooking", editFlightbooking);
 					req.getRequestDispatcher("/customerFlightbookings_edit.jsp")
 					.forward(req,resp);

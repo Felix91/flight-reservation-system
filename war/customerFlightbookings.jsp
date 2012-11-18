@@ -44,7 +44,9 @@
 											out.println("<td>");
 												out.println("<a href=\"/customerProfile/showFlightbookings?confirmationNumber="+ nextFlightbooking.getConfirmationNumber().getId() + "\">Show</a>");
 												if(!nextFlightbooking.getCheckedIn() ){
-													out.println("<a href=\"/customerProfile/editFlightbookings?confirmationNumber="+ nextFlightbooking.getConfirmationNumber().getId() + "\">Modify</a>");
+													out.println("<BR><a href=\"/customerProfile/editFlightbookings?confirmationNumber="+ nextFlightbooking.getConfirmationNumber().getId() + "\">Modify</a>");
+													out.println("<BR><a href=\"/customerProfile/deleteFlightbookings?confirmationNumber="+ nextFlightbooking.getConfirmationNumber().getId() + "\">Delete</a>");
+												
 												}
 											out.println("</td>");
 										out.println("</tr>");

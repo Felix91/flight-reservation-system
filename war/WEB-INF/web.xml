@@ -119,6 +119,19 @@
 		<servlet-name>customerFlightbookings_edit</servlet-name>
 		<url-pattern>/customerFlightbookings/edit</url-pattern>
 	</servlet-mapping>
+	<!-- CUSTOMER FLIGHTBOOKINGS DELETE PAGE -->
+	<servlet>
+		<servlet-name>customerFlightbookings_delete</servlet-name>
+		<servlet-class>ufly.frs.CustomerFlightbookings</servlet-class>
+		<init-param>
+	            <param-name>action</param-name>
+	            <param-value>delete</param-value>
+	    </init-param>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>customerFlightbookings_delete</servlet-name>
+		<url-pattern>/customerProfile/deleteFlightbookings</url-pattern>
+	</servlet-mapping>
 	<!-- CUSTOMER FLIGHTBOOKINGS SHOW PAGE -->
 	<servlet>
 		<servlet-name>customerFlightbookings_show</servlet-name>
