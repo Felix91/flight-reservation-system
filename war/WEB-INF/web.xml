@@ -178,7 +178,7 @@
 	</servlet>
 	<servlet-mapping>
 		<servlet-name>adminFlights_create</servlet-name>
-		<url-pattern>/adminProfile/addFlights</url-pattern>
+		<url-pattern>/flightManagerProfile/addFlights</url-pattern>
 	</servlet-mapping>
 	<!-- ADMIN EDIT FLIGHTS PAGE -->
 	<servlet>
@@ -191,7 +191,7 @@
 	</servlet>
 	<servlet-mapping>
 		<servlet-name>adminFlights_edit</servlet-name>
-		<url-pattern>/adminProfile/editFlights</url-pattern>
+		<url-pattern>/flightManagerProfile/editFlights</url-pattern>
 	</servlet-mapping>
 	<!-- ADMIN FLIGHTBOOKINGS PAGE -->
 	<servlet>
@@ -217,7 +217,7 @@
 	</servlet>
 	<servlet-mapping>
 		<servlet-name>adminFlightbookings_create</servlet-name>
-		<url-pattern>/adminProfile/addFlightbookings</url-pattern>
+		<url-pattern>/_adminFlightbookings/addFlightbookings</url-pattern>
 	</servlet-mapping>
 	<!-- ADMIN AIRPORTS PAGE -->
 	<servlet>
@@ -243,7 +243,7 @@
 	</servlet>
 	<servlet-mapping>
 		<servlet-name>adminAirports_create</servlet-name>
-		<url-pattern>/adminProfile/addAirports</url-pattern>
+		<url-pattern>/flightManagerProfile/addAirports</url-pattern>
 	</servlet-mapping>
 	<!-- HEADER -->
 	<servlet>
