@@ -10,6 +10,7 @@ import javax.servlet.http.HttpSession;
 
 import ufly.entities.Customer;
 import ufly.entities.FlightManager;
+import ufly.entities.FlightStaff;
 import ufly.entities.User;
 
 @SuppressWarnings("serial")
@@ -27,11 +28,20 @@ public class UflyServlet extends HttpServlet {
 			localUser = Customer.getCustomer(email);
 			return localUser;
 		}
+		//Check if it is Flight Manager
 		else if(FlightManager.getFlightManager(email)!=null)
 		{
 			localUser = FlightManager.getFlightManager(email);
 			return localUser;
 		}
+		
+		//Check if it is Flight Staff
+		else if(FlightStaff.getFlightStaff(email)!=null)
+		{
+			localUser = FlightStaff.getFlightStaff(email);
+			return localUser;
+		}
+		
 		else
 		{
 			return localUser;

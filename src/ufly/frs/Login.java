@@ -7,6 +7,7 @@ import javax.servlet.http.*;
 
 import ufly.entities.Customer;
 import ufly.entities.FlightManager;
+import ufly.entities.FlightStaff;
 
 @SuppressWarnings("serial")
 public class Login extends UflyServlet {
@@ -37,7 +38,9 @@ public class Login extends UflyServlet {
 		String Password= req.getParameter("password");
 		
 		FlightManager localFlightManager = FlightManager.getFlightManager(email);
+		FlightStaff localFlightStaff = FlightStaff.getFlightStaff(email);
 		Customer localUser = Customer.getCustomer(email);
+		
 		
 		//Check if it is Flight Manager
 		if(localFlightManager!=null && localFlightManager.checkPassword(Password))
@@ -46,7 +49,13 @@ public class Login extends UflyServlet {
 				resp.sendRedirect("/flightManagerProfile");	
 		}
 
-		
+		//Check if it is Flight Staff
+		if(localFlightStaff!=null && localFlightStaff.checkPassword(Password))
+		{
+			login(email,req.getSession());
+				resp.sendRedirect("/flightStaffProfile");	
+		}
+	
 		//Check if it is Customer
 		if (localUser != null && localUser.checkPassword(Password))
 		{

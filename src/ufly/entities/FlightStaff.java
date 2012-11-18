@@ -46,5 +46,22 @@ public class FlightStaff extends Admin {
 			pm.close();
 		}
 	}
+	public static FlightStaff getFlightStaff(String emailAddr)
+	{
+		PersistenceManager pm = PMF.get().getPersistenceManager();
+		FlightStaff c, detached = null;
+		try{
+		    	c = pm.getObjectById(FlightStaff.class, emailAddr);
+		        detached = pm.detachCopy(c);
+		    }
+		catch( javax.jdo.JDOException e)
+		{
+			e.printStackTrace();
+		}
+		finally {
+			pm.close();
+		}
+		return detached;
+	}
 
 }
