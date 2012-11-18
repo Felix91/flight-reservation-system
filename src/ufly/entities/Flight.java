@@ -519,7 +519,32 @@ public class Flight extends SuperEntity{
 			pm.close();
 		}
 	}
+	
+	/**
+	 * @param fb	: remove fb from flightbooking vector
+	 */
+	public void removeBooking(Key fb)
+	{
+		PersistenceManager pm= PMF.get().getPersistenceManager();
 
+		try
+		{	
+			Iterator<Key> itr=this.flightBookings.iterator();
+			while(itr.hasNext()){
+				Key cur_fb = itr.next();
+				if( cur_fb.toString().equals(fb.toString()) )
+				{
+					this.flightBookings.remove(cur_fb);//since a flightbooking is unique this works
+					pm.makePersistent(this);
+					break;
+				}
+			}
+		}finally
+		{
+			pm.close();
+		}
+	}
+	
 	/**
 	 * @return the allowableMealTypes
 	 */

@@ -284,7 +284,40 @@ public class FlightBooking extends SuperEntity {
 			pm.close();
 		}
 	}
-
+	
+	/**
+	 * Delete this FlightBooking
+	 */
+	public void deleteFlightBooking()
+	{
+		// Clean up Customer's flightBookings
+		Customer c = Customer.getCustomer(this.bookedBy);
+		c.removeBooking(this.getConfirmationNumber());
+		
+		// Clean up Flight's flightBookings
+		Flight f = Flight.getFlight(this.bookedFlight);
+		f.removeBooking(this.getConfirmationNumber());
+		
+		// Free Seat
+		Seat s = Seat.getSeat(this.bookedSeat);
+		s.clearFlightBooking();
+		
+		// Refund Customer
+		Integer priceInCents = f.getPriceInCents();
+		Integer priceInDollars = priceInCents/100;
+		int refundPoints = priceInDollars*10; // 10 points = $1
+		c.addLoyaltyPoints(refundPoints);
+		
+		// Remove FlightBooking from datastore
+		PersistenceManager pm= PMF.get().getPersistenceManager();
+		try
+		{
+			pm.deletePersistent(this);
+		}finally
+		{
+			pm.close();
+		}
+	}
 
 	/*------------ACCESSORS--------------*/
 	/**
