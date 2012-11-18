@@ -4,18 +4,26 @@
 <head>	
 	<jsp:include page="/_header" />
 	
+	
 </head>
+
 <body>
 	<jsp:include page="/_navbar" />
 	<div class="container">
 		<div id="content"><!-- start content -->
 			<h2>Welcome Admin</h2>
 			
-			<div class="tabbable">
+			<div class="bs-docs-example">
 				<ul class="nav nav-pills">
-					<li class="active"><a href="#flights" data-toggle="tab">Upcoming Flights</a></li>
-					<li><a href="#flightstat" data-toggle="tab">Flight Statistics</a></li>
-					<li><a href="#flightbookings" data-toggle="tab">Flightbookings</a></li>			
+				<li><a href="#flights" data-toggle="tab">Upcoming Flights</a></li>
+				<li class="dropdown">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown">Statistics <b class="caret"></b></a>
+                <ul class="dropdown-menu">
+                  <li><a href="#airport"data-toggle="tab">Airport Statistics</a></li>
+                  <li><a href="#">Flight Statistics</a></li>
+                </ul>
+              </li>					
+              <li><a href="#flightbookings" data-toggle="tab">Flightbookings</a></li>			
 					<li><a href="#airports" data-toggle="tab">Airports</a></li>				
 				</ul>
 				<div class="tab-content">
@@ -23,7 +31,8 @@
 						<jsp:include page="/_adminFlights" />
 						<a href="/flightManagerProfile/addFlights"><button class="btn btn-primary">Add Flights</button></a>
 					</div>
-					<div id="flightstat" class="tab-pane fade">
+					<div id="airport" class="tab-pane fade">
+					
 						<jsp:include page="/_adminStats" />					
 					</div>
 					<div id="flightbookings" class="tab-pane fade">				
@@ -45,5 +54,6 @@
     	</div><!-- end footer -->
 	</div>
 	<!-- page generated at: <% //out.print(request.getAttribute("date")); %>-->
+	
 </body>
 </html>
