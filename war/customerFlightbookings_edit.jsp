@@ -1,4 +1,4 @@
-<%@ page import="java.util.*, ufly.entities.FlightBooking" %>
+<%@ page import="java.util.*, ufly.entities.FlightBooking, ufly.entities.Flight, ufly.entities.Meal" %>
 
 <html>
 <head>	
@@ -17,16 +17,33 @@
 	        			<%
 							if(request.getAttribute("editFlightbooking") != null){
 								FlightBooking editFlightbooking = (FlightBooking) request.getAttribute("editFlightbooking");
+								out.print("<form action = \"/customerProfile/editFlightbookings\" method=\"post\">");
 								out.print("<div class=\"dl-horizontal\">");
 	        						out.print("<div class=\"control-group\">");
-		                    			out.print("<dt>flightNumber</dt>");
-										out.print("<dd>"+editFlightbooking.getConfirmationNumber().getId()+"</dd>");
+		                    			out.print("<label class=\"control-label span2\" for=\"flightNumber\">flightNumber</label>");
+										out.print("<input type=\"text\" name=\"flightNumber\">");
 									out.print("</div>");
 									out.print("<div class=\"control-group\">");
-		                    			out.print("<dt>Passenger Name</dt>");
-										out.print("<dd>"+editFlightbooking.getConfirmationNumber().getId()+"</dd>");
-									out.print("</div>");
+		                    			out.print("<label class=\"control-label span2\" for=\"passengerName\">passengerName</label>");
+										out.print("<input type=\"text\" name=\"passengerName\">");
+		                    		out.print("</div>");
+									
+		    						out.print("<div class=\"control-group\">");
+		    							out.print("<label class=\"control-label span2\" for=\"mealPreference\">mealPreference</label>");
+										
+		    							out.print("<select name=\"meal\">");
+						    				Vector<Meal> allowableMeals = editFlightbooking.getBookedFlight().getAllowableMeals();	
+						    				for(int j=0;j<allowableMeals.size();j++)
+						    				{
+						    					out.print("<option value=\""+ allowableMeals.elementAt(j).toString() +"\">"+ allowableMeals.elementAt(j).toString() + "</option>");
+						    					
+						    				}
+						    			out.print("</select>");
+		    						out.print("</div>");
+									
+									out.print("<input type=\"submit\" value=\"Modify\">");
 		                		out.print("</div>");
+		                		out.print("</form>");
 							}
 						%>
 					</div><!--/span row-->
