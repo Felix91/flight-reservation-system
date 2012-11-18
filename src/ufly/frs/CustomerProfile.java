@@ -22,6 +22,7 @@ public class CustomerProfile extends UflyServlet {
 				Customer loggedInCustomer = Customer.getCustomer(getLoggedInUser(req.getSession()).getEmailAddr());
 				req.setAttribute("customerFirstName", loggedInCustomer.getFirstName());
 				req.setAttribute("customerLastName", loggedInCustomer.getLastName());
+				req.setAttribute("loyaltyPoints", loggedInCustomer.getLoyaltyPoints());
 				req.getRequestDispatcher("customerProfile.jsp")
 				.forward(req,resp);
 			}

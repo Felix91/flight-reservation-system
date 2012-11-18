@@ -52,22 +52,6 @@
 										out.println("</tr>");
 									}
 									%>
-									<tr>
-										<td>1</td>
-										<td>John</td>
-										<td>123</td>
-										<td>Economy</td>
-										<td>2C</td>
-										<td><a href="#">View</a></td>
-									</tr>
-									<tr>
-										<td>1</td>
-										<td>John</td>
-										<td>123</td>
-										<td>Economy</td>
-										<td>2C</td>
-										<td><a href="#">View</a></td>
-									</tr>
 								</tbody>
 							</table>
 						</div><!-- span10 -->
