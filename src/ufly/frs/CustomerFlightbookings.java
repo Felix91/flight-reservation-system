@@ -32,15 +32,7 @@ public class CustomerFlightbookings extends UflyServlet {
 		if(pageToInclude.equals("index") )
 		{
 			Customer loggedInCustomer = Customer.getCustomer(getLoggedInUser(req.getSession()).getEmailAddr());
-			Vector<Key> customerFlightKeys = loggedInCustomer.getFlightBookings();
-			Iterator<Key> itr = customerFlightKeys.iterator();
-			List<FlightBooking> allFlightbookings = new ArrayList<FlightBooking>();
-			while(itr.hasNext()){
-				FlightBooking fb = FlightBooking.getFlightBooking(itr.next());
-				if(fb!=null)
-					allFlightbookings.add(fb);
-				
-			}
+			Vector<Key> allFlightbookings = loggedInCustomer.getFlightBookings();
 			req.setAttribute("allFlightbookings", allFlightbookings);
 			req.getRequestDispatcher("/customerFlightbookings.jsp")
 			.forward(req,resp);

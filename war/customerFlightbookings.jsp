@@ -1,4 +1,4 @@
-<%@ page import="java.util.*, ufly.entities.FlightBooking" %>
+<%@ page import="java.util.*, ufly.entities.FlightBooking, com.google.appengine.api.datastore.Key" %>
 
 <html>
 <head>	
@@ -27,11 +27,12 @@
 								</thead>
 								<tbody>
 									<% 
-			                    	List<FlightBooking> allFlightbookings = (List<FlightBooking>) request.getAttribute("allFlightbookings");
+									Vector<Key> allFlightbookings = (Vector<Key>) request.getAttribute("allFlightbookings");
 									
-									Iterator<FlightBooking> iterator = allFlightbookings.iterator();
+									Iterator<Key> iterator = allFlightbookings.iterator();
 									while (iterator.hasNext()) {
-										FlightBooking nextFlightbooking = iterator.next();
+										FlightBooking nextFlightbooking = FlightBooking.getFlightBooking(iterator.next());
+										if(nextFlightbooking != null){
 										out.println("<tr>");
 											out.println("<td>"+nextFlightbooking.getConfirmationNumber().getId()+"</td>");
 											out.println("<td>"+nextFlightbooking.getBookedBy().getFirstName() + nextFlightbooking.getBookedBy().getLastName() + "</td>");
@@ -50,6 +51,7 @@
 												}
 											out.println("</td>");
 										out.println("</tr>");
+									}
 									}
 									%>
 								</tbody>
