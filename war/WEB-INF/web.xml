@@ -158,7 +158,7 @@
 		<servlet-name>customerFlightbookings_checkin</servlet-name>
 		<url-pattern>/customerProfile/checkinFlightbookings</url-pattern>
 	</servlet-mapping>
-	<!-- FLIGHT MANAGER PAGE -->
+	<!-- FLIGHT MANAGER PROFILE PAGE -->
 	<servlet>
 		<servlet-name>flightManagerProfilePage</servlet-name>
 		<servlet-class>ufly.frs.FlightManagerProfile</servlet-class>
@@ -166,6 +166,15 @@
 	<servlet-mapping>
 		<servlet-name>flightManagerProfilePage</servlet-name>
 		<url-pattern>/flightManagerProfile</url-pattern>
+	</servlet-mapping>
+	<!-- FLIGHT STAFF PROFILE PAGE -->
+	<servlet>
+		<servlet-name>flightStaffProfilePage</servlet-name>
+		<servlet-class>ufly.frs.FlightStaffProfile</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>flightStaffProfilePage</servlet-name>
+		<url-pattern>/flightStaffProfile</url-pattern>
 	</servlet-mapping>
 	<!-- ADMIN FLIGHTS PAGE -->
 	<servlet>
