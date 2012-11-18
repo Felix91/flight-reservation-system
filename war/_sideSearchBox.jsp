@@ -40,14 +40,14 @@
 										</script>
 									</div>
 									<div class="control-group">
-                	                    <label class="control-label span5" for="dp1">Depart Date</label>
-										<input type="text" id="dp1" placeholder="Depart Date" class="span7 required" name="departureDate" value=<%=(String)request.getAttribute("departureDate") %>>
+                	                    <label class="control-label span5" for="depart">Depart Date</label>
+										<input type="text" id="in_depart" placeholder="Depart Date" class="span7 required" name="departureDate" value=<%=(String)request.getAttribute("departureDate") %>>
         								<script>
-        									$('#dp1').datepicker({
+        									$('#in_depart').datepicker({
 												format: 'mm-dd-yyyy'
 											})
 											 .on('changeDate', function(ev){								
-												$('#dp1').datepicker('hide');
+												$('#in_depart').datepicker('hide');
 											}); 
 											
 											
@@ -57,15 +57,15 @@
 										</script>
                                     </div>
 									<div class="control-group" id="returnDate" <%if(!request.getAttribute("oneWayOrReturn").equals("return")){%> style="display:none"<%} %>>
-                	                    <label class="control-label span5" for="dp2">Return Date</label>
-                                        <input type="text" id="dp2" placeholder="Return Date" class="span7 required" value="<%=(String)request.getAttribute("returnDate")%>" name="returnDate">
+                	                    <label class="control-label span5" for="in_return">Return Date</label>
+                                        <input type="text" id="in_return" placeholder="Return Date" class="span7 <%if(request.getAttribute("oneWayOrReturn").equals("return")){%> required<%} %>" value="<%=(String)request.getAttribute("returnDate")%>" name="returnDate">
                                         <script>
-                                        	$('#dp2').datepicker({
+                                        	$('#in_return').datepicker({
        		                                	format: 'mm-dd-yyyy'
  	                                    	})
  	                                    	.on('changeDate', function(ev){								
-												$('#dp2').datepicker('hide');
-											});     
+												$('#in_return').datepicker('hide');
+											});
                                         </script>
                                     </div>
 							</div><!-- span12 -->

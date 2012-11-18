@@ -16,7 +16,7 @@ import com.google.appengine.api.datastore.Key;
 
 @PersistenceCapable
 public class FlightBooking extends SuperEntity {
-	
+
 	/*------------ CONSTRUCTORS ------------*/
 	/**
 	 * Create a FlightBooking object
@@ -29,17 +29,17 @@ public class FlightBooking extends SuperEntity {
 	public FlightBooking(String bookedBy, String bookedFlight, String bookedFlightClass, String bookedSeat, String mealChoice)
 	{
 		// Key will be generated automatically
-		
+
 		// Set customer
 		Customer c = Customer.getCustomer(bookedBy);
 		this.bookedBy = c.getEmailAddr();
-		
+
 		// Set flight
 		Flight f = Flight.getFlight(bookedFlight);
 		this.bookedFlight = f.getKey();
-		
+
 		// Set flight class
-		if (bookedFlightClass.equalsIgnoreCase("first")) 
+		if (bookedFlightClass.equalsIgnoreCase("first"))
 		{
 			this.bookedFlightClass = FlightClass.first;
 		}
@@ -51,11 +51,11 @@ public class FlightBooking extends SuperEntity {
 		{
 			this.bookedFlightClass = FlightClass.economy;
 		}
-		
+
 		// Set seat
 		int rowNum = Integer.parseInt(bookedSeat.substring(0, 2));
 		char colChar = bookedSeat.charAt(2);
-		SeatingArrangement sa = f.getSeatingArrangement();		
+		SeatingArrangement sa = f.getSeatingArrangement();
 		Vector<Seat> seats = sa.getSeats();
 		Iterator<Seat> seatsIt = seats.iterator();
 		Seat s = null;
@@ -77,10 +77,10 @@ public class FlightBooking extends SuperEntity {
 		{
 			System.out.println("Seat found: " + this.bookedSeat.toString());
 		}
-		
+
 		//  Set meal choice
 		this.mealChoice = Meal.valueOf(mealChoice);
-		
+
 		// Finally, add FlightBooking to datastore
 		// TODO use parent class method
 		PersistenceManager pm = PMF.get().getPersistenceManager();
@@ -89,7 +89,7 @@ public class FlightBooking extends SuperEntity {
 		}finally{
 			pm.close();
 		}
-		
+
 		// Add this to Customer's flightBookings
 		c.addFlightBooking(this.getConfirmationNumber());
 		// Add this to Flight's flightBookings
@@ -98,24 +98,26 @@ public class FlightBooking extends SuperEntity {
 		s.setFlightBooking(this.getConfirmationNumber());
 	}
 	/**
-	 * 
-	 * Create a FlightBooking, does NOT add this booking to flight,seat, or customer 
+	 *
+	 * Create a FlightBooking, does NOT add this booking to flight,seat, or customer
 	 * It is recommended that you do that
-	 * 
+	 *
 	 * @param bookedByUser User assosiated with this booking
 	 * @param flight	   flight to book
 	 * @param fclass       class of booking ie first, business,economy
 	 * @param bookedSeat   seat that will be booked
 	 * @param mealChoice   choice of meal for this booking
 	 */
-	public FlightBooking(Customer bookedByUser,Flight flight, Seat bookedSeat,Meal mealChoice)
+	public FlightBooking(String passengerName, Customer bookedByUser,Flight flight, Seat bookedSeat,Meal mealChoice,String creditCardNo)
 	{
+		this.passengerName=passengerName;
 		this.bookedBy=bookedByUser.getEmailAddr();
 		this.bookedFlight=flight.getKey();
 		FlightClass fclass =flight.getSeatingArrangement().getFlightClass(bookedSeat);
 		this.bookedFlightClass=fclass;
 		this.bookedSeat=bookedSeat.getKey();
 		this.mealChoice=mealChoice;
+		this.creditCardNo=creditCardNo;
 		this.makePersistant();
 	}
 	/*------------ CLASS METHODS ------------*/
@@ -132,7 +134,7 @@ public class FlightBooking extends SuperEntity {
 			pm.close();
 		}
 	}
-	
+
 	public static FlightBooking getFlightBooking(Key confirmationNumber)
 	{
 		if (confirmationNumber == null)
@@ -152,19 +154,39 @@ public class FlightBooking extends SuperEntity {
 		}
 		return detached;
 	}
-	
+
+	public static FlightBooking getFlightBooking(Long confirmationNumber)
+	{
+		if (confirmationNumber == null)
+			return null;
+		PersistenceManager pm = PMF.get().getPersistenceManager();
+		FlightBooking fb, detached = null;
+		try{
+		    	fb = pm.getObjectById(FlightBooking.class, confirmationNumber);
+		        detached = pm.detachCopy(fb);
+		    }
+		catch( javax.jdo.JDOException e)
+		{
+			e.printStackTrace();
+		}
+		finally {
+			pm.close();
+		}
+		return detached;
+	}
+
 	@Override
-	public String toString() 
+	public String toString()
 	{
 		return "FlightBooking [key=" + confirmationNumber.toString()
 				+ ", customer=" + bookedBy.toString()
 				+ ", flight=" + bookedFlight.toString()
 				+ ", flightClass=" + bookedFlightClass.toString()
 				+ ", seat=" + bookedSeat.toString()
-				+ ", meal=" + mealChoice 
+				+ ", meal=" + mealChoice
 				+ "]";
 	}
-	
+
 	/*------------MODIFIERS--------------*/
 	/**
 	 * @param newConfirmationNumber	: new confirmation number to change to
@@ -176,45 +198,13 @@ public class FlightBooking extends SuperEntity {
 		{
 			this.confirmationNumber=newConfirmationNumber;
 			pm.makePersistent(this);
-		
+
 		}finally
 		{
 			pm.close();
 		}
 	}
-	/**
-	 * @param newCustomer	: new customer to change to
-	 */
-	/*public void changeCustomer(Customer newCustomer)
-	{
-		PersistenceManager pm= PMF.get().getPersistenceManager();
-		try
-		{
-			this.bookedBy=newCustomer;
-			pm.makePersistent(this);
-		
-		}finally
-		{
-			pm.close();
-		}
-	}*/
-	/**
-	 * @param newFlight	: new flight booked to change to
-	 */
-	/*public void changeFlight(Flight newFlight)
-	{
-		PersistenceManager pm= PMF.get().getPersistenceManager();
-		try
-		{
-			this.bookedFlight=newFlight;
-			pm.makePersistent(this);
-		
-		}finally
-		{
-			pm.close();
-		}
-	}*/
-	
+
 	/**
 	 * @param newFlightClass	: new fight class to change to
 	 */
@@ -225,7 +215,7 @@ public class FlightBooking extends SuperEntity {
 		{
 			this.bookedFlightClass=newFlightClass;
 			pm.makePersistent(this);
-		
+
 		}finally
 		{
 			pm.close();
@@ -234,38 +224,51 @@ public class FlightBooking extends SuperEntity {
 	/**
 	 * @param newSeat	: new seat booking to change to
 	 */
-	/*public void changeSeat(Seat newSeat)
+	public void changeSeat(Seat newSeat)
 	{
 		PersistenceManager pm= PMF.get().getPersistenceManager();
 		try
 		{
-			this.bookedSeat=newSeat;
+			// Empty old Seat
+			Seat.getSeat(this.bookedSeat).clearFlightBooking();
+
+			// Occupy new Seat
+			newSeat.setFlightBooking(this.getConfirmationNumber());
+
+			// Update key for Seat
+			this.bookedSeat = newSeat.getKey();
+
+			// Update Flight Class
+			Flight f = Flight.getFlight(this.bookedFlight);
+			FlightClass fclass = f.getSeatingArrangement().getFlightClass(newSeat);
+			this.bookedFlightClass = fclass;
+
 			pm.makePersistent(this);
-		
-		}finally
-		{
-			pm.close();
-		}
-	}*/
-	
-	/**
-	 * @param newMeal	: new meal choice to change to
-	 */
-	public void changeMealChoice(Meal newMeal)
-	{
-		
-		PersistenceManager pm= PMF.get().getPersistenceManager();
-		try
-		{
-			this.mealChoice=newMeal;
-			pm.makePersistent(this);
-		
+
 		}finally
 		{
 			pm.close();
 		}
 	}
-	
+
+	/**
+	 * @param newMeal	: new meal choice to change to
+	 */
+	public void changeMealChoice(Meal newMeal)
+	{
+
+		PersistenceManager pm= PMF.get().getPersistenceManager();
+		try
+		{
+			this.mealChoice=newMeal;
+			pm.makePersistent(this);
+
+		}finally
+		{
+			pm.close();
+		}
+	}
+
 	/**
 	 * Check in FlightBooking
 	 */
@@ -281,8 +284,8 @@ public class FlightBooking extends SuperEntity {
 			pm.close();
 		}
 	}
-	
-	
+
+
 	/*------------ACCESSORS--------------*/
 	/**
 	 * @return the confirmation number of booking
@@ -291,7 +294,7 @@ public class FlightBooking extends SuperEntity {
 	{
 		return this.confirmationNumber;
 	}
-	
+
 	/**
 	 * @return the customer object
 	 */
@@ -300,15 +303,15 @@ public class FlightBooking extends SuperEntity {
 		Customer c = Customer.getCustomer(this.bookedBy);
 		return c;
 	}
-	
+
 	/**
 	 * @return the flight booked by customer
 	 */
-	/*public Flight getBookedFlight()
+	public Flight getBookedFlight()
 	{
-		return this.bookedFlight;
-	}*/
-	
+		return Flight.getFlight(this.bookedFlight);
+	}
+
 	/**
 	 * @return the flight class of booked flight
 	 */
@@ -316,7 +319,7 @@ public class FlightBooking extends SuperEntity {
 	{
 		return this.bookedFlightClass;
 	}
-	
+
 	/**
 	 * @return the booked seat
 	 */
@@ -324,7 +327,7 @@ public class FlightBooking extends SuperEntity {
 	{
 		return this.bookedSeat;
 	}*/
-	
+
 	/**
 	 * @return the meal choice
 	 */
@@ -332,7 +335,7 @@ public class FlightBooking extends SuperEntity {
 	{
 		return this.mealChoice;
 	}
-	
+
 	/**
 	 * @return the checked-in status
 	 */
@@ -340,11 +343,13 @@ public class FlightBooking extends SuperEntity {
 	{
 		return this.checkedIn;
 	}
-	
+
 	/*------------ VARIABLES ------------*/
 	@PrimaryKey
 	@Persistent(valueStrategy = IdGeneratorStrategy.IDENTITY) // automatically generate a numeric ID
 	private Key confirmationNumber;			// The FlightBooking's confirmation number. Note that since FlightBooking is a child class of entity relationships, its key must either be a Key or a Key value encoded as a string.
+	@Persistent
+	private String passengerName;
 	@Persistent
 	private String bookedBy;				// The FlightBooking's owner
 	@Persistent
@@ -357,5 +362,7 @@ public class FlightBooking extends SuperEntity {
 	private Meal mealChoice;				// The FlightBooking's meal choice
 	@Persistent
 	private boolean checkedIn;
-	
+	@Persistent
+	private String creditCardNo;
+
 }

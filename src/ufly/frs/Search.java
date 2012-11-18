@@ -18,7 +18,7 @@ public class Search extends UflyServlet {
 	public void doGet(HttpServletRequest req, HttpServletResponse resp)
 			throws IOException ,ServletException
 	{
-		doPost(req,resp);
+		resp.sendRedirect("/");
 	}
 	public void doPost(HttpServletRequest req, HttpServletResponse resp)
 			throws IOException,ServletException {

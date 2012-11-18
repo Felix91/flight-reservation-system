@@ -74,7 +74,6 @@ public abstract class User {
 	 */
 	public void changePw(String newPw)
 	{
-		this.session=session;
 		this.setPassword(newPw);
 	}
 	

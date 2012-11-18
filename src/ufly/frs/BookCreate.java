@@ -12,14 +12,21 @@ import javax.servlet.http.HttpServletResponse;
 import ufly.entities.*;
 @SuppressWarnings("serial")
 public class BookCreate extends UflyServlet {
-
+	public void doGet(HttpServletRequest req, HttpServletResponse resp){
+		try {
+			resp.sendRedirect("/");
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
 	public void doPost(HttpServletRequest req, HttpServletResponse resp)
 			throws IOException,ServletException
 	{
-		//printParam(req,resp)
+//		printParam(req,resp);if(true)return;
 		SimpleDateFormat convertToDate = new SimpleDateFormat("yyyy/MM/dd HH:mm");
 		printParam(req,resp);
-//		String CreditCardNo = (String)req.getParameter("creditCard");
+		String creditCardNo = (String)req.getParameter("CreditCard");
 		Integer numberOfFlights= Integer.parseInt(req.getParameter("numberOfFlights"));
 		Integer numberOfPassengers= Integer.parseInt(req.getParameter("numberOfPassengers"));
 		//check to see if there is a user logged in
@@ -31,6 +38,14 @@ public class BookCreate extends UflyServlet {
 		}
 		for(Integer paxNo=0;paxNo<numberOfPassengers;paxNo++)
 		{
+			String passengerName=req.getParameter("passengerName"+paxNo.toString());
+			Integer price=0;
+			Integer loyaltyPointsDollars=null;
+			try{
+				loyaltyPointsDollars= Integer.parseInt(req.getParameter("loyaltyPointsUsed"));
+			}catch(NumberFormatException e){
+				loyaltyPointsDollars=0;
+			}
 			for(Integer flightNum=0;flightNum<numberOfFlights;flightNum++)
 			{
 				//Parse all the Posted values
@@ -42,14 +57,18 @@ public class BookCreate extends UflyServlet {
 				Date departureDate = convertToDate.parse(departureStr, new ParsePosition(0));
 				Flight f=Flight.getFlight(FlightNo, departureDate);
 				Seat seat=f.getSeatingArrangement().getSeatByRowCol(Integer.parseInt(seatStr[0]),seatStr[1].charAt(0) );
-				FlightBooking fb= new FlightBooking(localUser,f,seat,meal);
+				
+				FlightBooking fb= new FlightBooking(passengerName,localUser,f,seat,meal,creditCardNo);
+				
 				//Now associate this flightbooking with a 
 				seat.setFlightBooking(fb.getConfirmationNumber());
 				f.addFlightBooking(fb.getConfirmationNumber());
 				localUser.addFlightBooking(fb.getConfirmationNumber());
-				localUser.addLoyaltyPoints(f.getPriceInCents()/100);
+				price+=f.getPriceInCents();		
 			}
+			localUser.useLoyaltyPoints(loyaltyPointsDollars*10);
+			localUser.addLoyaltyPoints(price/100-loyaltyPointsDollars);
 		}
-		resp.sendRedirect("/_ah/admin/datastore?kind=Customer");
+		resp.sendRedirect("/_ah/admin/datastore?kind=FlightBooking");
 	}
 }

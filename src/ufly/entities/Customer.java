@@ -109,12 +109,15 @@ public class Customer extends User {
 	public void addLoyaltyPoints(int loyaltypoints)
 	{
 		PersistenceManager pm= PMF.get().getPersistenceManager();
-
 		try
 		{
-			this.loyaltyPoints+=loyaltypoints;
-			pm.makePersistent(this);
-		
+			//this.flightBookings.add(fbKey);
+			//pm.makePersistent(this);
+			// Apparently, the above 2 lines do not update the object in the datastore
+			// But getting a fresh copy and making that fresh copy persistent works. Oh well...
+			Customer c = (Customer)pm.getObjectById(Customer.class, this.getEmailAddr());
+			c.loyaltyPoints+=loyaltypoints;
+			pm.makePersistent(c);
 		}finally
 		{
 			pm.close();
@@ -128,10 +131,13 @@ public class Customer extends User {
 		PersistenceManager pm= PMF.get().getPersistenceManager();
 		try
 		{
-			
-			this.loyaltyPoints-=loyaltypoints;
-			pm.makePersistent(this);
-		
+			//this.flightBookings.add(fbKey);
+			//pm.makePersistent(this);
+			// Apparently, the above 2 lines do not update the object in the datastore
+			// But getting a fresh copy and making that fresh copy persistent works. Oh well...
+			Customer c = (Customer)pm.getObjectById(Customer.class, this.getEmailAddr());
+			c.loyaltyPoints-=loyaltypoints;
+			pm.makePersistent(c);
 		}finally
 		{
 			pm.close();

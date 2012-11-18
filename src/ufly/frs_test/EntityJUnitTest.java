@@ -45,15 +45,14 @@ public class EntityJUnitTest {
 	
 		try {
 			// Constructors
-			Airport a = new Airport("YYZ", "Toronto");
-			//Airport YVR = new Airport("YVR", "Vancouver");
-			//Airport YCC = new Airport("YCC", "Calgary");
+			Airport YYZ = new Airport("YYZ", "Toronto");
+			Airport YVR = new Airport("YVR", "Vancouver");
+			Airport YCC = new Airport("YCC", "Calgary");
 			
 			// Modifiers
-			//YYZ.changeCallSign("YVR");
-			//YYZ.changeCity("Vancouver");
-			
-			//assertTrue(YYZ.equals(YVR));
+			YYZ.changeCallSign("YVR");
+			YYZ.changeCity("Vancouver");
+			assertTrue(YYZ.equals(YVR));
 			
 			
 		} catch (Exception e) {

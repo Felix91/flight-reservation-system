@@ -44,6 +44,22 @@ public class Seat {
 		}
 	}
 	
+	/**
+	 * Clear the Seat's flightBooking
+	 * @param flightBooking	: The Seat's flightBooking to be cleared
+	 */
+	public void clearFlightBooking()
+	{
+		PersistenceManager pm= PMF.get().getPersistenceManager();
+		try{
+			this.flightBooking = null;
+			pm.makePersistent(this);
+		}finally
+		{
+			pm.close();
+		}
+	}
+	
 	/*------------CLASS METHODS------------*/
 	public static List<Seat> getAllSeat()
 	{
@@ -59,7 +75,25 @@ public class Seat {
 		}
 	}
 	
-
+	public static Seat getSeat(Key k)
+	{
+		if (k == null)
+			return null;
+		PersistenceManager pm = PMF.get().getPersistenceManager();
+		Seat s, detached = null;
+		try{
+		    	s = pm.getObjectById(Seat.class, k);
+		        detached = pm.detachCopy(s);
+		    }
+		catch( javax.jdo.JDOException e)
+		{
+			e.printStackTrace();
+		}
+		finally {
+			pm.close();
+		}
+		return detached;
+	}
 	
 	/*------------ACCESSORS------------*/
 	

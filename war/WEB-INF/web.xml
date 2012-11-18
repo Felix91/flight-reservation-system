@@ -93,6 +93,58 @@
 		<servlet-name>customerProfile_edit</servlet-name>
 		<url-pattern>/customerProfile/edit</url-pattern>
 	</servlet-mapping>
+	<!-- CUSTOMER FLIGHTBOOKINGS PAGE -->
+	<servlet>
+		<servlet-name>customerFlightbookings</servlet-name>
+		<servlet-class>ufly.frs.CustomerFlightbookings</servlet-class>
+		<init-param>
+	            <param-name>action</param-name>
+	            <param-value>index</param-value>
+	    </init-param>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>customerFlightbookings</servlet-name>
+		<url-pattern>/customerFlightbookings</url-pattern>
+	</servlet-mapping>
+	<!-- CUSTOMER FLIGHTBOOKINGS EDIT PAGE -->
+	<servlet>
+		<servlet-name>customerFlightbookings_edit</servlet-name>
+		<servlet-class>ufly.frs.CustomerFlightbookings</servlet-class>
+		<init-param>
+	            <param-name>action</param-name>
+	            <param-value>edit</param-value>
+	    </init-param>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>customerFlightbookings_edit</servlet-name>
+		<url-pattern>/customerFlightbookings/edit</url-pattern>
+	</servlet-mapping>
+	<!-- CUSTOMER FLIGHTBOOKINGS SHOW PAGE -->
+	<servlet>
+		<servlet-name>customerFlightbookings_show</servlet-name>
+		<servlet-class>ufly.frs.CustomerFlightbookings</servlet-class>
+		<init-param>
+	            <param-name>action</param-name>
+	            <param-value>show</param-value>
+	    </init-param>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>customerFlightbookings_show</servlet-name>
+		<url-pattern>/customerProfile/showFlightbookings</url-pattern>
+	</servlet-mapping>
+	<!-- CUSTOMER FLIGHTBOOKINGS CHECK IN PAGE -->
+	<servlet>
+		<servlet-name>customerFlightbookings_checkin</servlet-name>
+		<servlet-class>ufly.frs.CustomerFlightbookings</servlet-class>
+		<init-param>
+	            <param-name>action</param-name>
+	            <param-value>check-in</param-value>
+	    </init-param>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>customerFlightbookings_checkin</servlet-name>
+		<url-pattern>/customerProfile/checkinFlightbookings</url-pattern>
+	</servlet-mapping>
 	<!-- ADMIN PAGE -->
 	<servlet>
 		<servlet-name>flightManagerProfilePage</servlet-name>
