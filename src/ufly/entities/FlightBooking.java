@@ -323,10 +323,10 @@ public class FlightBooking extends SuperEntity {
 	/**
 	 * @return the booked seat
 	 */
-	/*public Seat getBookedSeat()
+	public Seat getBookedSeat()
 	{
-		return this.bookedSeat;
-	}*/
+		return Seat.getSeat(this.bookedSeat);
+	}
 
 	/**
 	 * @return the meal choice
