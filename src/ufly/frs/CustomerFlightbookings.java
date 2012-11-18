@@ -1,7 +1,10 @@
 package ufly.frs;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Vector;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.*;
@@ -9,6 +12,7 @@ import javax.servlet.http.*;
 import com.google.appengine.api.datastore.Key;
 import com.google.appengine.api.datastore.KeyFactory;
 
+import ufly.entities.Customer;
 import ufly.entities.FlightBooking;
 import ufly.entities.Meal;
 
@@ -27,7 +31,16 @@ public class CustomerFlightbookings extends UflyServlet {
 		String pageToInclude= getServletConfig().getInitParameter("action");
 		if(pageToInclude.equals("index") )
 		{
-			List<FlightBooking> allFlightbookings = FlightBooking.getAllFlightBookings();
+			Customer loggedInCustomer = Customer.getCustomer(getLoggedInUser(req.getSession()).getEmailAddr());
+			Vector<Key> customerFlightKeys = loggedInCustomer.getFlightBookings();
+			Iterator<Key> itr = customerFlightKeys.iterator();
+			List<FlightBooking> allFlightbookings = new ArrayList<FlightBooking>();
+			while(itr.hasNext()){
+				FlightBooking fb = FlightBooking.getFlightBooking(itr.next());
+				if(fb!=null)
+					allFlightbookings.add(fb);
+				
+			}
 			req.setAttribute("allFlightbookings", allFlightbookings);
 			req.getRequestDispatcher("/customerFlightbookings.jsp")
 			.forward(req,resp);
