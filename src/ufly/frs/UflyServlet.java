@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import ufly.entities.Customer;
+import ufly.entities.FlightManager;
 import ufly.entities.User;
 
 @SuppressWarnings("serial")
@@ -20,9 +21,22 @@ public class UflyServlet extends HttpServlet {
 		String email = (String) s.getAttribute("loggedInUser");
 		if (email == null)
 			return null;
-		localUser = Customer.getCustomer(email);
-		//add check for admin if localuser is null
-		return localUser;			
+		//Check if it is Customer
+		if (Customer.getCustomer(email)!=null)
+		{
+			localUser = Customer.getCustomer(email);
+			return localUser;
+		}
+		else if(FlightManager.getFlightManager(email)!=null)
+		{
+			localUser = FlightManager.getFlightManager(email);
+			return localUser;
+		}
+		else
+		{
+			return localUser;
+		}
+		
 	}
 	public void login(String email,HttpSession s)
 	{

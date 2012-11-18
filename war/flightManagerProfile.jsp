@@ -21,7 +21,7 @@
 				<div class="tab-content">
 					<div id="flights" class="tab-pane fade active in">
 						<jsp:include page="/_adminFlights" />
-						<a href="/adminProfile/addFlights"><button class="btn btn-primary">Add Flights</button></a>
+						<a href="/flightManagerProfile/addFlights"><button class="btn btn-primary">Add Flights</button></a>
 					</div>
 					<div id="flightstat" class="tab-pane fade">
 						<p>Stat goes here</p>						
@@ -32,7 +32,7 @@
 					</div>
 					<div id="airports" class="tab-pane fade">				
 						<jsp:include page="/_adminAirports" />
-						<a href="/adminProfile/addAirports"><button class="btn btn-primary">Add Airports</button></a>
+						<a href="/flightManagerProfile/addAirports"><button class="btn btn-primary">Add Airports</button></a>
 					</div>
 				</div> <!-- tab content -->
 			</div><!-- tabbable -->

@@ -6,7 +6,6 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import ufly.entities.PMF;
 import ufly.entities.Seat;
 
 @SuppressWarnings("serial")
@@ -24,13 +23,7 @@ public class seatTest extends HttpServlet {
 		int col= Integer.parseInt(req.getParameter("columnNumber"));
 	
 		Seat newSeat = new Seat(row, col); 
-		PersistenceManager pm = PMF.get().getPersistenceManager();
-		try {
-            pm.makePersistent(newSeat);
-            
-        } finally {
-            pm.close();
-        }
+
 		
 		//resp.setContentType("text/plain");
 		//resp.getWriter().println("City: "+email+" your callsign is "+ password);

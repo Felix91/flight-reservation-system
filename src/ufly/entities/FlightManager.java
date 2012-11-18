@@ -18,6 +18,13 @@ public class FlightManager extends Admin {
 	public FlightManager(String emailAddr, String password)
 	{
 		super(emailAddr, password);
+		PersistenceManager pm = PMF.get().getPersistenceManager();
+		try{
+			pm.makePersistent(this);
+		}finally{
+			pm.close();
+		}
+	
 	}
 	
 	/*------------ CLASS METHODS ------------*/
@@ -38,5 +45,23 @@ public class FlightManager extends Admin {
 		}finally{
 			pm.close();
 		}
+	}
+	
+	public static FlightManager getFlightManager(String emailAddr)
+	{
+		PersistenceManager pm = PMF.get().getPersistenceManager();
+		FlightManager c, detached = null;
+		try{
+		    	c = pm.getObjectById(FlightManager.class, emailAddr);
+		        detached = pm.detachCopy(c);
+		    }
+		catch( javax.jdo.JDOException e)
+		{
+			e.printStackTrace();
+		}
+		finally {
+			pm.close();
+		}
+		return detached;
 	}
 }

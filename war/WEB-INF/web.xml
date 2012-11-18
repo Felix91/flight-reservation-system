@@ -145,7 +145,7 @@
 		<servlet-name>customerFlightbookings_checkin</servlet-name>
 		<url-pattern>/customerProfile/checkinFlightbookings</url-pattern>
 	</servlet-mapping>
-	<!-- ADMIN PAGE -->
+	<!-- FLIGHT MANAGER PAGE -->
 	<servlet>
 		<servlet-name>flightManagerProfilePage</servlet-name>
 		<servlet-class>ufly.frs.FlightManagerProfile</servlet-class>

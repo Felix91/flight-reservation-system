@@ -7,7 +7,6 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import ufly.entities.FlightStaff;
-import ufly.entities.PMF;
 
 @SuppressWarnings("serial")
 public class FlightStaffTest extends HttpServlet {
@@ -24,13 +23,6 @@ public class FlightStaffTest extends HttpServlet {
 		String password = req.getParameter("password");
 		
 		FlightStaff newFlightStaff = new FlightStaff(email, password); 
-		PersistenceManager pm = PMF.get().getPersistenceManager();
-		try {
-            pm.makePersistent(newFlightStaff);
-            
-        } finally {
-            pm.close();
-        }
 		
 		//resp.setContentType("text/plain");
 		//resp.getWriter().println("City: "+email+" your callsign is "+ password);

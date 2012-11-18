@@ -18,6 +18,13 @@ public class FlightStaff extends Admin {
 	public FlightStaff(String emailAddr, String password)
 	{
 		super(emailAddr, password);
+		PersistenceManager pm = PMF.get().getPersistenceManager();
+		try {
+            pm.makePersistent(this);
+            
+        } finally {
+            pm.close();
+        }
 	}
 	
 	/*------------ CLASS METHODS ------------*/

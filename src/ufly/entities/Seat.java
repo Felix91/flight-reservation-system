@@ -25,6 +25,13 @@ public class Seat {
 		this.rowNumber = rowNumber;
 		this.columnChar = (char) ('A' + (columnNumber-1));
 		flightBooking = null; // Seat initially not taken
+		PersistenceManager pm = PMF.get().getPersistenceManager();
+		try {
+            pm.makePersistent(this);
+            
+        } finally {
+            pm.close();
+        }
 	}
 	
 	/*------------ MODIFIERS ------------*/
