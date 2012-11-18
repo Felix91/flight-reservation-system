@@ -162,12 +162,13 @@ public class Test extends HttpServlet{
 		{
 			String city = request.getParameter("city");
 			String csign = request.getParameter("callSign");
-			if(city ==null || csign == null)
+			String coordinates = request.getParameter("coordinates");
+			if(city ==null || csign == null || coordinates == null)
 			{
-				response.getWriter().println("Need both city or callsign");
+				response.getWriter().println("Missing parameter(s)");
 				return;
 			}
-			new Airport(csign,city);
+			new Airport(csign,city,coordinates);
 			response.sendRedirect("/entityTest?test=Airport");
 		}
 	}

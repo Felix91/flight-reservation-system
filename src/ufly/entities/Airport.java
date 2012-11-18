@@ -19,13 +19,15 @@ public class Airport {
 	/*------------ CONSTRUCTORS ------------*/
 	/**
 	 * Create an Airport object
-	 * @param callsign	: The Airport's callsign
-	 * @param city		: The Airport's city
+	 * @param callsign		: The Airport's callsign
+	 * @param city			: The Airport's city
+	 * @param coordindates	: The Airport's coordinates
 	 */
-	public Airport(String callsign, String city)
+	public Airport(String callsign, String city, String coordinates)
 	{
 		this.callsign = callsign;
 		this.city = city;
+		this.coordinates = coordinates;
 		this.departures = new Vector<Key>();
 		this.arrivals = new Vector<Key>();
 		this.k = KeyFactory.createKey(Airport.class.getSimpleName(), callsign);
@@ -247,6 +249,8 @@ public class Airport {
     private String callsign;			// The Airport's International Air Transport Association (IATA) airport code. e.g. YVR. Uniquely identifies an Airport.
 	@Persistent
 	private String city;				// The Airport's city e.g. Vancouver
+	@Persistent
+	private String coordinates;
 	@Persistent//(mappedBy = "origin")
 	private Vector<Key> departures; 	// The Airport's departing Flights
 	@Persistent//(mappedBy = "destination")

@@ -22,6 +22,10 @@
 		                    	<label class="control-label span2" for="callsign">callsign</label>
 		                    	<input type="text" name="callsign">
 		                    </div>
+		                    <div class="control-group">
+		                    	<label class="control-label span2" for="coordinates">coordinates</label>
+		                    	<input type="text" name="coordinates">
+		                    </div>
 							<input type="submit" value="Submit">
 						</form>
 					</div><!--/span row-->

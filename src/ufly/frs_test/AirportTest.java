@@ -23,8 +23,9 @@ public class AirportTest extends HttpServlet {
 	{
 		String city = req.getParameter("city");
 		String callsign = req.getParameter("callsign");
+		String coordinates = req.getParameter("coordinates");
 		
-		new Airport(callsign, city);
+		new Airport(callsign, city, coordinates);
 		resp.sendRedirect("/entityTest?test=Airport");
 	}
 }
