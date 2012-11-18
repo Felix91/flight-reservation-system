@@ -181,8 +181,11 @@ public class Customer extends User {
 				Key cur_fb = itr.next();
 				if( cur_fb.toString().equals(fb.toString()) )
 				{
-					this.flightBookings.remove(cur_fb);//since a flightbooking is unique this works
-					pm.makePersistent(this);
+					// Yet another unable to update problem...
+					// I think Customer is not actually detachable.
+					Customer c = (Customer)pm.getObjectById(Customer.class, this.getEmailAddr());
+					c.flightBookings.remove(cur_fb);//since a flightbooking is unique this works
+					pm.makePersistent(c);
 					break;
 				}
 			}
