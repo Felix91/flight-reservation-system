@@ -95,12 +95,12 @@
 	</servlet-mapping>
 	<!-- ADMIN PAGE -->
 	<servlet>
-		<servlet-name>adminProfile</servlet-name>
-		<servlet-class>ufly.frs.AdminProfile</servlet-class>
+		<servlet-name>flightManagerProfilePage</servlet-name>
+		<servlet-class>ufly.frs.FlightManagerProfile</servlet-class>
 	</servlet>
 	<servlet-mapping>
-		<servlet-name>adminProfile</servlet-name>
-		<url-pattern>/adminProfile</url-pattern>
+		<servlet-name>flightManagerProfilePage</servlet-name>
+		<url-pattern>/flightManagerProfile</url-pattern>
 	</servlet-mapping>
 	<!-- ADMIN FLIGHTS PAGE -->
 	<servlet>
