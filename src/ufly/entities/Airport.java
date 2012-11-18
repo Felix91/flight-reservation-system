@@ -250,7 +250,7 @@ public class Airport {
 	@Persistent
 	private String city;				// The Airport's city e.g. Vancouver
 	@Persistent
-	private String coordinates;
+	private String coordinates;			// The Airport's coordinates e.g. "49.1955,-123.1778" for YVR
 	@Persistent//(mappedBy = "origin")
 	private Vector<Key> departures; 	// The Airport's departing Flights
 	@Persistent//(mappedBy = "destination")
