@@ -10,6 +10,7 @@
 						<tr>
 							<th>Callsign</th>
 							<th>City</th>
+							<th>Coordinates</th>
 							<th>Action</th>
 						</tr>
 					</thead>
@@ -24,6 +25,7 @@
 							out.println("<tr>");
 							out.println("<td>"+nextAirport.getCallSign()+"</td>");
 							out.println("<td>"+nextAirport.getCity()+"</td>");
+							out.println("<td>"+nextAirport.getCoordinates()+"</td>");
 							out.println("<td><a href=\"#\">Delete</a></td>");
 							out.println("</tr>");
 						}

@@ -32,12 +32,17 @@
 									while (iterator.hasNext()) {
 										FlightBooking nextFlightbooking = iterator.next();
 										out.println("<tr>");
-										out.println("<td>"+nextFlightbooking.getConfirmationNumber().getId()+"</td>");
-										out.println("<td>"+nextFlightbooking.getBookedBy().getFirstName() + nextFlightbooking.getBookedBy().getLastName() + "</td>");
-										out.println("<td>+nextFlightbooking.getBookedFlight().getFlightNumber()+</td>");
-										out.println("<td>"+nextFlightbooking.getBookedFlightClass().toString()+"</td>");
-										out.println("<td>+nextFlightbooking.getBookedSeat().toString()+</td>");
-										out.println("<td><a href=\"/customerProfile/showFlightbookings?confirmationNumber="+ nextFlightbooking.getConfirmationNumber().getId() + "\">Show</a></td>");
+											out.println("<td>"+nextFlightbooking.getConfirmationNumber().getId()+"</td>");
+											out.println("<td>"+nextFlightbooking.getBookedBy().getFirstName() + nextFlightbooking.getBookedBy().getLastName() + "</td>");
+											out.println("<td>"+nextFlightbooking.getBookedFlight().getFlightNumber()+"</td>");
+											out.println("<td>"+nextFlightbooking.getBookedFlightClass().toString()+"</td>");
+											out.println("<td>"+nextFlightbooking.getBookedSeat().toString()+"</td>");
+											out.println("<td>");
+												out.println("<a href=\"/customerProfile/showFlightbookings?confirmationNumber="+ nextFlightbooking.getConfirmationNumber().getId() + "\">Show</a>");
+												if(!nextFlightbooking.getCheckedIn() ){
+													out.println("<a href=\"/customerProfile/editFlightbookings?confirmationNumber="+ nextFlightbooking.getConfirmationNumber().getId() + "\">Modify</a>");
+												}
+											out.println("</td>");
 										out.println("</tr>");
 									}
 									%>
