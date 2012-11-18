@@ -210,6 +210,14 @@ public class Airport {
 	{
 		return this.city;
 	}
+	
+	/**
+	 * @return the coordinates
+	 */
+	public String getCoordinates()
+	{
+		return this.coordinates;
+	}
 
 	/**
 	 * @return a vector of departure flights from this
