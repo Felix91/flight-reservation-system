@@ -24,7 +24,7 @@
 						<a href="/flightManagerProfile/addFlights"><button class="btn btn-primary">Add Flights</button></a>
 					</div>
 					<div id="flightstat" class="tab-pane fade">
-						<p>Stat goes here</p>						
+						<jsp:include page="/_adminStats" />					
 					</div>
 					<div id="flightbookings" class="tab-pane fade">				
 						<jsp:include page="/_adminFlightbookings" />
