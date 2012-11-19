@@ -46,6 +46,10 @@ public class BookCreate extends UflyServlet {
 			}catch(NumberFormatException e){
 				loyaltyPointsDollars=0;
 			}
+			//Make sure customer does not use more loyalty points then he has
+			if(loyaltyPointsDollars>localUser.getLoyaltyPoints()/10){
+				loyaltyPointsDollars=localUser.getLoyaltyPoints()/10;
+			}
 			for(Integer flightNum=0;flightNum<numberOfFlights;flightNum++)
 			{
 				//Parse all the Posted values
