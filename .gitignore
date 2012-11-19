@@ -7,3 +7,4 @@ ufly/doc/
 .metadata/
 
 .settings/
+war/WEB-INF/lib/*
