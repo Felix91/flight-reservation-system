@@ -14,7 +14,7 @@ import ufly.entities.FlightStaff;
 import ufly.entities.User;
 
 @SuppressWarnings("serial")
-public class UflyServlet extends HttpServlet {
+class UflyServlet extends HttpServlet {
 	static protected class NullLoginUser extends Error{}
 	public User getLoggedInUser(HttpSession s)
 	{
