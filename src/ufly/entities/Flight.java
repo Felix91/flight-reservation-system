@@ -275,6 +275,64 @@ public class Flight extends SuperEntity{
 		return toRet;
 	}
 	
+	/**
+	 * Get total booked flights by flightnumber (for adminstats)
+	 * @param flightNumber String
+	 * @return
+	 */
+	@SuppressWarnings("unchecked")
+	public static int getBookedFlightsByFlightNum(String flightNumber)
+	{
+		int bookedflights=0;
+		List<Flight> toRet= null;
+		PersistenceManager pm = PMF.get().getPersistenceManager();
+		Query q = pm.newQuery(Flight.class );
+		q.setFilter("flightNumber == FlightNoParam");
+		q.declareParameters("String FlightNoParam");
+		toRet=(List<Flight>)q.executeWithArray(flightNumber);
+		Iterator<Flight> it = toRet.iterator();
+		try{		
+		
+			while (it.hasNext())
+			{
+				bookedflights+=it.next().getNumBookedFlights();
+				//pm.detachCopy(it.next());
+				
+			}
+		}
+		finally{
+			pm.close();
+		}
+		return bookedflights;
+
+	}
+	
+	/**
+	 * Get total booked flights by flightnumber (for admin stats) 
+	 * @param flightNumber String
+	 * @return
+	 */
+	@SuppressWarnings("unchecked")
+	public static int getTotalFlightsByFlightNum(String flightNumber)
+	{
+		int totalflights=0;
+		List<Flight> toRet= null;
+		PersistenceManager pm = PMF.get().getPersistenceManager();
+		Query q = pm.newQuery(Flight.class );
+		q.setFilter("flightNumber == FlightNoParam");
+		q.declareParameters("String FlightNoParam");
+		toRet=(List<Flight>)q.executeWithArray(flightNumber);
+		Iterator<Flight> it = toRet.iterator();
+		try{		
+			return toRet.size();
+		}
+		finally{
+			pm.close();
+		}
+
+		
+	}
+	
 	public static Flight getFlight(Key flightKey)
 	{
 		PersistenceManager pm = PMF.get().getPersistenceManager();
@@ -298,8 +356,8 @@ public class Flight extends SuperEntity{
 		PersistenceManager pm = PMF.get().getPersistenceManager();
 		Flight f, detached = null;
 		try{
-		    	f = pm.getObjectById(Flight.class, flightKey);
-		        detached = pm.detachCopy(f);
+			f = pm.getObjectById(Flight.class, flightKey);
+		    detached = pm.detachCopy(f);
 		}
 		finally {
 			pm.close();

@@ -219,10 +219,6 @@ public class Airport {
 		return this.coordinates;
 	}
 
-	/**
-	 * @return a vector of departure flights from this
-	 */
-	//JDV 02/11/2012 Do we need these accessors? they require lots db work
 	public int getnumDepartures()
 	{
 		return this.departures.size();
@@ -233,13 +229,6 @@ public class Airport {
 		return this.arrivals.size();
 	}
 	
-//	/**
-//	 * @return a vector of arrival flights from this
-//	 */
-//	public Vector<Flight> getArrivingFlight()
-//	{
-//		return this.arrivals;
-//	}
 	/**
 	 * 
 	 * @return return the datastore key for this Airport

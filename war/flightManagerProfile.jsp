@@ -20,7 +20,7 @@
                 <a href="#" class="dropdown-toggle" data-toggle="dropdown">Statistics <b class="caret"></b></a>
                 <ul class="dropdown-menu">
                   <li><a href="#airport"data-toggle="tab">Airport Statistics</a></li>
-                  <li><a href="#">Flight Statistics</a></li>
+                  <li><a href="#flightstat" data-toggle="tab">Flight Statistics</a></li>
                 </ul>
               </li>					
               <li><a href="#flightbookings" data-toggle="tab">Flightbookings</a></li>			
@@ -32,8 +32,10 @@
 						<a href="/flightManagerProfile/addFlights"><button class="btn btn-primary">Add Flights</button></a>
 					</div>
 					<div id="airport" class="tab-pane fade">
-					
-						<jsp:include page="/_adminStats" />					
+						<jsp:include page="/_adminStats" />
+					</div>
+					<div id="flightstat" class="tab-pane fade">
+						<jsp:include page="/_flightStats" />					
 					</div>
 					<div id="flightbookings" class="tab-pane fade">				
 						<jsp:include page="/_adminFlightbookings" />

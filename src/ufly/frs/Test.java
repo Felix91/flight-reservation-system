@@ -3,8 +3,11 @@ package ufly.frs;
 import java.io.IOException;
 
 import java.util.GregorianCalendar;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Set;
+import java.util.Vector;
 
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -68,6 +71,10 @@ public class Test extends HttpServlet{
 		else if( test.equalsIgnoreCase("AdminStats") == true )
 		{
 			testAirportStats(request, response);
+		}
+		else if( test.equalsIgnoreCase("FlightStats") == true )
+		{
+			testFlightStats(request, response);
 		}
 		response.getWriter().println("</body></html>");
 	
@@ -339,6 +346,7 @@ public class Test extends HttpServlet{
 		}
 		response.getWriter().println("</ul>");
 		
+		
 		response.getWriter().println("Booked Flights: ");
 		response.getWriter().println("<ul>");
 		Flight ff;
@@ -348,10 +356,42 @@ public class Test extends HttpServlet{
 			int bookedflights = ff.getNumBookedFlights();
 			response.getWriter().println("<li>"+ff.getKey()+"Number of booked flights" +bookedflights+"</li>");
 		}
-		response.getWriter().println("</ul>");
-		
-		
-
-       
+		response.getWriter().println("</ul>");   
 	}
+	
+	private void testFlightStats(HttpServletRequest request, HttpServletResponse response) throws IOException
+	{
+		List<Flight> results2 = Flight.getAllFlights();
+		Set<String>fn = new HashSet<String>();
+		Iterator<Flight> it2 = results2.iterator();
+		response.getWriter().println("Booked Flights: ");
+		response.getWriter().println("<ul>");
+		Flight ff;
+		
+		//get list of unique flightnumbers
+		while (it2.hasNext())
+		{
+			ff =it2.next();
+			if(ff.getNumBookedFlights()>0){
+				String flightnum =ff.getFlightNumber();
+				fn.add(flightnum);
+				response.getWriter().println("<li>"+fn +"</li>");
+				
+			}
+		}
+		
+		Iterator<String> it3= fn.iterator();
+		while(it3.hasNext())
+		{
+			String test= it3.next();
+			response.getWriter().println("<li>"+test+" "+Flight.getBookedFlightsByFlightNum(test) +" "+Flight.getTotalFlightsByFlightNum(test)+"</li>");
+		}
+			
+		
+		response.getWriter().println("</ul>");   
+	}
+
+	
+
+	
 }
