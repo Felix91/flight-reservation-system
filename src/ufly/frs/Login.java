@@ -60,6 +60,7 @@ public class Login extends UflyServlet {
 		if (localUser != null && localUser.checkPassword(Password))
 		{
 			login(email,req.getSession());
+			//check to see if in the middle of a flight booking
 			if(req.getSession().getAttribute("departopt")!=null )
 			{
 				resp.sendRedirect("/select");
