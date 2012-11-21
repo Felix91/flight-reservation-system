@@ -3,6 +3,8 @@
 <%
 	SimpleDateFormat dateFormat = new SimpleDateFormat("MMM dd, yyyy");
 	SimpleDateFormat timeFormat = new SimpleDateFormat("HH:mm");
+	SimpleDateFormat fullDateFormat = new SimpleDateFormat(
+			"yyyy-MM-dd_HH:mm");
 %>
 <html>
 
@@ -16,12 +18,7 @@
 							<h4>Staff Flight Management</h4>
 							<div class="row-fluid">
 								<div class="span12">
-									<script type="text/javascript">
-										function openManifest(date,flightNum){
-											newwindow=window.open("/flightmanifest.jsp","Manifest");
-										}
-										
-									</script>
+									
 									<table class="table table-striped">
 										<thead>
 											<tr>
@@ -43,7 +40,7 @@
 												for (HashMap<String, Object> flight : flights) {
 											%>
 											<tr>
-												<td>1</td>
+												<td><%=flight.get("flightNo")%></td>
 												<td><%=(String) flight.get("flightOrigin")%></td>
 												<td><%=(String) flight.get("flightDestination")%></td>
 												<td><%=dateFormat.format(flight.get("departs"))%></td>
@@ -53,8 +50,7 @@
 
 												<td><%=flight.get("numBooked").toString()%>/<%=flight.get("capacity").toString()%></td>
 												<td>
-
-													<button></button> <a href="/flightmanifest.jsp">Manifest</a>
+													<a href="/flightManifest?flightNo=<%=flight.get("flightNo")%>&date=<%=fullDateFormat.format(flight.get("departs"))%>">Manifest</a>
 												</td>
 											</tr>
 											<%

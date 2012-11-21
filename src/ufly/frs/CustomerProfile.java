@@ -19,7 +19,7 @@ public class CustomerProfile extends UflyServlet {
 		
 			if (getLoggedInUser(req.getSession())!=null)
 			{
-				Customer loggedInCustomer = Customer.getCustomer(getLoggedInUser(req.getSession()).getEmailAddr());
+				Customer loggedInCustomer =(Customer)getLoggedInUser(req.getSession());
 				req.setAttribute("customerFirstName", loggedInCustomer.getFirstName());
 				req.setAttribute("customerLastName", loggedInCustomer.getLastName());
 				req.setAttribute("loyaltyPoints", loggedInCustomer.getLoyaltyPoints());

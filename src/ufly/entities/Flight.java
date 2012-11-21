@@ -684,7 +684,14 @@ public class Flight extends SuperEntity{
 	{
 		return this.departure;
 	}
-
+	public Vector<FlightBooking> getBookings()
+	{
+		Vector<FlightBooking> toRet = new Vector(this.flightBookings.size());
+		for(Key fbK:this.flightBookings){
+			toRet.add(FlightBooking.getFlightBooking(fbK));
+		}
+		return toRet;
+	}
 	/**
 	 * @return the destination airport
 	 */
