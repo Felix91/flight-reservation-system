@@ -55,9 +55,8 @@ public class FlightManager extends Admin {
 		    	c = pm.getObjectById(FlightManager.class, emailAddr);
 		        detached = pm.detachCopy(c);
 		    }
-		catch( javax.jdo.JDOException e)
+		catch( javax.jdo.JDOObjectNotFoundException e)
 		{
-			e.printStackTrace();
 		}
 		finally {
 			pm.close();

@@ -58,7 +58,6 @@ public class Customer extends User {
 		    }
 		catch( javax.jdo.JDOException e)
 		{
-			e.printStackTrace();
 		}
 		finally {
 			pm.close();

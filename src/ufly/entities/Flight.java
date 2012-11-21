@@ -364,7 +364,27 @@ public class Flight extends SuperEntity{
 		}
 		return detached;
 	}
-	
+	public static List<Flight> getFlightsAfterDate(Date day)
+	{
+		List<Flight> toRet= null;
+		PersistenceManager pm = PMF.get().getPersistenceManager();
+		try{
+			Query q = pm.newQuery(Flight.class, "departure >  startDateParam " );
+			q.declareImports("import java.util.Date" );
+			q.declareParameters("Date startDateParam");
+			q.setOrdering("departure asc");
+			toRet=(List<Flight>)q.executeWithArray(day);
+			Iterator<Flight> it = toRet.iterator();
+			while (it.hasNext())
+			{
+				pm.detachCopy(it.next());
+			}
+		}
+		finally{
+			pm.close();
+		}
+		return toRet;
+	}
 	/**
 	 *
 	 * @param origin the airport to fly from,
@@ -708,6 +728,10 @@ public class Flight extends SuperEntity{
 	public int getNumBookedFlights()
 	{
 		return flightBookings.size();
+	}
+	public int getCapacity(){
+		SeatingArrangement sa=this.getSeatingArrangement();
+		return sa.getNumRows() * sa.getNumColumns();
 	}
 	public Integer getPriceInCents()
 	{
