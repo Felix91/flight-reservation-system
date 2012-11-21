@@ -17,7 +17,7 @@ public class FlightManagerProfile extends UflyServlet {
 
 			if (getLoggedInUser(req.getSession())!=null)
 			{
-				req.getRequestDispatcher("/FlightManagerProfile.jsp")
+				req.getRequestDispatcher("/flightManagerProfile.jsp")
 				.forward(req,resp);
 			}
 			else{
