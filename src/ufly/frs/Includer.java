@@ -6,6 +6,9 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import ufly.entities.Customer;
+import ufly.entities.FlightManager;
+import ufly.entities.FlightStaff;
 import ufly.entities.User;
 
 @SuppressWarnings("serial")
@@ -29,6 +32,14 @@ public class Includer extends UflyServlet {
 			{
 				String name=u.getDisplayName();
 				req.setAttribute("userName", name);
+				if(u.getClass().equals(Customer.class)){
+					req.setAttribute("userProfilePage", "/customerProfile" );
+				}else if(u.getClass().equals(FlightStaff.class)){
+					req.setAttribute("userProfilePage", "/flightStaffProfile" );
+				}else if(u.getClass().equals(FlightManager.class)){
+					req.setAttribute("userProfilePage", "/flightManagerProfile" );
+				}
+
 			}
 			req.getRequestDispatcher("/_navBar.jsp")
 				.include(req,resp);

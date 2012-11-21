@@ -18,7 +18,18 @@
 							<h4>Staff Flight Management</h4>
 							<div class="row-fluid">
 								<div class="span12">
-									
+									<div class="controls">
+	                               		<input name="departureDate" class="required" type="text" id="flightDate" placeholder="Date To List Flights">
+	                               		<script>
+	                               			$(function(){
+	                                        	$('#flightDate').datepicker({
+	       		                                	format: 'mm-dd-yyyy'
+	 	                                    	}).on('changeDate', function(ev){								
+													window.location = "/flightStaffProfile?Date="+$('#flightDate').val()
+												})
+	                               			});     
+                                        </script>
+	                           		</div>
 									<table class="table table-striped">
 										<thead>
 											<tr>

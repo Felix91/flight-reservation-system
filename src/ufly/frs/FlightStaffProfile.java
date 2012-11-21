@@ -26,12 +26,12 @@ public class FlightStaffProfile extends UflyServlet {
 			}
 		}
 		SimpleDateFormat convertToDate = new SimpleDateFormat(
-				"yyyy/MM/dd HH:mm");
+				"MM-dd-yyyy");
 		Date daytocheck = null;
 
 		if (req.getParameter("Date") == null) {
 
-			daytocheck = convertToDate.parse("2012/11/12 00:00",
+			daytocheck = convertToDate.parse("11-13-2012",
 					new ParsePosition(0));
 
 		} else {
@@ -40,7 +40,7 @@ public class FlightStaffProfile extends UflyServlet {
 		}
 
 		Vector<HashMap> flights = new Vector();
-		List<Flight> flightList = Flight.getFlightsAfterDate(daytocheck);
+		List<Flight> flightList = Flight.getFlightsOnDate(daytocheck);
 		for (Flight f : flightList) {
 			HashMap<String, Object> hm = f.getHashMap();
 			hm.put("capacity", new Integer(f.getCapacity()));
