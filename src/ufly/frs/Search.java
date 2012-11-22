@@ -112,11 +112,11 @@ public class Search extends UflyServlet {
 		@Override
 		public int compare(Vector<HashMap<String, Object>> o1,
 				Vector<HashMap<String, Object>> o2) {
-			if (((Date) o1.get(0).get("departure")).before((Date) o2.get(0)
-					.get("departure")))
+			if (((Date) o1.get(0).get("departs")).before((Date) o2.get(0)
+					.get("departs")))
 				return -1;
-			if (((Date) o1.get(0).get("departure")).after((Date) o2.get(0).get(
-					"departure")))
+			if (((Date) o1.get(0).get("departs")).after((Date) o2.get(0).get(
+					"departs")))
 				return 1;
 			return 0;
 		}
