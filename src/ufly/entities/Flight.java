@@ -755,7 +755,7 @@ public class Flight extends SuperEntity{
 	public String toString() {
 		return "Flight [flightNumber=" + flightNumber + ", origin=" + origin.toString()
 				+ ", destination=" + destination.toString()+ ", departure=" + departure.toLocaleString()
-				+ ", arrival=" + arrival + ", allowableMealTypes="
+				+ ", arrival=" + arrival.toLocaleString() + ", allowableMealTypes="
 				+ allowableMealTypes + ", seatingArragement="
 				+ seatingArrangement + ", flightBookings=" + flightBookings.toString() + " #elems: " + flightBookings.size()
 				+ "]";
