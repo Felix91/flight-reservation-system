@@ -70,10 +70,10 @@
                                     </div>
 							</div><!-- span12 -->
 						</div><!-- row-fluid -->
-						<div class="row-fluid">
-								<label class="control-label span4" for="focusedInput">Passengers</label>
-								<div class="controls span8">
-									<select class="required" name="numPassengers" class="input-medium focused">
+						<div class="control-group">
+								<label class="control-label" for="focusedInput">Passengers</label>
+								<div class="controls">
+									<select class="required input-small focused" id="focusedInput" name="numPassengers" >
 										<%	
 											Integer selNumPax;
 											if (request.getAttribute("numPassengers") != null)
