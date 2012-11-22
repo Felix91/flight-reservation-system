@@ -40,8 +40,8 @@ public class Flight extends SuperEntity{
 	 * new Flight (	####
 	 * 				YVR
 	 * 				LAX
-	 * 				yyyy/MM/dd HH:mm
-	 * 				yyyy/MM/dd HH:mm
+	 * 				yyyy.MM.dd.HH.mm
+	 * 				yyyy.MM.dd.HH.mm
 	 * 				BF-CK-PK
 	 * 				BOEING_777
 	 */
@@ -127,7 +127,7 @@ public class Flight extends SuperEntity{
 		tempDestination.addArrivalFlight(this.k);
 
 
-		SimpleDateFormat convertToDate = new SimpleDateFormat("yyyy/MM/dd HH:mm");
+		SimpleDateFormat convertToDate = new SimpleDateFormat("yyyy.MM.dd.HH.mm");
 		//Departure
 		this.departure = convertToDate.parse(departure, new ParsePosition(0));
 		//Arrival
@@ -412,6 +412,7 @@ public class Flight extends SuperEntity{
 			param[0]=origin.getKey();
 			param[1]=startTime;
 			param[2]=endTime;
+			System.out.println("Tried");
 			q.declareParameters("Key originParam, Date startDateParam,Date endDateParam");
 			toRet=(List<Flight>)q.executeWithArray(param);
 			Iterator<Flight> it = toRet.iterator();
@@ -421,6 +422,7 @@ public class Flight extends SuperEntity{
 			}
 		}
 		finally{
+			System.out.println("Fail");
 			pm.close();
 		}
 		return toRet;
@@ -755,7 +757,7 @@ public class Flight extends SuperEntity{
 	public String toString() {
 		return "Flight [flightNumber=" + flightNumber + ", origin=" + origin.toString()
 				+ ", destination=" + destination.toString()+ ", departure=" + departure.toLocaleString()
-				+ ", arrival=" + arrival + ", allowableMealTypes="
+				+ ", arrival=" + arrival.toLocaleString() + ", allowableMealTypes="
 				+ allowableMealTypes + ", seatingArragement="
 				+ seatingArrangement + ", flightBookings=" + flightBookings.toString() + " #elems: " + flightBookings.size()
 				+ "]";

@@ -27,7 +27,7 @@ public class FlightBooking extends SuperEntity {
 	 * @param bookedSeat		: The FlightBooking's booked seat. In "<row#><columnChar>" format e.g. "03C", "12D"
 	 * @param mealChoice		: The FlightBooking's meal choice. E.g. "beef"
 	 */
-	public FlightBooking(String bookedBy, String bookedFlight, String bookedFlightClass, String bookedSeat, String mealChoice)
+	public FlightBooking(String bookedBy, String bookedFlight, String bookedFlightClass, String bookedSeat, String mealChoice, String creditCardNo)
 	{
 		// Key will be generated automatically
 
@@ -52,6 +52,7 @@ public class FlightBooking extends SuperEntity {
 		{
 			this.bookedFlightClass = FlightClass.economy;
 		}
+		this.creditCardNo=creditCardNo;
 
 		// Set seat
 		int rowNum = Integer.parseInt(bookedSeat.substring(0, 2));
@@ -183,7 +184,7 @@ public class FlightBooking extends SuperEntity {
 				+ ", customer=" + bookedBy.toString()
 				+ ", flight=" + bookedFlight.toString()
 				+ ", flightClass=" + bookedFlightClass.toString()
-				+ ", seat=" + bookedSeat.toString()
+				//+ ", seat=" + bookedSeat.toString()
 				+ ", meal=" + mealChoice
 				+ "]";
 	}
