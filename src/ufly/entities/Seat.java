@@ -115,7 +115,7 @@ public class Seat {
 	/**
 	 * @return the row number
 	 */
-	public int getRowNumber()
+	public Integer getRowNumber()
 	{
 		return this.rowNumber;
 	}
@@ -123,7 +123,7 @@ public class Seat {
 	/**
 	 * @return the column character
 	 */
-	public char getColumn()
+	public Character getColumn()
 	{
 		return this.columnChar;
 	}

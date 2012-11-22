@@ -56,7 +56,6 @@ public class FlightStaff extends Admin {
 		    }
 		catch( javax.jdo.JDOException e)
 		{
-			e.printStackTrace();
 		}
 		finally {
 			pm.close();

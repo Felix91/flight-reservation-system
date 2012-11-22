@@ -12,35 +12,15 @@ public class FlightManagerProfile extends UflyServlet {
 	public void doGet(HttpServletRequest req, HttpServletResponse resp)
 		throws IOException,ServletException
 	{	
-		
-		String pageToInclude= getServletConfig().getInitParameter("action");
 
 			if (getLoggedInUser(req.getSession())!=null)
 			{
-				req.getRequestDispatcher("/FlightManagerProfile.jsp")
+				req.getRequestDispatcher("/flightManagerProfile.jsp")
 				.forward(req,resp);
 			}
 			else{
 				resp.sendRedirect("/");
 			}
-			
-		
-		
-		
-		
-		
-		
-		//if (getLoggedInUser(req.getSession())!=null)
-		//{
-		//	Customer loggedInCustomer = Customer.getCustomer(getLoggedInUser(req.getSession()).getEmailAddr());
-		//	req.setAttribute("customerFirstName", loggedInCustomer.getFirstName());
-		//	req.setAttribute("customerLastName", loggedInCustomer.getLastName());
-		//	req.getRequestDispatcher("/FlightManagerProfile.jsp")
-		//	.forward(req,resp);
-		//}
-		//else{
-		//	resp.sendRedirect("/");
-		//}
 	}
 
 	public void doPost(HttpServletRequest req, HttpServletResponse resp)

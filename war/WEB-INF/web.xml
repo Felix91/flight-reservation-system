@@ -188,6 +188,15 @@
 	<servlet-mapping>
 		<servlet-name>flightStaffProfilePage</servlet-name>
 		<url-pattern>/flightStaffProfile</url-pattern>
+	</servlet-mapping>	
+	<!-- FLIGHT STAFF MANIFEST PAGE -->
+	<servlet>
+		<servlet-name>flightStaffManifest</servlet-name>
+		<servlet-class>ufly.frs.Manifest</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>flightStaffManifest</servlet-name>
+		<url-pattern>/flightManifest</url-pattern>
 	</servlet-mapping>
 	<!-- ADMIN FLIGHTS PAGE -->
 	<servlet>

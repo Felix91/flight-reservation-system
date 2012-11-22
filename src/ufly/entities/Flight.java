@@ -364,7 +364,31 @@ public class Flight extends SuperEntity{
 		}
 		return detached;
 	}
-	
+	public static List<Flight> getFlightsOnDate(Date day)
+	{
+		final long TWENTYFOUR_HOURS =24000*3600;
+		/*get date stuff set up*/
+		List<Flight> toRet=null;
+		Date startTime = new Date(day.getTime());
+		Date endTime = new Date(day.getTime()+TWENTYFOUR_HOURS);
+		PersistenceManager pm = PMF.get().getPersistenceManager();
+		try{
+			Query q = pm.newQuery(Flight.class, "departure >  startDateParam && departure < endDateParam" );
+			q.declareImports("import java.util.Date" );
+			q.declareParameters("Date startDateParam,Date endDateParam");
+			q.setOrdering("departure asc");
+			toRet=(List<Flight>)q.executeWithArray(startTime,endTime);
+			Iterator<Flight> it = toRet.iterator();
+			while (it.hasNext())
+			{
+				pm.detachCopy(it.next());
+			}
+		}
+		finally{
+			pm.close();
+		}
+		return toRet;
+	}
 	/**
 	 *
 	 * @param origin the airport to fly from,
@@ -373,7 +397,7 @@ public class Flight extends SuperEntity{
 	 */
 
 	public static List<Flight> getFlightsOriginDate(Airport origin,Date dayTime) {
-		final long TWENTYFOUR_HOURS =240000*3600;
+		final long TWENTYFOUR_HOURS =24000*3600;
 		/*get date stuff set up*/
 		List<Flight> toRet=null;
 		Date startTime = new Date(dayTime.getTime());
@@ -664,7 +688,14 @@ public class Flight extends SuperEntity{
 	{
 		return this.departure;
 	}
-
+	public Vector<FlightBooking> getBookings()
+	{
+		Vector<FlightBooking> toRet = new Vector(this.flightBookings.size());
+		for(Key fbK:this.flightBookings){
+			toRet.add(FlightBooking.getFlightBooking(fbK));
+		}
+		return toRet;
+	}
 	/**
 	 * @return the destination airport
 	 */
@@ -708,6 +739,10 @@ public class Flight extends SuperEntity{
 	public int getNumBookedFlights()
 	{
 		return flightBookings.size();
+	}
+	public int getCapacity(){
+		SeatingArrangement sa=this.getSeatingArrangement();
+		return sa.getNumRows() * sa.getNumColumns();
 	}
 	public Integer getPriceInCents()
 	{

@@ -1,6 +1,7 @@
 package ufly.entities;
 
 
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Vector;
@@ -320,6 +321,21 @@ public class FlightBooking extends SuperEntity {
 	}
 
 	/*------------ACCESSORS--------------*/
+	public HashMap<String,Object> getHashMap()
+	{
+		HashMap <String,Object>toRet = new HashMap();
+		toRet.put("bookedBy", this.getBookedBy().getDisplayName());
+		toRet.put("confirmNo", this.getConfirmationNumber().toString());
+		toRet.put("passengerName", this.getPassengerName());
+		toRet.put("flightClass", this.getBookedFlightClass().toString());
+		toRet.put("seat", this.getBookedSeat().getRowNumber().toString()+this.getBookedSeat().getColumn().toString());
+		toRet.put("meal", this.getMealChoice());
+		toRet.put("checkedIn", this.getCheckedIn());
+		toRet.put("creditCardNumber", this.creditCardNo);
+		
+		return toRet;
+	}
+	
 	/**
 	 * @return the confirmation number of booking
 	 */
@@ -327,7 +343,10 @@ public class FlightBooking extends SuperEntity {
 	{
 		return this.confirmationNumber;
 	}
-
+	public String getPassengerName()
+	{
+		return this.passengerName;
+	}
 	/**
 	 * @return the customer object
 	 */

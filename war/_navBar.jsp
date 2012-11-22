@@ -23,7 +23,7 @@
               <% 
               	if(loggedin){ %>
 				<ul aria-labelledby="drop5" role="menu" class="dropdown-menu" id="menu2">
-                  <li><a href="/customerProfile" tabindex="-1">Profile Page</a></li>
+                  <li><a href="<%=request.getAttribute("userProfilePage") %>" tabindex="-1">Profile Page</a></li>
                   <li><a href="#" tabindex="-1">Modify a Booking</a></li>
                   <li><a href="#" tabindex="-1">Something else here</a></li>
                   <li class="divider"></li>
