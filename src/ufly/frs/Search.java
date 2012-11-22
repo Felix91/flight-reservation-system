@@ -103,7 +103,7 @@ public class Search extends UflyServlet {
 				}
 			}
 		}
-		Collections.sort(toRet, new TripDepartureSort());
+		//Collections.sort(toRet, new TripDepartureSort());
 		return toRet;
 	}
 

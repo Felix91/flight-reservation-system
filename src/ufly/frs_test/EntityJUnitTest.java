@@ -8,6 +8,8 @@ import org.junit.Test;
 import ufly.entities.Airport;
 import com.google.appengine.tools.development.testing.LocalDatastoreServiceTestConfig;
 import com.google.appengine.tools.development.testing.LocalServiceTestHelper;
+import ufly.entities.Airport;
+
 
 /* JUnit Test Cases for determining functionality of primitive user-defined classes
  * for the uFly Flight Booking Reservation System.
@@ -45,9 +47,9 @@ public class EntityJUnitTest {
 	
 		try {
 			// Constructors
-			Airport YYZ = new Airport("YYZ", "Toronto");
-			Airport YVR = new Airport("YVR", "Vancouver");
-			Airport YCC = new Airport("YCC", "Calgary");
+			Airport YYZ = new Airport("YYZ", "Toronto", "43.6817,-79.6120");
+			Airport YVR = new Airport("YVR", "Vancouver", "49.1955,123.1779");
+			Airport YYC = new Airport("YYC", "Calgary", "51.1139,-114.0203");
 			
 			// Modifiers
 			YYZ.changeCallSign("YVR");

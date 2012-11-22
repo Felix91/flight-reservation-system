@@ -150,6 +150,39 @@ public class Test extends HttpServlet{
 	}
 	
 	
+	private void testFlightBooking(HttpServletRequest request, HttpServletResponse response) throws IOException
+	{
+		if (request.getParameter("bookedBy")==null) {
+			List<FlightBooking> results = FlightBooking.getAllFlightBookings();
+			Iterator<FlightBooking> it = results.iterator();
+	        // Print all FlightBookings in the datastore
+	        response.getWriter().println("FlightBookings added: ");
+	        response.getWriter().println("<ul>");
+	        FlightBooking fb;
+			while (it.hasNext())
+			{
+				fb = it.next();
+				response.getWriter().println("<li>"+ fb.toString() +"</li>");
+			}
+			response.getWriter().println("</ul>");
+			
+		}
+		else {
+			String bookedBy = request.getParameter("bookedBy");
+			String bookedFlight = request.getParameter("bookedFlight");
+			String bookedFlightClass = request.getParameter("bookedFlightClass");
+			String bookedSeat = request.getParameter("bookedSeat");
+			String mealChoice = request.getParameter("mealChoice");
+		    String creditCardNo = request.getParameter("creditCardNo");
+			new FlightBooking(bookedBy,bookedFlight,bookedFlightClass,bookedSeat,mealChoice,creditCardNo); // TODO: create Customer once User has proven to work
+			// FlightBooking's constructor will automatically make object persistant
+
+			response.sendRedirect("/entityTest?test=FlightBooking");
+		}
+		
+		
+	}
+	
 	private void testAirport(HttpServletRequest request, HttpServletResponse response) throws IOException
 	{
 		if(request.getParameter("callSign")==null)
@@ -229,6 +262,7 @@ public class Test extends HttpServlet{
 			response.sendRedirect("/entityTest?test=Customer");
 		}
 	}
+
 	
 	private void testFlightManager(HttpServletRequest request, HttpServletResponse response) throws IOException
 	{
@@ -310,22 +344,6 @@ public class Test extends HttpServlet{
 		}
 		response.getWriter().println("</ul>");
     		
-	}
-	
-	private void testFlightBooking(HttpServletRequest request, HttpServletResponse response) throws IOException
-	{
-		List<FlightBooking> results = FlightBooking.getAllFlightBookings();
-		Iterator<FlightBooking> it = results.iterator();
-        // Print all FlightBookings in the datastore
-        response.getWriter().println("FlightBookings added: ");
-        response.getWriter().println("<ul>");
-        FlightBooking fb;
-		while (it.hasNext())
-		{
-			fb = it.next();
-			response.getWriter().println("<li>"+ fb.toString() +"</li>");
-		}
-		response.getWriter().println("</ul>");
 	}
 	
 	private void testAirportStats(HttpServletRequest request, HttpServletResponse response) throws IOException

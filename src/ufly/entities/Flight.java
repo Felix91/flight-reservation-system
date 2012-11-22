@@ -412,6 +412,7 @@ public class Flight extends SuperEntity{
 			param[0]=origin.getKey();
 			param[1]=startTime;
 			param[2]=endTime;
+			System.out.println("Tried");
 			q.declareParameters("Key originParam, Date startDateParam,Date endDateParam");
 			toRet=(List<Flight>)q.executeWithArray(param);
 			Iterator<Flight> it = toRet.iterator();
@@ -421,6 +422,7 @@ public class Flight extends SuperEntity{
 			}
 		}
 		finally{
+			System.out.println("Fail");
 			pm.close();
 		}
 		return toRet;
