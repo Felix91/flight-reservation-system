@@ -182,7 +182,7 @@ public class FlightBooking extends SuperEntity {
 				+ ", customer=" + bookedBy.toString()
 				+ ", flight=" + bookedFlight.toString()
 				+ ", flightClass=" + bookedFlightClass.toString()
-				+ ", seat=" + bookedSeat.toString()
+				//+ ", seat=" + bookedSeat.toString()
 				+ ", meal=" + mealChoice
 				+ "]";
 	}
