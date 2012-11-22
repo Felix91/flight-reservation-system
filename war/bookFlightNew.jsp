@@ -62,8 +62,9 @@
 <body>
 	<jsp:include page="/_navbar" />
 	<div class="container">
+		<form action="/createBooking" method=Post class="form-horizontal">
 		<div class="row-fluid">
-		<form action="/createBooking" method=Post>
+		
 			<div class="span12">
 				<h2>Booking Confirmation</h2>
 				<%
@@ -80,14 +81,14 @@
 					for (int numPax = 0; numPax < (Integer) request
 							.getAttribute("numPassengers"); numPax++) {
 				%>
-				Passenger<%=numPax+1%>
+				<h3>Passenger <%=numPax+1%></h3>
 				<div class="row-fluid">
 					<%
 						
 							for (int numFlight = 0; numFlight < Flights.size(); numFlight++) {
 								HashMap<String, Object> flight = Flights.get(numFlight);
 					%>
-					<div class="span4 well" style="min-height: 400px;">
+					<div class="span4 well" style="min-height: 500px;">
 						<h4>Departure Flight Options</h4>
 						<input type="hidden" name="FlightNo<%=numPax%>_<%=numFlight%>" value="<%=(String) flight.get("flightNo") %>">
 						<input type="hidden" name="Date<%=numPax%>_<%=numFlight%>" value="<%=fullDateFormat.format((Date)flight.get("departs")) %>">
@@ -149,7 +150,7 @@
 						}//foreach flight
 					%>
 
-					<div class="span4 well" style="min-height: 400px;">
+					<div class="span4 well" style="min-height: 500px;">
 						<h4>In-Flight Options</h4>
 						<input type="hidden" name="seat" value="">
 						<dl>
@@ -165,40 +166,59 @@
 					}//for numPax
 				%>
 
-				</div>
-				<div id=PaymentInfo>
-					Total Cost= <%=request.getAttribute("TotalCostString") %><br>
-					User has $<%=((Integer)request.getAttribute("loyaltyPoints"))/10 %> worth of loyalty points how much would you like to use
-					<label>
-						Loyalty points:
-						<input type="text" name=loyaltyPointsUsed placeholder="Loyalty Points">
-					</label>
-					<label>
-						Credit Card:
-						<input type="text" name=CreditCard placeholder="Credit Card #">	
-					</label>
-					<label>
-						Expiration Date:
-						<input name="ccExpDate" placeholder="Expiration date">  
-					</label>
-					<label>
-						Card holder:
-						<input name="cardHolder" placeholder="Cardholder Name">
-					</label>
-					<label>
-						Address Line1:
-						<input name="addrLine1" placeholder="address line 1">
-					</label>
-					<label>
-						Address Line2:
-						<input name="addrLine2" placeholder="address line 2">
-					</label>
-				</div>
-				<div id=requiredError class="text-required"></div>
-				<input type=submit value=submit>
-			</form>
 			</div>
-			<!-- row fluid -->
+		
+		</div>
+		<!-- row fluid -->
+		<div class="row">
+				
+				<div class="span6 well">
+					<strong> Total Cost= <%=request.getAttribute("TotalCostString") %> </strong> <br>
+					<em>You have $<%=((Integer)request.getAttribute("loyaltyPoints"))/10 %> worth of loyalty points. How much would you like to use today?</em>
+					<div class="control-group" >					
+						<label class="control-label" for="inputPoints">Loyalty points:</label>
+						<div class="controls">
+							<input type="text" name="loyaltyPointsUsed" placeholder="Loyalty Points" id="inputPoints">
+						</div>
+					</div>
+					<div class="control-group">
+						<label class="control-label" for="inputCard">Credit Card:</label>
+						<div class="controls">
+							<input type="text" name="CreditCard" placeholder="Credit Card #" id="inputCard">
+						</div>
+					</div>
+					
+					<div class="control-group">
+						<label class="control-label" for="expDate">Expiration Date:</label>
+						<div class="controls">
+							<input type="text" name="ccExpDate" placeholder="Expiration Date" id="expDate">
+						</div>
+					</div>
+					<div class="control-group">
+						<label class="control-label" for="cardHolder">Cardholder Name:</label>
+						<div class="controls">
+							<input type="text" name="cardHolder" placeholder="Expiration Date" id="cardHolder">
+						</div>
+					</div>
+					<div class="control-group">
+						<label class="control-label" for="addrLine1">Address Line 1:</label>
+						<div class="controls">
+							<input type="text" name="addrLine1" placeholder="Address Line 1" id="addrLine1">
+						</div>
+					</div>
+					<div class="control-group">
+						<label class="control-label" for="addrLine2">Address Line 2:</label>
+						<div class="controls">
+							<input type="text" name="addrLine2" placeholder="Address Line 2" id="addrLine2">
+						</div>
+					</div>
+				<div id=requiredError class="text-required"></div>
+				<input type="submit"  class="btn btn-primary" value="Confirm and Pay">
+				</div>			
+			</div>
+	</div>
+		</form>
+		</div>
 			<div id=SeatSelectHiddenDiv>
 			<%
 				for (int numPax = 0; numPax < (Integer) request
