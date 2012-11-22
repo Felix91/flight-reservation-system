@@ -40,8 +40,8 @@ public class Flight extends SuperEntity{
 	 * new Flight (	####
 	 * 				YVR
 	 * 				LAX
-	 * 				yyyy/MM/dd HH:mm
-	 * 				yyyy/MM/dd HH:mm
+	 * 				yyyy.MM.dd.HH.mm
+	 * 				yyyy.MM.dd.HH.mm
 	 * 				BF-CK-PK
 	 * 				BOEING_777
 	 */
@@ -127,7 +127,7 @@ public class Flight extends SuperEntity{
 		tempDestination.addArrivalFlight(this.k);
 
 
-		SimpleDateFormat convertToDate = new SimpleDateFormat("yyyy/MM/dd HH:mm");
+		SimpleDateFormat convertToDate = new SimpleDateFormat("yyyy.MM.dd.HH.mm");
 		//Departure
 		this.departure = convertToDate.parse(departure, new ParsePosition(0));
 		//Arrival
