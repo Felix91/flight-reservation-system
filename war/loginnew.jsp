@@ -36,9 +36,17 @@
 									<label class="checkbox"> <input type="checkbox">
 										Remember me
 									</label>
+									<div id="passordError" class="text-required">
+									<%
+										if (request.getAttribute("errorMsg") == "passwordIncorrect") {
+									%>
+									User email or password incorrect
+									<%} %>
+									</div>
 									<button type="submit" class="btn">Sign in</button>
 								</div>
 							</div>
+							
 						</form>
 					</div>
 					<!-- span6 -->
