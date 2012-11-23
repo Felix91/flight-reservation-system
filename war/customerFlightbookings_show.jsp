@@ -26,6 +26,22 @@
 		                    			out.print("<dt>Passenger Name</dt>");
 										out.print("<dd>"+showFlightbooking.getConfirmationNumber().getId()+"</dd>");
 									out.print("</div>");
+									out.print("<div class=\"control-group\">");
+		                    			out.print("<dt>Travel Date</dt>");
+										out.print("<dd>"+showFlightbooking.getConfirmationNumber().getId()+"</dd>");
+									out.print("</div>");
+									out.print("<div class=\"control-group\">");
+		                    			out.print("<dt>Departure</dt>");
+										out.print("<dd>"+showFlightbooking.getConfirmationNumber().getId()+"</dd>");
+									out.print("</div>");
+									out.print("<div class=\"control-group\">");
+		                    			out.print("<dt>Arrival</dt>");
+										out.print("<dd>"+showFlightbooking.getConfirmationNumber().getId()+"</dd>");
+									out.print("</div>");
+									out.print("<div class=\"control-group\">");
+		                    			out.print("<dt>Seat Number</dt>");
+										out.print("<dd>"+showFlightbooking.getConfirmationNumber().getId()+"</dd>");
+									out.print("</div>");
 		                		out.print("</div>");
 							}
 						%>
@@ -41,7 +57,54 @@
 								out.print("</form>");
 							}else{
 								// else show manifest details
-								out.print("Already Checked In");
+								out.print("<H3>Checked In - Boarding Pass</H3>");
+								out.print("<div class=\"row-fluid\">");
+									out.print("<div class=\"span2\">");
+										out.print("<img src=\"/img/qrcode.png\">");
+									out.print("</div>");
+									out.print("<div class=\"span6\" style=\"background-color:lightgrey\">");
+										out.print("<div class=\"row-fluid\">");
+											out.print("<div class=\"span6\">");
+												out.print("<B>GATE</B>: 5D");
+											out.print("</div>");
+											out.print("<div class=\"span6\">");
+												out.print("<B>SEAT</B>: ");
+											out.print("</div>");
+										out.print("</div>");
+										out.print("<div class=\"row-fluid\">");
+											out.print("<div class=\"span8\">");
+												out.print("<B>PASSENGER</B>");
+											out.print("</div>");
+										out.print("</div>");
+										out.print("<div class=\"row-fluid\">");
+											out.print("<div class=\"span6\">");
+												out.print("<B>TO</B>");
+											out.print("</div>");
+											out.print("<div class=\"span6\">");
+												out.print("<B>FROM</B>");
+											out.print("</div>");
+										out.print("</div>");
+									out.print("</div>");
+									out.print("<div class=\"span4\" style=\"background-color:lightblue\">");
+										out.print("<div class=\"row-fluid\">");
+											out.print("<B>NAME</B>");
+										out.print("</div>");
+										out.print("<div class=\"row-fluid\">");
+											out.print("<B>TO</B>");
+										out.print("</div>");
+										out.print("<div class=\"row-fluid\">");
+											out.print("<B>FROM</B>");
+										out.print("</div>");
+										out.print("<div class=\"row-fluid\">");
+											out.print("<div class=\"span6\">");
+												out.print("<B>GATE</B>");
+											out.print("</div>");
+											out.print("<div class=\"span6\">");
+												out.print("<B>SEAT</B>");
+											out.print("</div>");
+										out.print("</div>");
+									out.print("</div>");
+								out.print("</div>");
 							}
 						
 						}
