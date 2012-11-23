@@ -1,18 +1,5 @@
 $(document).ready(function(){
-	
-	$("#signup").submit(function(){
-		var allRequiredFilledOut=true;
-		$(".required1").each(function(index){
-			if($(this).val().length == 0)
-			{
-				allRequiredFilledOut=false;
-				$('[for="'+$(this).attr('id')+'"]').filter('label').addClass('text-required')
-			}else{
-				$('[for="'+$(this).attr('id')+'"]').filter('label').removeClass('text-required')
-			}
-		})
-		return allRequiredFilledOut;
-	})
+
 	
 	$("#login").submit(function(){
 		var allRequiredFilledOut=true;

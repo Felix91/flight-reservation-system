@@ -47,7 +47,7 @@
 						<form id="signup" class="form-horizontal" action="/signedup"
 							method="post">
 							<div class="control-group">
-								<label class="control-label" for="fname">First Name *</label>
+								<label class="control-label" for="fname">First Name </label>
 								<div class="controls">
 									<input class="required1" type="text" id="su_fname" name="fname"
 										placeholder="Enter your First Name"
@@ -111,20 +111,20 @@
 						<script type="text/javascript">
 							$(function(){
 								$('#signup').submit(function(){
-									if(!$('#su_newpassword').val()){
-										$("#signedupError").html("Please provide a password");
-										return false;
-									}else if($('#su_confpassword').val()=="" || $('#su_newpassword').val() != $('#su_confpassword').val()){
-										$("#signedupError").html("Make sure passwords match");
-										return false;
-									}else if ( !$('#su_email').val() ){
+									if ( !$('#su_email').val() ){
 										$("#signupError").html("Please provide an email");
 										return false;
+									}else if(!$('#su_newpassword').val()){
+										$("#signupError").html("Please provide a password");
+										return false;
+									}else if($('#su_confpassword').val()=="" || $('#su_newpassword').val() != $('#su_confpassword').val()){
+										$("#signupError").html("Make sure passwords match");
+										return false;
 									}else if (!$('#su_fname').val()){
-										$("#signedupError").html("Please provide a first Name");
+										$("#signupError").html("Please provide a first Name");
 										return false;
 									}else if (!$('#su_lname').val()){
-										$("#signedupError").html("Please provide a last Name");
+										$("#signupError").html("Please provide a last Name");
 										return false;
 									}else{
 										return true;
