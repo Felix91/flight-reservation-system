@@ -66,7 +66,7 @@ public class CustomerProfile extends UflyServlet {
 						req.setAttribute("customerEmail", loggedInCustomer.getEmailAddr());
 						req.setAttribute("customerFirstName", firstName);
 						req.setAttribute("customerLastName", lastName);
-						req.setAttribute("errorMsg", "passwordMismatch");
+						req.setAttribute("errorMsg", "Password Mismatch!");
 						req.getRequestDispatcher("/customerProfile_edit.jsp")
 							.forward(req,resp);
 						return;
