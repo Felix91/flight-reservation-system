@@ -1,6 +1,7 @@
 package ufly.frs;
 
 import java.io.IOException;
+import java.util.Date;
 import java.util.Enumeration;
 
 import javax.servlet.http.HttpServlet;
@@ -20,9 +21,15 @@ class UflyServlet extends HttpServlet {
 
 	public User getLoggedInUser(HttpSession s) {
 		User localUser = null;
+		final int ONE_MINUTE = 60*1000;
+		final int longestPeriodOfInactivity=5*ONE_MINUTE;
 		String email = (String) s.getAttribute("loggedInUser");
-		if (email == null)
+		Date lastModified = (Date) s.getAttribute("lastModified");
+		if (email == null || (lastModified != null && lastModified.getTime()+longestPeriodOfInactivity < new Date().getTime())){
 			return null;
+		}else{
+			s.setAttribute("lastModified", new Date());
+		}
 		// Check if it is Customer
 		try {
 			localUser = Customer.getCustomer(email);
@@ -53,6 +60,7 @@ class UflyServlet extends HttpServlet {
 
 	public void login(String email, HttpSession s) {
 		s.setAttribute("loggedInUser", email);
+		s.setAttribute("lastModified", new Date());
 	}
 
 	/**
