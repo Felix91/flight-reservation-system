@@ -298,6 +298,15 @@
 		<servlet-name>adminStats</servlet-name>
 		<url-pattern>/_adminStats</url-pattern>
 	</servlet-mapping>
+	<!-- FLIGHT STATS PAGE -->
+	<servlet>
+    	<servlet-name>flightStats</servlet-name>
+    	<servlet-class>ufly.frs.FlightStats</servlet-class>
+	</servlet>
+     <servlet-mapping>
+    	<servlet-name>flightStats</servlet-name>
+    	<url-pattern>/_flightStats</url-pattern>
+	</servlet-mapping>
 	<!-- HEADER -->
 	<servlet>
 		<servlet-name>_header</servlet-name>

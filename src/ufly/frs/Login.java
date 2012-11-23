@@ -71,7 +71,7 @@ public class Login extends UflyServlet {
 		else
 		{
 			req.setAttribute("failedEmail", email);
-			req.setAttribute("loginError", "userNameNotFound");
+			req.setAttribute("errorMsg", "passwordIncorrect");
 			req.getRequestDispatcher("loginnew.jsp").forward(req, resp);
 		}
 		
