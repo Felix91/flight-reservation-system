@@ -326,14 +326,15 @@ public class FlightBooking extends SuperEntity {
 	{
 		HashMap <String,Object>toRet = new HashMap();
 		toRet.put("bookedBy", this.getBookedBy().getDisplayName());
-		toRet.put("confirmNo", this.getConfirmationNumber().toString());
+		toRet.put("confirmNo", new Long(this.getConfirmationNumber().getId()));
 		toRet.put("passengerName", this.getPassengerName());
 		toRet.put("flightClass", this.getBookedFlightClass().toString());
 		toRet.put("seat", this.getBookedSeat().getRowNumber().toString()+this.getBookedSeat().getColumn().toString());
 		toRet.put("meal", this.getMealChoice());
 		toRet.put("checkedIn", this.getCheckedIn());
 		toRet.put("creditCardNumber", this.creditCardNo);
-		
+		toRet.put("origin", this.getBookedFlight().getOrigin());
+		toRet.put("origin", this.getBookedFlight().getDestination());
 		return toRet;
 	}
 	

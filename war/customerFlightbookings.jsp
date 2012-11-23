@@ -1,4 +1,4 @@
-<%@ page import="java.util.*, ufly.entities.FlightBooking, com.google.appengine.api.datastore.Key" %>
+<%@ page import="java.util.*,ufly.entities.Airport" %>
 
 <html>
 <head>	
@@ -19,41 +19,49 @@
 										<th>Confirmation Number</th>
 										<th>Booked By</th>
 										<th>Flight Number</th>
+										<th>Passenger Name</th>
 										<th>Flight Class</th>
 										<th>Seat</th>
+										<th>Checked In</th>
 										<th>World Map</th>
 										<th>Action</th>
 									</tr>
 								</thead>
 								<tbody>
-									<% 
-									Vector<Key> allFlightbookings = (Vector<Key>) request.getAttribute("allFlightbookings");
-									
-									Iterator<Key> iterator = allFlightbookings.iterator();
-									while (iterator.hasNext()) {
-										FlightBooking nextFlightbooking = FlightBooking.getFlightBooking(iterator.next());
-										if(nextFlightbooking != null){
-										out.println("<tr>");
-											out.println("<td>"+nextFlightbooking.getConfirmationNumber().getId()+"</td>");
-											out.println("<td>"+nextFlightbooking.getBookedBy().getFirstName() + nextFlightbooking.getBookedBy().getLastName() + "</td>");
-											out.println("<td>"+nextFlightbooking.getBookedFlight().getFlightNumber()+"</td>");
-											out.println("<td>"+nextFlightbooking.getBookedFlightClass().toString()+"</td>");
-											out.println("<td>"+nextFlightbooking.getBookedSeat().toString()+"</td>");
-								            String originCoor = nextFlightbooking.getBookedFlight().getOrigin().getCoordinates();
-											String destinationCoor = nextFlightbooking.getBookedFlight().getDestination().getCoordinates();
-											out.println("<td><a href=\"http://maps.google.com/maps?saddr="+originCoor+"&daddr="+destinationCoor+"\" target=\"_blank\" >View on Map</a><td>");
-											out.println("<td>");
-												out.println("<a href=\"/customerProfile/showFlightbookings?confirmationNumber="+ nextFlightbooking.getConfirmationNumber().getId() + "\">Show</a>");
-												if(!nextFlightbooking.getCheckedIn() ){
-													out.println("<BR><a href=\"/customerProfile/editFlightbookings?confirmationNumber="+ nextFlightbooking.getConfirmationNumber().getId() + "\">Modify</a>");
-													out.println("<BR><a href=\"/customerProfile/deleteFlightbookings?confirmationNumber="+ nextFlightbooking.getConfirmationNumber().getId() + "\">Delete</a>");
-												
-												}
-											out.println("</td>");
-										out.println("</tr>");
-									}
-									}
+									<%
+										Vector<HashMap> bookings = (Vector) request
+												.getAttribute("bookings");
+										for (HashMap<String, Object> booking : bookings) {
 									%>
+									<tr>
+										<td><%=booking.get("confirmNo")%></td>
+										<td><%=(String) booking.get("bookedBy")%></td>
+										<td>flightNo</td>
+										<td><%=(String) booking.get("passengerName")%></td>
+										
+										<td><%=booking.get("flightClass")%></td>
+										
+										<td><%=booking.get("seat")%></td>
+										<td><%=booking.get("creditCardNumber")%></td>
+										<td><%=booking.get("seat")%></td>
+										<td><%=((Boolean) booking.get("checkedIn")) ? "Yes" : "No"%></td>
+										<td>
+										<%
+											//HACK, this should not access Entity directly
+												Airport origin = (Airport) booking.get("origin");
+												Airport dest = (Airport) booking.get("dest");
+										%>
+										<a href="http://maps.google.com/maps?saddr=<%=origin.getCoordinates()%>&daddr=<%=dest.getCoordinates()%>" target="_blank" >View on Map</a>
+										</td>
+										<td><a
+											href="/customerProfile/showFlightbookings?confirmationNumber=<%=booking.get("confirmNo")%>">Show</a>
+											<BR> <a
+											href="/customerProfile/editFlightbookings?confirmationNumber=<%=booking.get("confirmNo")%>">Modify</a>
+											<BR> <a
+											href="/customerProfile/deleteFlightbookings?confirmationNumber=<%=booking.get("confirmNo")%>">Delete</a>
+
+										</td>
+									</tr>
 								</tbody>
 							</table>
 						</div><!-- span10 -->

@@ -1,8 +1,8 @@
-<%@ page import="java.util.*" %>
+<%@ page import="java.util.*"%>
 
 <html>
-<head>	
-	<jsp:include page="/_header" />
+<head>
+<jsp:include page="/_header" />
 </head>
 <body>
 	<jsp:include page="/_navbar" />
@@ -37,9 +37,9 @@
 	                               		<script>
                                         	$('#in_depart').datepicker({
        		                                	format: 'mm-dd-yyyy'
- 	                                    	}).on('changeDate', function(ev){								
+ 	                                    	}).on('changeDate', function(ev){
 												$('#in_depart').datepicker('hide');
-											});     
+											});
                                         </script>
 	                           		</div>
 	                        	</div>
@@ -50,9 +50,9 @@
 	                                	<script>
                                         	$('#in_return').datepicker({
        		                                	format: 'mm-dd-yyyy'
- 	                                    	}).on('changeDate', function(ev){								
+ 	                                    	}).on('changeDate', function(ev){
 												$('#in_return').datepicker('hide');
-											});      
+											});
                                         </script>
 	                            	</div>
 	                        	</div>
@@ -75,31 +75,39 @@
 	                        	</div>
                     	</form> <!-- Close the form -->
 
-                 	</div><!--/span7-->
-                    <div class="span5">
-                    	<h2>Promotions</h2>
-                        <ul class="thumbnails">
-  							<li class="span12">
-                            	<div class="thumbnails">
-                                    <a href="#" class="thumbnail">
-                                      <img src="http://placehold.it/300x200" alt="">
-                                    </a>
-                                    <div class="captions">
-                                    	<h3>Promotions This Month</h3>
-                                        <p>This month fly to Antartica one way trip for free</p>
-                                    </div><!--captions-->
-                                </div> <!--thumbnails-->
-                          </li>
-                        </ul>
-                    </div> <!--span5-->
-          		</div><!-- span12 -->     
-          </div><!--row-fluid12-->
-    	</div><!-- content -->
-    
-    	<div id="footer">
-    		<jsp:include page="/_footer" />
-    	</div>
+						</div>
+						<!--/span7-->
+						<div class="span5">
+							<h2>Promotions</h2>
+							<ul class="thumbnails">
+								<li class="span12">
+									<div class="thumbnails">
+										<a href="#" class="thumbnail"> <img
+											src="http://placehold.it/300x200" alt="">
+										</a>
+										<div class="captions">
+											<h3>Promotions This Month</h3>
+											<p>This month fly to Antartica one way trip for free</p>
+										</div>
+										<!--captions-->
+									</div> <!--thumbnails-->
+								</li>
+							</ul>
+						</div>
+						<!--span5-->
+					</div>
+					<!-- span12 -->
+				</div>
+				<!--row-fluid12-->
+			</div>
+			<!-- content -->
+
+			<div id="footer">
+				<jsp:include page="/_footer" />
+			</div>
+		</div>
 	</div>
-	<!-- page generated at: <% //out.print(request.getAttribute("date")); %>-->
+	<!-- page generated at: <%//out.print(request.getAttribute("date"));%>-->
+
 </body>
 </html>
