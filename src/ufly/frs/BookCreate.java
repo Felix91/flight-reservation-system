@@ -33,11 +33,17 @@ public class BookCreate extends UflyServlet {
 		Integer numberOfFlights= Integer.parseInt(req.getParameter("numberOfFlights"));
 		Integer numberOfPassengers= Integer.parseInt(req.getParameter("numberOfPassengers"));
 		//check to see if there is a user logged in
-		Customer localUser = (Customer) getLoggedInUser(req.getSession());
+
+		Customer localUser=null;
+		try {
+			localUser = (Customer) getLoggedInUser(req.getSession());
+		} catch (UserInactivityTimeout e1) {
+			resp.sendRedirect("/?errorMsg=Sorry, you have been logged out because you have been inactive too long");
+		}
+		
 		if (localUser==null)
 		{
-			//should not happen
-			throw new NullLoginUser();
+			resp.sendRedirect("/");
 		}
 		for(Integer paxNo=0;paxNo<numberOfPassengers;paxNo++)
 		{

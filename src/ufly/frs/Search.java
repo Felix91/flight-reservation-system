@@ -8,9 +8,9 @@ import java.util.*;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
-import ufly.entities.Airport;
-import ufly.entities.Flight;
+import ufly.entities.*;
 
 @SuppressWarnings("serial")
 public class Search extends UflyServlet {
@@ -22,6 +22,12 @@ public class Search extends UflyServlet {
 	public void doPost(HttpServletRequest req, HttpServletResponse resp)
 			throws IOException, ServletException {
 		// printParam(req,resp);
+		//remove old session variables from aborted bookings
+		HttpSession session = req.getSession();
+		session.setAttribute("departopt",null);
+		session.setAttribute("returnopt", null);
+		session.setAttribute("numPass", null);
+		
 		req.setAttribute("origin", req.getParameter("origin"));
 		req.setAttribute("destination", req.getParameter("destination"));
 		req.setAttribute("departureDate", req.getParameter("departureDate"));
@@ -37,23 +43,44 @@ public class Search extends UflyServlet {
 		Date returnDate = null;
 		Airport destination = null;
 		SimpleDateFormat convertToDate = new SimpleDateFormat("MM-dd-yyyy");
+		String errorMessage=null;
 		if (req.getParameter("departureDate") != null) {
 			departureDate = convertToDate.parse(
 					req.getParameter("departureDate"), new ParsePosition(0));
 		}
+		if(departureDate == null){
+			errorMessage="Please provide a valid departure date";
+		}
+		
 		if (req.getParameter("returnDate") != null) {
 			returnDate = convertToDate.parse(req.getParameter("returnDate"),
 					new ParsePosition(0));
 		}
 		if (returnDate == null) {
+		//if there is no return date, pretend there is
 			returnDate = (Date) departureDate.clone();
+		}else if (returnDate.before(departureDate)){
+			errorMessage = "Return date must be after departure date";
 		}
-		if (req.getParameter("origin") != null) {
-			origin = Airport.getAirportByCallSign(req.getParameter("origin"));
+		
+		try{
+			if (req.getParameter("origin") != null) {
+				origin = Airport.getAirportByCallSign(req.getParameter("origin"));
+			}
+		}catch(javax.jdo.JDOObjectNotFoundException e){
+			errorMessage = "No Airport with call sign "+req.getParameter("origin");
 		}
-		if (req.getParameter("destination") != null) {
-			destination = Airport.getAirportByCallSign(req
-					.getParameter("destination"));
+		try{
+			if (req.getParameter("destination") != null) {
+				destination = Airport.getAirportByCallSign(req
+						.getParameter("destination"));
+			}
+		}catch(javax.jdo.JDOObjectNotFoundException e){
+			errorMessage = "No Airport with call sign "+req.getParameter("destination");
+		}
+
+		if(errorMessage!=null){
+			resp.sendRedirect("/?errorMsg="+errorMessage);
 		}
 		if (origin != null) {
 			Vector trips = getFlightsFromOrigToDestOnDate(origin, destination,

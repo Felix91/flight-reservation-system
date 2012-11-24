@@ -18,15 +18,31 @@ import ufly.entities.User;
 class UflyServlet extends HttpServlet {
 	static protected class NullLoginUser extends Error {
 	}
-
-	public User getLoggedInUser(HttpSession s) {
+	static protected class UserInactivityTimeout extends Exception {
+	}
+	
+	protected HttpServletRequest request;
+	protected HttpServletResponse response;
+//	
+//	protected void setRequestResponse(HttpServletRequest req,HttpServletResponse resp){
+//		this.request=req;
+//		this.response=resp;
+//	}
+	public User getLoggedInUser(HttpSession s) 
+	
+	throws UserInactivityTimeout
+	{
 		User localUser = null;
 		final int ONE_MINUTE = 60*1000;
-		final int longestPeriodOfInactivity=500*ONE_MINUTE;
+		final int longestPeriodOfInactivity=5*ONE_MINUTE;
 		String email = (String) s.getAttribute("loggedInUser");
 		Date lastModified = (Date) s.getAttribute("lastModified");
-		if (email == null || (lastModified != null && lastModified.getTime()+longestPeriodOfInactivity < new Date().getTime())){
+		if (email == null ){
 			return null;
+		}
+		else if((lastModified != null && lastModified.getTime()+longestPeriodOfInactivity < new Date().getTime())){
+			s.setAttribute("loggedInUser", null);
+			throw new UserInactivityTimeout();
 		}else{
 			s.setAttribute("lastModified", new Date());
 		}

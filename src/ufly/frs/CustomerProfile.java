@@ -14,34 +14,43 @@ public class CustomerProfile extends UflyServlet {
 	{	
 		
 		String pageToInclude= getServletConfig().getInitParameter("action");
+		Customer loggedInUser=null;
+		try {
+			loggedInUser = (Customer) getLoggedInUser(req.getSession());
+		} catch (UserInactivityTimeout e) {
+			resp.sendRedirect("/?errorMsg=Sorry, you have been logged out because you have been inactive too long");
+			return;
+		} catch(ClassCastException e){
+		}
+		
 		if(pageToInclude.equals("index") )
 		{
-		
-			if (getLoggedInUser(req.getSession())!=null)
+
+			
+			if (loggedInUser!=null)
 			{
-				Customer loggedInCustomer =(Customer)getLoggedInUser(req.getSession());
-				req.setAttribute("customerFirstName", loggedInCustomer.getFirstName());
-				req.setAttribute("customerLastName", loggedInCustomer.getLastName());
-				req.setAttribute("loyaltyPoints", loggedInCustomer.getLoyaltyPoints());
+				req.setAttribute("customerFirstName", loggedInUser.getFirstName());
+				req.setAttribute("customerLastName", loggedInUser.getLastName());
+				req.setAttribute("loyaltyPoints", loggedInUser.getLoyaltyPoints());
 				req.getRequestDispatcher("customerProfile.jsp")
 				.forward(req,resp);
 			}
 			else{
-				resp.sendRedirect("/");
+				resp.sendRedirect("/?errorMsg=Must be logged in as a customer to view the Customer Profile");
 			}
 		}else if (pageToInclude.equals("edit") )
 		{
-			if (getLoggedInUser(req.getSession())!=null)
+			if (loggedInUser !=null)
 			{
-				Customer loggedInCustomer = Customer.getCustomer(getLoggedInUser(req.getSession()).getEmailAddr());
-				req.setAttribute("customerFirstName", loggedInCustomer.getFirstName());
-				req.setAttribute("customerLastName", loggedInCustomer.getLastName());
-				req.setAttribute("customerEmail", loggedInCustomer.getEmailAddr());
+				
+				req.setAttribute("customerFirstName", loggedInUser.getFirstName());
+				req.setAttribute("customerLastName", loggedInUser.getLastName());
+				req.setAttribute("customerEmail", loggedInUser.getEmailAddr());
 				req.getRequestDispatcher("/customerProfile_edit.jsp")
 				.forward(req,resp);
 			}
 			else{
-				resp.sendRedirect("/");
+				resp.sendRedirect("/?errorMsg=Must be logged in as a customer to view the Customer Profile");
 			}
 			
 		}
@@ -51,11 +60,17 @@ public class CustomerProfile extends UflyServlet {
 		throws IOException,ServletException
 	{
 		String pageToInclude= getServletConfig().getInitParameter("action");
+		Customer loggedInUser=null;
+		try {
+			loggedInUser = (Customer) getLoggedInUser(req.getSession());
+		} catch (UserInactivityTimeout e) {
+			resp.sendRedirect("/?errorMsg=Sorry, you have been logged out because you have been inactive too long");
+		} catch(ClassCastException e){
+		}
 		if (pageToInclude.equals("edit") )
 		{
-			if (getLoggedInUser(req.getSession())!=null)
+			if (loggedInUser!=null)
 			{
-				Customer loggedInCustomer = Customer.getCustomer(getLoggedInUser(req.getSession()).getEmailAddr());
 				String firstName= req.getParameter("fname");
 				String lastName= req.getParameter("lname");
 				String newPw = req.getParameter("newpassword");
@@ -63,7 +78,7 @@ public class CustomerProfile extends UflyServlet {
 				
 					if(!newPw.equals(confirmPw) && (newPw != null) && (confirmPw != null))
 					{
-						req.setAttribute("customerEmail", loggedInCustomer.getEmailAddr());
+						req.setAttribute("customerEmail", loggedInUser.getEmailAddr());
 						req.setAttribute("customerFirstName", firstName);
 						req.setAttribute("customerLastName", lastName);
 						req.setAttribute("errorMsg", "Password Mismatch!");
@@ -71,14 +86,14 @@ public class CustomerProfile extends UflyServlet {
 							.forward(req,resp);
 						return;
 					}else{
-						loggedInCustomer.changeFirstName(firstName);
-						loggedInCustomer.changeLastName(lastName);
+						loggedInUser.changeFirstName(firstName);
+						loggedInUser.changeLastName(lastName);
 						if(newPw!=null){
-							loggedInCustomer.changePw(newPw);
+							loggedInUser.changePw(newPw);
 						}
-						req.setAttribute("customerFirstName", loggedInCustomer.getFirstName());
-						req.setAttribute("customerLastName", loggedInCustomer.getLastName());
-						req.setAttribute("customerEmail", loggedInCustomer.getEmailAddr());
+						req.setAttribute("customerFirstName", loggedInUser.getFirstName());
+						req.setAttribute("customerLastName", loggedInUser.getLastName());
+						req.setAttribute("customerEmail", loggedInUser.getEmailAddr());
 						req.setAttribute("successMsg", "Updated Profile Successfully");
 						req.getRequestDispatcher("/customerProfile_edit.jsp")
 							.forward(req,resp);

@@ -50,7 +50,11 @@ public class Select extends UflyServlet {
 		 * them to login page. before we do that we want to save the flights that they are
 		 * trying to book. We'll do that in the session.
 		 */
-		User loggedInUser = getLoggedInUser(req.getSession());
+		User loggedInUser=null;
+		try {
+			loggedInUser = getLoggedInUser(req.getSession());
+		} catch (UserInactivityTimeout e) {
+		}
 		
 		if(loggedInUser == null)
 		{
@@ -103,7 +107,7 @@ public class Select extends UflyServlet {
 		}
 		try{
 			loggedInUser = (Customer)getLoggedInUser(req.getSession());
-		}catch(ClassCastException e){
+		}catch(ClassCastException | UserInactivityTimeout e){
 			return;
 		}
 		price+=priceInCents.toString();

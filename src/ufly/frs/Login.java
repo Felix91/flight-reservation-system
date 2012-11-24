@@ -8,6 +8,7 @@ import javax.servlet.http.*;
 import ufly.entities.Customer;
 import ufly.entities.FlightManager;
 import ufly.entities.FlightStaff;
+import ufly.entities.User;
 
 @SuppressWarnings("serial")
 public class Login extends UflyServlet {
@@ -15,12 +16,18 @@ public class Login extends UflyServlet {
 	public void doGet(HttpServletRequest req, HttpServletResponse resp)
 		throws IOException,ServletException
 	{	
+		User user=null;
+		try {
+			user=getLoggedInUser(req.getSession());
+		} catch (UserInactivityTimeout e) {
+		}
 		if(req.getParameter("logout")!= null)
 		{
 			req.getSession().setAttribute("loggedInUser", null);
 			resp.sendRedirect("/");
 		}
-		else if (getLoggedInUser(req.getSession())!=null)
+
+		else if (user!=null)
 		{
 			resp.sendRedirect("/");
 		}

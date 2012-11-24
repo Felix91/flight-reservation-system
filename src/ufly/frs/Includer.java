@@ -27,7 +27,11 @@ public class Includer extends UflyServlet {
 				.include(req,resp);
 		}else if ( pageToInclude.equals("navbar") )
 		{
-			User u = getLoggedInUser(req.getSession());
+			User u = null;
+			try {
+				u=getLoggedInUser(req.getSession());
+			} catch (UserInactivityTimeout e) {
+			}
 			if ( u != null)
 			{
 				String name=u.getDisplayName();

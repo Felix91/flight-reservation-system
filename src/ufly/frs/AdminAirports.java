@@ -41,6 +41,7 @@ public class AdminAirports extends UflyServlet {
 	public void doPost(HttpServletRequest req, HttpServletResponse resp)
 		throws IOException,ServletException
 	{
+		
 		resp.setContentType("text/plain");
 		
 		

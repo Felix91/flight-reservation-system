@@ -19,6 +19,8 @@ public class FlightStaffProfile extends UflyServlet {
 		try {
 			loggedInUser = (FlightStaff) this.getLoggedInUser(req.getSession());
 		}catch(ClassCastException e){
+		} catch (UserInactivityTimeout e) {
+			resp.sendRedirect("/?errorMsg=Sorry, you have been logged out because you have been inactive too long");
 		}finally {
 			if (loggedInUser == null) {
 				// not logged in, send to root page

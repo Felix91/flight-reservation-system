@@ -31,7 +31,12 @@ public class CustomerFlightbookings extends UflyServlet {
 		String pageToInclude= getServletConfig().getInitParameter("action");
 		if(pageToInclude.equals("index") )
 		{
-			Customer loggedInCustomer = Customer.getCustomer(getLoggedInUser(req.getSession()).getEmailAddr());
+			Customer loggedInCustomer=null;
+			try {
+				loggedInCustomer = Customer.getCustomer(getLoggedInUser(req.getSession()).getEmailAddr());
+			} catch (UserInactivityTimeout e) {
+				resp.sendRedirect("/?errorMsg=Sorry, you have been logged out because you have been inactive too long");
+			}
 			Vector<Key> allFlightbookings = loggedInCustomer.getFlightBookings();
 			req.setAttribute("allFlightbookings", allFlightbookings);
 			req.getRequestDispatcher("/customerFlightbookings.jsp")

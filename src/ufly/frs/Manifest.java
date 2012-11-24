@@ -26,6 +26,8 @@ public class Manifest extends UflyServlet {
 		try {
 			loggedInUser = (FlightStaff) this.getLoggedInUser(req.getSession());
 		}catch(ClassCastException e){
+		} catch (UserInactivityTimeout e) {
+			resp.sendRedirect("/?errorMsg=Sorry, you have been logged out because you have been inactive too long");
 		}finally {
 			if (loggedInUser == null || datestr==null || flightNo== null) {
 				//do nothing
