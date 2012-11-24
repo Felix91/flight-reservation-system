@@ -63,7 +63,7 @@ public class Select extends UflyServlet {
 			session.setAttribute("departopt",req.getParameter("departopt") );
 			session.setAttribute("returnopt", req.getParameter("returnopt"));
 			session.setAttribute("numPass", Integer.parseInt((String)req.getParameter("numPassengers")));
-			resp.sendRedirect("/login?message=cantBookWithoutUser");
+			resp.sendRedirect("/login?errorMsg=Please%20log%20in,%20you%20will%20be%20returned%20to%20the%20booking%20process%20afterwards");
 			return;
 		}
 		/**
@@ -104,7 +104,6 @@ public class Select extends UflyServlet {
 		try{
 			loggedInUser = (Customer)getLoggedInUser(req.getSession());
 		}catch(ClassCastException e){
-			resp.sendRedirect("/?errorMsg=Must%20be%20logged%20in%20as%20Customer%20to%20book");
 			return;
 		}
 		price+=priceInCents.toString();

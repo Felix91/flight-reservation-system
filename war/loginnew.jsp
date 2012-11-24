@@ -11,6 +11,9 @@
 		<div class="row-fluid">
 			<div class="span12">
 				<h2>CUSTOMER LOGIN</h2>
+				<div class="alert alert-error" id=errmsg <%if(request.getParameter("errorMsg")==null){%>style="display:none"<%} %>>
+					<%=request.getParameter("errorMsg") %>
+				</div>
 				<div class="row-fluid">
 					<div class="span6">
 

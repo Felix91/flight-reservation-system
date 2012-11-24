@@ -14,7 +14,7 @@ $(document).ready(function(){
 			}
 		})
 		if(!allRequiredFilledOut){
-			$('#errmsg').html("Please fill out all fields").show().effect("pulsate",{times:0},1000)
+			$('#errmsg').html("Please fill out all fields").hide().fadeIn()
 		}
 		return allRequiredFilledOut;
 	})
@@ -30,7 +30,7 @@ $(document).ready(function(){
 			}
 		})
 		if(!allRequiredFilledOut){
-			$('#errmsg').html("Please fill out all fields").show().effect("pulsate",{times:1},1000)
+			$('#errmsg').html("Please fill out all fields").hide().fadeIn()
 		}
 		return allRequiredFilledOut;
 	})

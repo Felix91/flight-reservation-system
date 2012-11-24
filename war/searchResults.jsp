@@ -211,7 +211,7 @@
 										if( $('input[name="returnopt"]')!=[] && $('input[name="returnopt"]:checked')==[] )
 											var returnSelected = false;
 										if (!(departSelected && returnSelected)){
-											$('#errmsg').html("Please select a flight").show()
+											$('#errmsg').html("Please select a flight").hide().fadeIn()
 											return false
 										}return true
 										  
