@@ -119,6 +119,10 @@ public class FlightBooking extends SuperEntity {
 		this.bookedFlightClass=fclass;
 		this.bookedSeat=bookedSeat.getKey();
 		this.mealChoice=mealChoice;
+		if(creditCardNo.length()!=4)
+		{
+			throw new Error();
+		}
 		this.creditCardNo=creditCardNo;
 		this.makePersistant();
 	}
@@ -216,6 +220,20 @@ public class FlightBooking extends SuperEntity {
 		try
 		{
 			this.bookedFlightClass=newFlightClass;
+			pm.makePersistent(this);
+
+		}finally
+		{
+			pm.close();
+		}
+	}
+	
+	public void changeCreditCardNumber(String cc)
+	{
+		PersistenceManager pm= PMF.get().getPersistenceManager();
+		try
+		{
+			this.creditCardNo=cc;
 			pm.makePersistent(this);
 
 		}finally
@@ -332,7 +350,13 @@ public class FlightBooking extends SuperEntity {
 		toRet.put("seat", this.getBookedSeat().getRowNumber().toString()+this.getBookedSeat().getColumn().toString());
 		toRet.put("meal", this.getMealChoice());
 		toRet.put("checkedIn", this.getCheckedIn());
-		toRet.put("creditCardNumber", this.creditCardNo);
+		String creditCard=this.creditCardNo;
+		if(creditCard.length()!=4)
+		{
+			creditCard=creditCard.substring(creditCard.length()-4);
+			this.changeCreditCardNumber(creditCard);
+		}
+		toRet.put("creditCardNumber", creditCard);
 		toRet.put("origin", this.getBookedFlight().getOrigin());
 		toRet.put("origin", this.getBookedFlight().getDestination());
 		return toRet;

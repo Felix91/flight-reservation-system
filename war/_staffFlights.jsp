@@ -22,14 +22,18 @@
 	                               		<input name="departureDate" class="required" type="text" id="flightDate" placeholder="Date To List Flights">
 	                               		<script>
 	                               			$(function(){
+	                               				//$("#flightsLoader").hide()
 	                                        	$('#flightDate').datepicker({
 	       		                                	format: 'mm-dd-yyyy'
-	 	                                    	}).on('changeDate', function(ev){								
+	 	                                    	}).on('changeDate', function(ev){	
+	 	                                    		$('#flightsTable').hide()
+	 	                                    		$('#flightsLoader').show()
 													window.location = "/flightStaffProfile?Date="+$('#flightDate').val()
 												})
 	                               			});     
                                         </script>
 	                           		</div>
+	                           		<div id="flightsTable">
 									<table class="table table-striped">
 										<thead>
 											<tr>
@@ -70,7 +74,12 @@
 
 										</tbody>
 									</table>
+									</div>	
+									<div id="flightsLoader" style="display:none" align="center">
+									<img src="/img/ajax_loader.gif" height="20" width="20">
+									</div>
 								</div>
+
 								<!-- span10 -->
 							</div>
 							<!--/span row-->
