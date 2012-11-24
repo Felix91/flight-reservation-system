@@ -50,11 +50,19 @@
 			}if(!seatSelected){
 				error.html("Select a seat for all flights")
 				return false
-			}if(!$('#inputCard').val() || !isNumber($('#inputCard').val()) || !$('#inputCard').val().length == 16){
+			}if(!$('#inputCard').val() || !isNumber($('#inputCard').val()) || $('#inputCard').val().length != 16){
 				error.html("Please Provide a valid credit card number")
 				return false;
-			}if(!$('#expDate').val()){
+			}if(	!$('#expDate1').val() ||
+					!isNumber($('#expDate1').val())||
+					$('#expDate1').val().length != 2 ||
+					!$('#expDate2').val() ||
+					!isNumber($('#expDate1').val())||
+					$('#expDate2').val().length != 2){
 				error.html("Please Provide a credit card expiry date")
+				return false;
+			}if(!$('#secNum').val() || !isNumber($('#secNum').val()) || $('#secNum').val().length != 3){
+				error.html("Please Provide a 3 digit Security Number")
 				return false;
 			}if(!$('#cardHolder').val()){
 				error.html("Please provide the cardholder's name");
@@ -205,9 +213,18 @@
 					</div>
 					
 					<div class="control-group">
-						<label class="control-label" for="expDate">Expiration Date:</label>
+						<label class="control-label" for="expDate1">Expiration Date:</label>
+
+							<input type="text" name="ccExpDate" placeholder="MM" id="expDate1"> /
+
+
+							<input type="text" name="ccExpDate" placeholder="YY" id="expDate2">
+
+					</div>
+					<div class="control-group">
+						<label class="control-label" for="secNum">Expiration Date:</label>
 						<div class="controls">
-							<input type="text" name="ccExpDate" placeholder="Expiration Date" id="expDate">
+							<input type="text" name="ccSecNum" placeholder="3 digit security number" id="secNum">
 						</div>
 					</div>
 					<div class="control-group">
