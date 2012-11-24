@@ -16,6 +16,9 @@
 		        <div class="span9">
 			  		<div class="row-fluid">
 		                <div class="span12">
+	                        <div class="alert alert-error" id="errmsg" <%if(request.getParameter("errorMsg")==null){%>style="display:none"<%} %>>
+								<%=request.getParameter("errorMsg") %>
+							</div>
 	                        <h2>Departure Flight Option</h2>
 	                        <form id="flightSelect" method="post" action="/select">
 							<input type="hidden" name="numPassengers" value="<%=request.getAttribute("numPassengers") %>">
@@ -208,7 +211,7 @@
 										if( $('input[name="returnopt"]')!=[] && $('input[name="returnopt"]:checked')==[] )
 											var returnSelected = false;
 										if (!(departSelected && returnSelected)){
-											$('#flightNotSelected').show()
+											$('#errmsg').html("Please select a flight").show()
 											return false
 										}return true
 										  

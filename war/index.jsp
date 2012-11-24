@@ -8,12 +8,16 @@
 	<jsp:include page="/_navbar" />
 	<div class="container">
 		<div id="content">
+			
 			<div class="row-fluid">
    				<div class="span12">
               		<div class="hero-unit" style="background-color:whiteSmoke">
                 		<h1>Canada Airlines</h1>
                 		<p>Flying at its best</p>
               		</div>
+              		<div class="alert alert-error" id=errmsg <%if(request.getParameter("errorMsg")==null){%>style="display:none"<%} %>>
+						<%=request.getParameter("errorMsg") %>
+					</div>
           			<div class="row-fluid">
                     	<div class="span7">
                             <h2>Search for Flights</h2>

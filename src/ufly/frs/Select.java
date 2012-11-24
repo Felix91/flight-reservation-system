@@ -97,10 +97,16 @@ public class Select extends UflyServlet {
 		priceInCents *= numPass;
 		String price="$"+new Integer(priceInCents/100).toString()+".";
 		priceInCents%=100;
+		Customer loggedInUser=null;
 		if(priceInCents<10){
 			price+="0";
 		}
-		Customer loggedInUser = (Customer)getLoggedInUser(req.getSession());
+		try{
+			loggedInUser = (Customer)getLoggedInUser(req.getSession());
+		}catch(ClassCastException e){
+			resp.sendRedirect("/?errorMsg=Must%20be%20logged%20in%20as%20Customer%20to%20book");
+			return;
+		}
 		price+=priceInCents.toString();
 		req.setAttribute("TotalCostString",price);
 		req.setAttribute("loyaltyPoints",loggedInUser.getLoyaltyPoints());

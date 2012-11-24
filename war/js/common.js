@@ -8,10 +8,14 @@ $(document).ready(function(){
 			{
 				allRequiredFilledOut=false;
 				$('[for="'+$(this).attr('id')+'"]').filter('label').addClass('text-required')
+				
 			}else{
 				$('[for="'+$(this).attr('id')+'"]').filter('label').removeClass('text-required')
 			}
 		})
+		if(!allRequiredFilledOut){
+			$('#errmsg').html("Please fill out all fields").show().effect("pulsate",{times:0},1000)
+		}
 		return allRequiredFilledOut;
 	})
 	$("#flightSearch").submit(function(){
@@ -25,8 +29,13 @@ $(document).ready(function(){
 				$('[for="'+$(this).attr('id')+'"]').filter('label').removeClass('text-required')
 			}
 		})
+		if(!allRequiredFilledOut){
+			$('#errmsg').html("Please fill out all fields").show().effect("pulsate",{times:1},1000)
+		}
 		return allRequiredFilledOut;
 	})
+	
+	
 	$('[name="oneWayOrReturn"]').filter('[value=oneWay]').click(function(){
 		$("#returnDate").hide();
 		$("#in_return").removeClass('required');
