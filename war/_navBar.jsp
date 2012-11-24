@@ -24,7 +24,7 @@
               	if(loggedin){ %>
 				<ul aria-labelledby="drop5" role="menu" class="dropdown-menu" id="menu2">
                   <li><a href="<%=request.getAttribute("userProfilePage") %>" tabindex="-1">Profile Page</a></li>
-                  <li><a href="#" tabindex="-1">Manage Your Bookings</a></li>                
+                  <li><a href="/customerFlightbookings" tabindex="-1">Manage Your Bookings</a></li>                
                   <li class="divider"></li>
                   <li><a href="/login?logout" tabindex="-1">Log out</a></li>
                 </ul>
