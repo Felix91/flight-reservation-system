@@ -38,7 +38,7 @@ $(document).ready(function(){
 	
 	$('[name="oneWayOrReturn"]').filter('[value=oneWay]').click(function(){
 		$("#returnDate").hide();
-		$("#in_return").removeClass('required');
+		$("#in_return").removeClass('required').val("");
 	})
 	
 	$('[name="oneWayOrReturn"]').filter('[value=return]').click(function(){

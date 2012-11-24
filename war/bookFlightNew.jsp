@@ -230,7 +230,7 @@
 					<div class="control-group">
 						<label class="control-label" for="cardHolder">Cardholder Name:</label>
 						<div class="controls">
-							<input type="text" name="cardHolder" placeholder="Expiration Date" id="cardHolder">
+							<input type="text" name="cardHolder" placeholder="Cardholder Name" id="cardHolder">
 						</div>
 					</div>
 					<div class="control-group">
