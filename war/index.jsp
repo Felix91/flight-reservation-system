@@ -39,6 +39,7 @@
        		                                	format: 'mm-dd-yyyy'
  	                                    	}).on('changeDate', function(ev){
 												$('#in_depart').datepicker('hide');
+												$('#in_depart').blur()
 											});
                                         </script>
 	                           		</div>
@@ -52,6 +53,7 @@
        		                                	format: 'mm-dd-yyyy'
  	                                    	}).on('changeDate', function(ev){
 												$('#in_return').datepicker('hide');
+												$('#in_return').blur()
 											});
                                         </script>
 	                            	</div>
@@ -59,7 +61,13 @@
 	                        	<div class="control-group">
 	                            	<label class="control-label" for="in_psgr">Number of Passengers *</label>
 	                            	<div class="controls">
-	                                	<input name="numPassengers" class="required" type="text" id="in_psgr" placeholder="Number of Passengers">
+	                                	<select class="required input-small focused" id="in_psgr" name="numPassengers" >
+	                                	<%
+	                                	for(Integer numPax=1;numPax<20;numPax++){ %>
+										<option><%=numPax %></option>
+										<%} %>
+										</select>
+	                                	
 	                            	</div>
 	                        	</div>
 	                        	<div class="control-group">
