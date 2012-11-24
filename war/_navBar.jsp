@@ -37,8 +37,8 @@
             </div>
             <ul class="nav">
               
-              <li><a href="#about">About</a></li>
-              <li><a href="#contact">Contact</a></li>
+              <li><a href="/about.jsp">About</a></li>
+              <li><a href="/contact.jsp">Contact</a></li>
             </ul>
         </div> <!--containerfluidnavbar-->
       </div> <!--navbar inner-->
