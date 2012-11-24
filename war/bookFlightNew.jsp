@@ -25,18 +25,19 @@
 			$('[name="'+"SeatButton"+pass+"_"+flight+'"]').addClass('disabled')
 			.attr("onclick","");
 		}
+		function isNumber(n) {
+		  return !isNaN(parseFloat(n)) && isFinite(n);
+		}
 		function onFormSubmit()
 		{
+			var error = $("#requiredError")
 			var passengerNameFilled=true;
 			$("[name^=passengerName]").each(function(index){
 				if(passengerNameFilled){
 					passengerNameFilled=$(this).val()!=""
 				}
 			})
-			if(!passengerNameFilled){
-				$("#requiredError").html("Make sure all passengers are named")
-				return false
-			}
+			
 			var seatSelected=true;
 			$('input[name^=Seat]').each(function(){
 				if(seatSelected){
@@ -44,10 +45,27 @@
 				}
 				
 			})
-			if(!seatSelected){
-				$("#requiredError").html("Select a seat for all flights")
+			
+			if(!passengerNameFilled){
+				error.html("Make sure all passengers are named")
+				return false
+			}if(!seatSelected){
+				error.html("Select a seat for all flights")
+				return false
+			}if(!$('#inputCard').val() || !isNumber($('#inputCard').val()) || !$('#inputCard').val().length == 16){
+				error.html("Please Provide a valid credit card number")
+				return false;
+			}if(!$('#expDate').val()){
+				error.html("Please Provide a credit card expiry date")
+				return false;
+			}if(!$('#cardHolder').val()){
+				error.html("Please provide the cardholder's name");
+				return false
+			}if(!$('#addrLine1').val()){
+				error.html("Please provide an address")
 				return false
 			}
+				
 			return true;
 		}
 		$(function(){
