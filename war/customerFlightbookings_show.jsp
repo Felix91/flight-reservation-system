@@ -114,7 +114,6 @@
 				</div><!--/span12-->
 			</div><!--/row-->
     	</div><!-- end content -->
-		    
     	<div id="footer"><!-- start footer -->
     		<jsp:include page="/_footer" />
     	</div><!-- end footer -->

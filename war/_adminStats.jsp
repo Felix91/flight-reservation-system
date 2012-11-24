@@ -3,7 +3,7 @@
 <div class="row-fluid">
     <div class="span12">
         <h4>Airport Statistics</h4>
-		<div class="row-fluid">
+        <div class="row-fluid">
 			<div class="span12">
 				<table class="table table-striped">
 					<thead>
@@ -30,7 +30,8 @@
 						%>
 					</tbody>
 				</table>
-			</div><!-- span10 -->
+				<BR><a href="/adminAirportStats.jsp" target="_blank">View Graph</a>
+        	</div><!-- span10 -->
 		</div><!--/span row-->
 	</div><!--/span12-->
 </div><!--/row-->

@@ -27,14 +27,16 @@ public class AdminFlightbookings extends UflyServlet {
 			.forward(req,resp);
 		}else if (pageToInclude.equals("edit") )
 		{
-			//String confirmationNumber = req.getParameter("confirmationNumber");
-			
-			//FlightBooking editFlight = FlightBooking.getFlightBooking(confirmationNumber);
-			//if(editFlight != null){
-				//req.setAttribute("editFlight", editFlight);
-			//	req.getRequestDispatcher("/adminFlightbookings_edit.jsp")
-			//		.include(req,resp);
-			//}
+			String confirmationNumber = (String) req.getParameter("confirmationNumber");
+			Long confirmNumber = Long.valueOf(confirmationNumber);
+			if(confirmNumber != null){
+				FlightBooking editFlightbooking = FlightBooking.getFlightBooking(confirmNumber);
+				if(editFlightbooking != null){
+					req.setAttribute("editFlightbooking", editFlightbooking);
+					req.getRequestDispatcher("/adminFlightbookings_edit.jsp")
+					.forward(req,resp);
+				}
+			}
 		}else{
 		
 		List<FlightBooking> allFlightbookings = FlightBooking.getAllFlightBookings();

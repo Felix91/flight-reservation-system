@@ -62,7 +62,7 @@
 	<jsp:include page="/_navbar" />
 	<div class="container">
 		<div id="content"><!-- start content -->
-			<h3>Customer Flightbookings - edit Flightbookings 
+			<h3>Flight Management Flightbookings - edit Flightbookings 
 			</h3>
 			<div class="row-fluid">
     			<div class="span12">

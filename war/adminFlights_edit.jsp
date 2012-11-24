@@ -20,10 +20,6 @@ Flight editFlight = (Flight) request.getAttribute("editFlight");
         			<div class="row-fluid">
 	        			<form action = "/flightTest" method="post">
 	        				<div class="control-group">
-		                    	<label class="control-label span2" for="flightNumber">flightNumber</label>
-								<input type="text" name="flightNumber" value="<% out.print(editFlight.getFlightNumber()); %>">
-							</div>
-							<div class="control-group">
 		                    	<label class="control-label span2" for="origin">origin</label>
 		                    	<input type="text" name="origin" value="<% out.print(editFlight.getOrigin().getCity()); %>">
 		                    </div>
@@ -41,11 +37,7 @@ Flight editFlight = (Flight) request.getAttribute("editFlight");
 		                    </div>
 							<div class="control-group">
 		                    	<label class="control-label span3" for="allowableMealTypes">allowableMealTypes</label>
-		                    	<input type="text" name="allowableMealTypes">
-		                    </div>
-							<div class="control-group">
-		                    	<label class="control-label span3" for="seatingArrangementLayout">seatingArrangementLayout</label>
-		                    	<input type="text" name="seatingArrangementLayout">
+		                    	<input type="text" name="allowableMealTypes" value="<% out.print(editFlight.getAllowableMeals()); %>">
 		                    </div>
 							<input type="submit" value="Submit">
 						</form>

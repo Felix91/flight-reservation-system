@@ -25,31 +25,15 @@
 						while (iterator.hasNext()) {
 							FlightBooking nextFlightbooking = iterator.next();
 							out.println("<tr>");
-							out.println("<td>"+nextFlightbooking.getConfirmationNumber().toString()+"</td>");
-							out.println("<td>+nextFlightbooking.getBookedBy().getFirstName() + nextFlightbooking.getBookedBy().getLastName() </td>");
-							out.println("<td>+nextFlightbooking.getBookedFlight().getFlightNumber()+</td>");
-							out.println("<td>+nextFlightbooking.getBookedFlightClass().toString()+</td>");
-							out.println("<td>+nextFlightbooking.getBookedSeat().toString()+</td>");
-							out.println("<td><a href=\"/adminProfile/editFlightbookings?confirmationNumber="+ nextFlightbooking.getConfirmationNumber().toString() + "\">Edit</a></td>");
+							out.println("<td>"+nextFlightbooking.getConfirmationNumber().getId()+"</td>");
+							out.println("<td>"+nextFlightbooking.getBookedBy().getFirstName() + " " + nextFlightbooking.getBookedBy().getLastName()+"</td>");
+							out.println("<td>"+nextFlightbooking.getBookedFlight().getFlightNumber()+"</td>");
+							out.println("<td>"+nextFlightbooking.getBookedFlightClass().toString()+"</td>");
+							out.println("<td>"+nextFlightbooking.getBookedSeat().getRowNumber()+nextFlightbooking.getBookedSeat().getColumn() +"</td>");
+							out.println("<td><a href=\"/flightManagerProfile/editFlightbookings?confirmationNumber="+ nextFlightbooking.getConfirmationNumber().getId() + "\">Edit</a></td>");
 							out.println("</tr>");
 						}
 						%>
-						<tr>
-							<td>1</td>
-							<td>John</td>
-							<td>123</td>
-							<td>Economy</td>
-							<td>2C</td>
-							<td><a href="#">View</a></td>
-						</tr>
-						<tr>
-							<td>1</td>
-							<td>John</td>
-							<td>123</td>
-							<td>Economy</td>
-							<td>2C</td>
-							<td><a href="#">View</a></td>
-						</tr>
 					</tbody>
 				</table>
 			</div><!-- span10 -->

@@ -51,7 +51,41 @@ public class AdminFlights extends UflyServlet {
 	public void doPost(HttpServletRequest req, HttpServletResponse resp)
 		throws IOException,ServletException
 	{
-		resp.setContentType("text/plain");
+		String pageToInclude= getServletConfig().getInitParameter("action");
+		
+		if (pageToInclude.equals("edit") )
+		{
+			String flightKey = req.getParameter("flightKey");
+			
+			Flight editFlight = Flight.getFlight(flightKey);
+			if(editFlight != null){
+				
+				String origin = req.getParameter("origin");
+				String destination = req.getParameter("destination");
+				String departure = req.getParameter("departure");
+				String arrival = req.getParameter("arrival"); 
+				String allowableMealTypes = req.getParameter("allowableMealTypes"); 
+					if(origin != null && destination != null && departure != null && arrival != null && allowableMealTypes != null )
+					{
+						req.setAttribute("origin", origin);
+						req.setAttribute("destination", destination);
+						req.setAttribute("departure", departure);
+						req.setAttribute("arrival", arrival);
+						req.setAttribute("allowableMealTypes", allowableMealTypes);
+						
+						// To Do Change flight
+						
+						req.setAttribute("successMsg", "Successfully Updated!");
+						req.getRequestDispatcher("/adminFlights_edit.jsp")
+							.forward(req,resp);
+					}
+					else{
+						req.setAttribute("errorMsg", "Missing Fields!");
+						req.getRequestDispatcher("/adminFlights_edit.jsp")
+							.forward(req,resp);
+					}
+			}
+		}
 		
 		
 	}

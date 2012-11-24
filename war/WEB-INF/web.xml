@@ -261,7 +261,20 @@
 	</servlet>
 	<servlet-mapping>
 		<servlet-name>adminFlightbookings_create</servlet-name>
-		<url-pattern>/_adminFlightbookings/addFlightbookings</url-pattern>
+		<url-pattern>/flightManagerProfile/addFlightbookings</url-pattern>
+	</servlet-mapping>
+	<!-- ADMIN EDIT FLIGHTBOOKINGS PAGE -->
+	<servlet>
+		<servlet-name>adminFlightbookings_edit</servlet-name>
+		<servlet-class>ufly.frs.AdminFlightbookings</servlet-class>
+		<init-param>
+	            <param-name>action</param-name>
+	            <param-value>edit</param-value>
+	    </init-param>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>adminFlightbookings_edit</servlet-name>
+		<url-pattern>/flightManagerProfile/editFlightbookings</url-pattern>
 	</servlet-mapping>
 	<!-- ADMIN AIRPORTS PAGE -->
 	<servlet>
