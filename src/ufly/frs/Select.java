@@ -108,6 +108,7 @@ public class Select extends UflyServlet {
 		try{
 			loggedInUser = (Customer)getLoggedInUser(req.getSession());
 		}catch(ClassCastException e){
+			resp.sendRedirect("/index.jsp?errorMsg=You must be logged in as customer to make a booking");
 			return;
 		}catch(UserInactivityTimeout e){
 			return;
