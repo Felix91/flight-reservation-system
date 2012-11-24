@@ -39,12 +39,11 @@
 											<tr>
 												<td><%=booking.get("confirmNo")%></td>
 												<td><%=(String) booking.get("passengerName")%></td>
-												
 												<td><%=booking.get("flightClass")%></td>
 												<td><%=(String) booking.get("bookedBy")%></td>
 												<td><%=booking.get("seat")%></td>
-												<td><%=booking.get("creditCardNumber")%></td>
-												<td><%=booking.get("seat")%></td>
+												<td><%=booking.get("meal")%></td>
+												<td>**** **** **** <%=booking.get("creditCardNumber")%></td>
 												<td><%=((Boolean)booking.get("checkedIn"))?"Yes":"No"%></td>
 
 											</tr>

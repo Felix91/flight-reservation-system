@@ -89,7 +89,7 @@
 								HashMap<String, Object> flight = Flights.get(numFlight);
 					%>
 					<div class="span4 well" style="min-height: 500px;">
-						<h4>Departure Flight Options</h4>
+						<h4>Flight Options</h4>
 						<input type="hidden" name="FlightNo<%=numPax%>_<%=numFlight%>" value="<%=(String) flight.get("flightNo") %>">
 						<input type="hidden" name="Date<%=numPax%>_<%=numFlight%>" value="<%=fullDateFormat.format((Date)flight.get("departs")) %>">
 						<input type="hidden" id="Seat<%=numPax%>_<%=numFlight%>" name="Seat<%=numPax%>_<%=numFlight%>" >

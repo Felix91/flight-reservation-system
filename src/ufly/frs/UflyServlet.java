@@ -22,7 +22,7 @@ class UflyServlet extends HttpServlet {
 	public User getLoggedInUser(HttpSession s) {
 		User localUser = null;
 		final int ONE_MINUTE = 60*1000;
-		final int longestPeriodOfInactivity=5*ONE_MINUTE;
+		final int longestPeriodOfInactivity=500*ONE_MINUTE;
 		String email = (String) s.getAttribute("loggedInUser");
 		Date lastModified = (Date) s.getAttribute("lastModified");
 		if (email == null || (lastModified != null && lastModified.getTime()+longestPeriodOfInactivity < new Date().getTime())){

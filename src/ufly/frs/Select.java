@@ -92,8 +92,9 @@ public class Select extends UflyServlet {
 		{
 			HashMap<String,Object> hm = f.getHashMap();
 			allFlightsInfo.add(hm);
-			priceInCents=f.getPriceInCents();
+			priceInCents+=f.getPriceInCents();
 		}
+		priceInCents *= numPass;
 		String price="$"+new Integer(priceInCents/100).toString()+".";
 		priceInCents%=100;
 		if(priceInCents<10){

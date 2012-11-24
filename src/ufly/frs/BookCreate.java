@@ -22,11 +22,14 @@ public class BookCreate extends UflyServlet {
 	}
 	public void doPost(HttpServletRequest req, HttpServletResponse resp)
 			throws IOException,ServletException
-	{
+		{
 //		printParam(req,resp);if(true)return;
 		SimpleDateFormat convertToDate = new SimpleDateFormat("yyyy/MM/dd HH:mm");
 		printParam(req,resp);
 		String creditCardNo = (String)req.getParameter("CreditCard");
+		//get the last 4 charaters of credit card
+		creditCardNo=creditCardNo.substring(creditCardNo.length()-4);
+		
 		Integer numberOfFlights= Integer.parseInt(req.getParameter("numberOfFlights"));
 		Integer numberOfPassengers= Integer.parseInt(req.getParameter("numberOfPassengers"));
 		//check to see if there is a user logged in
@@ -73,6 +76,6 @@ public class BookCreate extends UflyServlet {
 			localUser.useLoyaltyPoints(loyaltyPointsDollars*10);
 			localUser.addLoyaltyPoints(price/100-loyaltyPointsDollars);
 		}
-		resp.sendRedirect("/customerflightbookings");
+		resp.sendRedirect("/customerFlightbookings");
 	}
 }
