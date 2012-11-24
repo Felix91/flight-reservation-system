@@ -78,7 +78,13 @@ public class Search extends UflyServlet {
 		}catch(javax.jdo.JDOObjectNotFoundException e){
 			errorMessage = "No Airport with call sign "+req.getParameter("destination");
 		}
-
+		if (origin.equals(destination)){
+			errorMessage = "origin and destination cannot be the same";
+		}
+		if( departureDate.before(new Date())){
+			errorMessage = "Cannot book flights in the past";
+		}
+		
 		if(errorMessage!=null){
 			resp.sendRedirect("/?errorMsg="+errorMessage);
 		}
