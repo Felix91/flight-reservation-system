@@ -519,6 +519,92 @@ public class Flight extends SuperEntity{
 	}
 
 	/*------------ MODIFIERS ------------*/
+	//modify: origin, destination, departure time,  arrival time, meal, price 
+	
+	public void changeOrigin(Key newOrigin)
+	{
+
+		PersistenceManager pm= PMF.get().getPersistenceManager();
+		try
+		{
+			// Update current origin's departure
+			Airport oldOriginAirport = Airport.getAirport(this.origin);
+			oldOriginAirport.removeDepartingFlight(this.k);
+			// Update new origin's departure
+			Airport newOriginAirport = Airport.getAirport(newOrigin);
+			newOriginAirport.addDepartingFlight(this.k);
+			// Update this Flight's origin key
+			this.origin=newOrigin;
+			pm.makePersistent(this);
+		}finally
+		{
+			pm.close();
+		}
+	}
+	
+	public void changeDestination(Key newDestination)
+	{
+
+		PersistenceManager pm= PMF.get().getPersistenceManager();
+		try
+		{
+			// Update current destionation's departure
+			Airport oldDestionationAirport = Airport.getAirport(this.destination);
+			oldDestionationAirport.removeDepartingFlight(this.k);
+			// Update new origin's departure
+			Airport newDestinationAirport = Airport.getAirport(newDestination);
+			newDestinationAirport.addDepartingFlight(this.k);
+			// Update this Flight's origin key
+			this.destination=newDestination;
+			pm.makePersistent(this);
+		}finally
+		{
+			pm.close();
+		}
+	}
+	
+	public void changeArrivalTime(Date newArrivalTime)
+	{
+		PersistenceManager pm= PMF.get().getPersistenceManager();
+		try
+		{
+			this.arrival=newArrivalTime;
+			pm.makePersistent(this);
+
+		}finally
+		{
+			pm.close();
+		}
+	}
+	
+	public void changeDepartureTime(Date newDepartureTime)
+	{
+		PersistenceManager pm= PMF.get().getPersistenceManager();
+		try
+		{
+			this.departure=newDepartureTime;
+			pm.makePersistent(this);
+
+		}finally
+		{
+			pm.close();
+		}
+	}
+	
+	public void changeMeal(Vector<Meal> newMeal)
+	{
+		PersistenceManager pm= PMF.get().getPersistenceManager();
+		try
+		{
+			this.allowableMealTypes=newMeal;
+			pm.makePersistent(this);
+
+		}finally
+		{
+			pm.close();
+		}
+	}
+	
 	/**
 	 * @param newFlightNumber	: new flight number to update to
 	 */
@@ -545,22 +631,6 @@ public class Flight extends SuperEntity{
 		try
 		{
 			this.priceInCents=priceInCents;
-			pm.makePersistent(this);
-
-		}finally
-		{
-			pm.close();
-		}
-	}
-	/**
-	 * @param orig	: new origin to update to
-	 */
-	public void changeOrigin(Airport orig)
-	{
-		PersistenceManager pm= PMF.get().getPersistenceManager();
-		try
-		{
-			this.origin=orig.getKey();
 			pm.makePersistent(this);
 
 		}finally
@@ -763,6 +833,7 @@ public class Flight extends SuperEntity{
 				+ "]";
 	}
 	/*------------ VARIABLES ------------*/
+	
 	@PrimaryKey
 	@Persistent(valueStrategy = IdGeneratorStrategy.IDENTITY)
 	private Key k; 	// Use a flightNumber and departure concatenated string to serve as entity key (to avoid using numeric ID) for now
