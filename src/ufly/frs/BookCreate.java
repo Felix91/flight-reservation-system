@@ -73,6 +73,6 @@ public class BookCreate extends UflyServlet {
 			localUser.useLoyaltyPoints(loyaltyPointsDollars*10);
 			localUser.addLoyaltyPoints(price/100-loyaltyPointsDollars);
 		}
-		resp.sendRedirect("/customerflightbookings");
+		resp.sendRedirect("/customerFlightbookings");
 	}
 }
