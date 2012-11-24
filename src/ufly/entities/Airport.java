@@ -1,5 +1,6 @@
 package ufly.entities;
 
+import java.util.Iterator;
 import java.util.List;
 import java.util.Vector;
 
@@ -219,6 +220,27 @@ public class Airport {
 		return this.coordinates;
 	}
 
+	public int  getnumPassengersArriving()
+	{
+		int numPassengers=0;
+		Iterator<Key> arv = arrivals.iterator();
+		while(arv.hasNext())
+		{
+			numPassengers+= Flight.getFlight(arv.next()).getNumBookedFlights();
+		}
+		return numPassengers;
+	}
+	
+	public int  getnumPassengersDeparting()
+	{
+		int numPassengers=0;
+		Iterator<Key> dep = departures.iterator();
+		while(dep.hasNext())
+		{
+			numPassengers+= Flight.getFlight(dep.next()).getNumBookedFlights();
+		}
+		return numPassengers;
+	}
 	public int getnumDepartures()
 	{
 		return this.departures.size();

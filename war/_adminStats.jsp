@@ -9,8 +9,8 @@
 					<thead>
 						<tr>
 							<th>Airport</th>
-							<th>Departing Flights</th>
-							<th>Arriving Flights</th>
+							<th>Passengers Departing</th>
+							<th>Passengers Arriving</th>
 						</tr>
 					</thead>
 					<tbody>
@@ -21,11 +21,11 @@
 						while (it.hasNext())
 						{
 							Airport nextAirport = it.next();
-							out.println("<tr>");
-							out.println("<td>"+nextAirport.getCity()+"</td>");
-							out.println("<td>"+nextAirport.getnumDepartures()+"</td>");
-							out.println("<td>"+nextAirport.getnumArrivals()+"</td>");
-							out.println("</tr>");
+								out.println("<tr>");
+								out.println("<td>"+nextAirport.getCity()+"</td>");
+								out.println("<td>"+nextAirport.getnumPassengersDeparting()+"</td>");
+								out.println("<td>"+nextAirport.getnumPassengersArriving()+"</td>");
+								out.println("</tr>");
 						}
 						%>
 					</tbody>
