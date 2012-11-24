@@ -78,7 +78,7 @@ public class Search extends UflyServlet {
 		}catch(javax.jdo.JDOObjectNotFoundException e){
 			errorMessage = "No Airport with call sign "+req.getParameter("destination");
 		}
-		if (origin.equals(destination)){
+		if (origin!=null && destination != null && origin.equals(destination)){
 			errorMessage = "origin and destination cannot be the same";
 		}
 		if( departureDate.before(new Date())){
@@ -86,7 +86,9 @@ public class Search extends UflyServlet {
 		}
 		
 		if(errorMessage!=null){
-			resp.sendRedirect("/?errorMsg="+errorMessage);
+			req.setAttribute("errorMsg",errorMessage);
+			req.getRequestDispatcher("/index.jsp").forward(req,resp);
+			return;
 		}
 		if (origin != null) {
 			Vector trips = getFlightsFromOrigToDestOnDate(origin, destination,

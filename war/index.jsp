@@ -15,29 +15,43 @@
                 		<h1>Canada Airlines</h1>
                 		<p>Flying at its best</p>
               		</div>
-              		<div class="alert alert-error" id=errmsg <%if(request.getParameter("errorMsg")==null){%>style="display:none"<%} %>>
-						<%=request.getParameter("errorMsg") %>
+              		<%
+              			String error=request.getParameter("errorMsg")!=null?request.getParameter("errorMsg") :(String)request.getAttribute("errorMsg");
+              		%>
+              		<div class="alert alert-error" id=errmsg <%if(error==null){%>style="display:none"<%} %>>
+						<%=error %>
 					</div>
           			<div class="row-fluid">
                     	<div class="span7">
                             <h2>Search for Flights</h2>
                       		<form id="flightSearch"class="form-horizontal" action="/search" method="post">
+	                        	<%String defVal=null; %>
 	                        	<div class="control-group">
 	                            	<label class="control-label" for="in_from">From *</label>
 	                            	<div class="controls">
-	                                	<input name="origin"  class="required" type="text" id="in_from" placeholder="Enter your Departure City">
+	                                	<input name="origin"  class="required" type="text" id="in_from" placeholder="Enter your Departure City"
+	                                	<%defVal=(String)request.getAttribute("origin");%>
+	                                	value="<%=defVal!=null?defVal:""%>"
+	                                	>
 	                            	</div>
 	                        	</div>
 	                        	<div class="control-group">
 	                            	<label class="control-label" for="in_to">To *</label>
 	                            	<div class="controls">
-	                                	<input name="destination" class="required" type="text" id="in_to" placeholder="Enter your Destination City">
+	                                	<input name="destination" class="required" type="text" id="in_to" placeholder="Enter your Destination City"
+	                                	<%defVal=(String)request.getAttribute("destination");%>
+	                                	value="<%=defVal!=null?defVal:""%>"
+	                                	>
 	                            	</div>
 	                        	</div>
 	                        	<div class="control-group">
 	                            	<label class="control-label" for="in_depart">Date of Departure *</label>
 	                            	<div class="controls">
-	                               		<input name="departureDate" class="required" type="text" id="in_depart" placeholder="Enter Date of Departure">
+	                               		<input name="departureDate" class="required" type="text" id="in_depart" placeholder="Enter Date of Departure"
+	                               		
+	                                	<%defVal=(String)request.getAttribute("departureDate");%>
+	                                	value="<%=defVal!=null?defVal:""%>"
+	                                	>
 	                               		<script>
                                         	$('#in_depart').datepicker({
        		                                	format: 'mm-dd-yyyy'
@@ -51,7 +65,10 @@
 	                        	<div class="control-group" id="returnDate">
 	                            	<label class="control-label" for="in_return">Date of Return *</label>
 	                            	<div class="controls">
-	                                	<input name="returnDate" class="required" type="text" id="in_return" placeholder="Enter Date of Return">
+	                                	<input name="returnDate" class="required" type="text" id="in_return" placeholder="Enter Date of Return"
+	                                	<%defVal=(String)request.getAttribute("returnDate");%>
+	                                	value="<%=defVal!=null?defVal:""%>"
+	                                	>
 	                                	<script>
                                         	$('#in_return').datepicker({
        		                                	format: 'mm-dd-yyyy'
@@ -59,6 +76,9 @@
 												$('#in_return').datepicker('hide');
 												$('#in_return').blur()
 											});
+                                        	<%defVal=(String)request.getAttribute("oneWayOrReturn");if(defVal!=null && defVal.equals("oneWay")){
+                                        	%> $(function(){$('#returnDate').hide().removeClass("required")})
+                                        	<%} %> 
                                         </script>
 	                            	</div>
 	                        	</div>
@@ -66,9 +86,14 @@
 	                            	<label class="control-label" for="in_psgr">Number of Passengers *</label>
 	                            	<div class="controls">
 	                                	<select class="required input-small focused" id="in_psgr" name="numPassengers" >
-	                                	<%
-	                                	for(Integer numPax=1;numPax<20;numPax++){ %>
-										<option><%=numPax %></option>
+	                                	<%	
+											Integer selNumPax;
+											if (request.getAttribute("numPassengers") != null)
+												selNumPax = Integer.parseInt((String)request.getAttribute("numPassengers"));
+											else
+												selNumPax=-1;
+										for(Integer numPax=1;numPax<20;numPax++){ %>
+										<option <%if(numPax==selNumPax)out.print("selected="); %>><%=numPax %></option>
 										<%} %>
 										</select>
 	                                	
@@ -77,11 +102,10 @@
 	                        	<div class="control-group">
 	                            	<div class="controls">
 	                                	<label class="radio">
-	                                    	<input name="oneWayOrReturn" type="radio" name="flightOpt" value="oneWay" > One Way
+	                                    	<input name="oneWayOrReturn" type="radio" name="flightOpt" value="oneWay" <%defVal=(String)request.getAttribute("oneWayOrReturn");if(defVal!=null && defVal.equals("oneWay")){ %> checked<%} %>> One Way
 	                                	</label>
 	                                	<label class="radio">
-	                                    	<input name="oneWayOrReturn" type="radio" name="flightOpt" value="return" checked> Return
-	                                	</label>
+	                                    	<input name="oneWayOrReturn" type="radio" name="flightOpt" value="return" <%defVal=(String)request.getAttribute("oneWayOrReturn");if(defVal!=null && !defVal.equals("oneWay")){ %> checked<%} %>>Return
 	                                	<button type="submit" class="btn">Search for Flights</button>
 	                            	</div>
 	                        	</div>
