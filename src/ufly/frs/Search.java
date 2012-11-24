@@ -90,10 +90,10 @@ public class Search extends UflyServlet {
 		}
 		if (origin != null) {
 			Vector trips = getFlightsFromOrigToDestOnDate(origin, destination,
-					departureDate);
+					departureDate,Integer.valueOf(req.getParameter("numPassengers")));
 			req.setAttribute("thereTrips", trips);
 			trips = getFlightsFromOrigToDestOnDate(destination, origin,
-					returnDate);
+					returnDate,Integer.valueOf(req.getParameter("numPassengers")));
 			req.setAttribute("returnTrips", trips);
 			req.getRequestDispatcher("searchResults.jsp").forward(req, resp);
 		}
@@ -101,7 +101,7 @@ public class Search extends UflyServlet {
 	}
 
 	private Vector<Vector<HashMap<String, Object>>> getFlightsFromOrigToDestOnDate(
-			Airport origin, Airport destination, Date departureDate) {
+			Airport origin, Airport destination, Date departureDate, Integer numPass) {
 
 		List<Flight> flights = Flight.getFlightsOriginDate(origin,
 				departureDate);
@@ -109,6 +109,9 @@ public class Search extends UflyServlet {
 		Iterator<Flight> it = flights.iterator();
 		while (it.hasNext()) {
 			Flight f = it.next();
+			if (f.getSeatingArrangement().getAvailableSeats().size() <numPass){
+				continue;
+			}
 			if (f.getDestination().equals(destination))
 			// this flight goes right to the destination
 			{
@@ -129,9 +132,14 @@ public class Search extends UflyServlet {
 				HashMap<String, Object> firstLegAttr = f.getHashMap();
 
 				while (connIt.hasNext()) {
+					Flight nxt=connIt.next();
+					//filter on seats left
+					if (nxt.getSeatingArrangement().getAvailableSeats().size() <numPass){
+						continue;
+					}
 					Vector trip = new Vector<HashMap<String, Object>>(2);
 					trip.add(firstLegAttr);
-					trip.add(connIt.next().getHashMap());
+					trip.add(nxt.getHashMap());
 					toRet.add(trip);
 				}
 			}
