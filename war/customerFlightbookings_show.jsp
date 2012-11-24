@@ -3,7 +3,7 @@
 <html>
 <head>	
 	<jsp:include page="/_header" />
-	
+	<script type="text/javascript" src="/js/jquery.qrcode.min.js"></script>
 </head>
 <body>
 	<jsp:include page="/_navbar" />
@@ -60,7 +60,8 @@
 								out.print("<H3>Checked In - Boarding Pass</H3>");
 								out.print("<div class=\"row-fluid\">");
 									out.print("<div class=\"span2\">");
-										out.print("<img src=\"/img/qrcode.png\">");
+										out.print("<div id=\"output\"></div>");
+										out.print("<script>jQuery(function(){ jQuery('#output').qrcode( {width: 140,height: 140,text: \""+ request.getScheme()+ "://" + request.getServerName() + ":" + request.getServerPort() + request.getAttribute("javax.servlet.forward.request_uri") + "?" + request.getAttribute("javax.servlet.forward.query_string") + "\"}); })</script>");
 									out.print("</div>");
 									out.print("<div class=\"span6\" style=\"background-color:lightgrey\">");
 										out.print("<div class=\"row-fluid\">");
