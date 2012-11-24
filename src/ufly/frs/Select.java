@@ -107,7 +107,9 @@ public class Select extends UflyServlet {
 		}
 		try{
 			loggedInUser = (Customer)getLoggedInUser(req.getSession());
-		}catch(ClassCastException | UserInactivityTimeout e){
+		}catch(ClassCastException e){
+			return;
+		}catch(UserInactivityTimeout e){
 			return;
 		}
 		price+=priceInCents.toString();
