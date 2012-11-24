@@ -13,7 +13,7 @@
 		<div id="content">
 			<div class="row-fluid">
 				<div class="span12">
-					<div class="row-fluid">
+					<div clasfs="row-fluid">
 						<div class="span11">
 							<h4>Staff Flight Management</h4>
 							<div class="row-fluid">
@@ -61,7 +61,7 @@
 
 												<td><%=flight.get("numBooked").toString()%>/<%=flight.get("capacity").toString()%></td>
 												<td>
-													<a href="/flightManifest?flightNo=<%=flight.get("flightNo")%>&date=<%=fullDateFormat.format(flight.get("departs"))%>">Manifest</a>
+													<a href="/flightManifest?flightNo=<%=flight.get("flightNo")%>&date=<%=fullDateFormat.format(flight.get("departs"))%>" target="_blank">Manifest</a>
 												</td>
 											</tr>
 											<%

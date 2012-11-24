@@ -24,8 +24,7 @@
               	if(loggedin){ %>
 				<ul aria-labelledby="drop5" role="menu" class="dropdown-menu" id="menu2">
                   <li><a href="<%=request.getAttribute("userProfilePage") %>" tabindex="-1">Profile Page</a></li>
-                  <li><a href="#" tabindex="-1">Modify a Booking</a></li>
-                  <li><a href="#" tabindex="-1">Something else here</a></li>
+                  <li><a href="#" tabindex="-1">Manage Your Bookings</a></li>                
                   <li class="divider"></li>
                   <li><a href="/login?logout" tabindex="-1">Log out</a></li>
                 </ul>
@@ -37,10 +36,9 @@
                
             </div>
             <ul class="nav">
-              <li class="active"><a href="#">Home</a></li>
-			  <li><a href="/">Search</a></li>
-              <li><a href="#about">About</a></li>
-              <li><a href="#contact">Contact</a></li>
+              
+              <li><a href="/about.jsp">About</a></li>
+              <li><a href="/contact.jsp">Contact</a></li>
             </ul>
         </div> <!--containerfluidnavbar-->
       </div> <!--navbar inner-->

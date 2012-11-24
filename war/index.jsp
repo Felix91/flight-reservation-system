@@ -57,9 +57,9 @@
 	                            	</div>
 	                        	</div>
 	                        	<div class="control-group">
-	                            	<label class="control-label" for="in_psgr">Number of Passangers *</label>
+	                            	<label class="control-label" for="in_psgr">Number of Passengers *</label>
 	                            	<div class="controls">
-	                                	<input name="numPassengers" class="required" type="text" id="in_psgr" placeholder="Number of Passangers">
+	                                	<input name="numPassengers" class="required" type="text" id="in_psgr" placeholder="Number of Passengers">
 	                            	</div>
 	                        	</div>
 	                        	<div class="control-group">
@@ -70,7 +70,6 @@
 	                                	<label class="radio">
 	                                    	<input name="oneWayOrReturn" type="radio" name="flightOpt" value="return" checked> Return
 	                                	</label>
-	                                	Get JS to make sure required fields are populated
 	                                	<button type="submit" class="btn">Search for Flights</button>
 	                            	</div>
 	                        	</div>

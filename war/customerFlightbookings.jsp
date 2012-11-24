@@ -10,9 +10,9 @@
 		<div id="content"><!-- start content -->
 			<div class="row-fluid">
 			    <div class="span12">
-			        <h2>Customer FlightBookings</h2>
+			        <h2>Customer Flight Bookings</h2>
 					<div class="row-fluid">
-						<div class="span10">
+						<div class="span12">
 							<table class="table table-striped">
 								<thead>
 									<tr>
