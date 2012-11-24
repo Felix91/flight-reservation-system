@@ -105,7 +105,8 @@
 	                                    	<input name="oneWayOrReturn" type="radio" name="flightOpt" value="oneWay" <%defVal=(String)request.getAttribute("oneWayOrReturn");if(defVal!=null && defVal.equals("oneWay")){ %> checked<%} %>> One Way
 	                                	</label>
 	                                	<label class="radio">
-	                                    	<input name="oneWayOrReturn" type="radio" name="flightOpt" value="return" <%defVal=(String)request.getAttribute("oneWayOrReturn");if(defVal!=null && !defVal.equals("oneWay")){ %> checked<%} %>>Return
+	                                    	<input name="oneWayOrReturn" type="radio" name="flightOpt" value="return" <%defVal=(String)request.getAttribute("oneWayOrReturn");if(!(defVal!=null && defVal.equals("oneWay"))){ %> checked<%} %>>Return
+	                                	<br>
 	                                	<button type="submit" class="btn">Search for Flights</button>
 	                            	</div>
 	                        	</div>
