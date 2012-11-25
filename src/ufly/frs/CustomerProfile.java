@@ -76,7 +76,7 @@ public class CustomerProfile extends UflyServlet {
 				String newPw = req.getParameter("newpassword");
 				String confirmPw = req.getParameter("confirmnewpass"); // TO-DO: verify that newPw == confirmPw
 				
-					if(!newPw.equals(confirmPw) && (newPw != null) && (confirmPw != null))
+					if((newPw == null) || (confirmPw == null) || newPw.equals("") || !newPw.equals(confirmPw) )
 					{
 						req.setAttribute("customerEmail", loggedInUser.getEmailAddr());
 						req.setAttribute("customerFirstName", firstName);
