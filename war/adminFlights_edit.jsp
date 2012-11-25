@@ -34,11 +34,11 @@ Flight editFlight = (Flight) request.getAttribute("editFlight");
 	        			<form action = "/flightManagerProfile/editFlights" method="post">
 	        				<div class="control-group">
 		                    	<label class="control-label span2" for="origin">origin</label>
-		                    	<input type="text" name="origin" value="<% out.print(editFlight.getOrigin().getCity()); %>">
+		                    	<input type="text" name="origin" value="<% out.print(editFlight.getOrigin().getCallSign()); %>">
 		                    </div>
 							<div class="control-group">
 		                    	<label class="control-label span2" for="destination">destination</label>
-		                    	<input type="text" name="destination" value="<% out.print(editFlight.getDestination().getCity()); %>">
+		                    	<input type="text" name="destination" value="<% out.print(editFlight.getDestination().getCallSign()); %>">
 		                    </div>
 							<div class="control-group">
 		                    	<label class="control-label span2" for="departure">departure</label>
