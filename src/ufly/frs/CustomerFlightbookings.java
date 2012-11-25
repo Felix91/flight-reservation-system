@@ -24,7 +24,10 @@ public class CustomerFlightbookings extends UflyServlet {
 		
 		String pageToInclude= getServletConfig().getInitParameter("action");
 		String confirmationNumberStr = (String) req.getParameter("confirmationNumber");
-		Long confirmNumber = Long.valueOf(confirmationNumberStr);
+		Long confirmNumber=null;
+		if(confirmationNumberStr!= null){
+			confirmNumber= Long.valueOf(confirmationNumberStr);
+		}
 		FlightBooking editFlightbooking=null;
 		if(confirmNumber != null){
 			editFlightbooking = FlightBooking.getFlightBooking(confirmNumber);
