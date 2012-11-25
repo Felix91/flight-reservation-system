@@ -1,4 +1,5 @@
 <%@ page import="java.util.*, ufly.entities.FlightBooking, com.google.appengine.api.datastore.Key" %>
+<%@ page import="java.text.SimpleDateFormat"%>
 
 <html>
 <head>	
@@ -17,31 +18,34 @@
 								<thead>
 									<tr>
 										<th>Confirmation Number</th>
-										<th>Booked By</th>
 										<th>Flight Number</th>
-										<th>Flight Class</th>
-										<th>Seat</th>
-										<th>World Map</th>
+										<th>Departure Date</th>
+										<th>Origin</th>
+										<th>Destination</th>
+										<th>Passenger Name</th>
+										<th>Map</th>
 										<th>Action</th>
 									</tr>
 								</thead>
 								<tbody>
 									<% 
 									Vector<Key> allFlightbookings = (Vector<Key>) request.getAttribute("allFlightbookings");
-									
+									SimpleDateFormat dateFormat = new SimpleDateFormat("EEE, MMM d, yyyy HH:mm");
 									Iterator<Key> iterator = allFlightbookings.iterator();
 									while (iterator.hasNext()) {
 										FlightBooking nextFlightbooking = FlightBooking.getFlightBooking(iterator.next());
 										if(nextFlightbooking != null){
 										out.println("<tr>");
 											out.println("<td>"+nextFlightbooking.getConfirmationNumber().getId()+"</td>");
-											out.println("<td>"+nextFlightbooking.getBookedBy().getFirstName() + nextFlightbooking.getBookedBy().getLastName() + "</td>");
 											out.println("<td>"+nextFlightbooking.getBookedFlight().getFlightNumber()+"</td>");
-											out.println("<td>"+nextFlightbooking.getBookedFlightClass().toString()+"</td>");
-											out.println("<td>"+nextFlightbooking.getBookedSeat().toString()+"</td>");
-								            String originCoor = nextFlightbooking.getBookedFlight().getOrigin().getCoordinates();
+											out.println("<td>"+dateFormat.format(nextFlightbooking.getBookedFlight().getDeparture())+"</td>");
+											out.println("<td>"+nextFlightbooking.getBookedFlight().getOrigin().getCity()+" ("+nextFlightbooking.getBookedFlight().getOrigin().getCallSign()+")"+"</td>");
+											out.println("<td>"+nextFlightbooking.getBookedFlight().getDestination().getCity()+" ("+nextFlightbooking.getBookedFlight().getDestination().getCallSign()+")"+"</td>");
+											out.println("<td>"+nextFlightbooking.getPassengerName()+ "</td>");
+											
+											String originCoor = nextFlightbooking.getBookedFlight().getOrigin().getCoordinates();
 											String destinationCoor = nextFlightbooking.getBookedFlight().getDestination().getCoordinates();
-											out.println("<td><a href=\"http://maps.google.com/maps?saddr="+originCoor+"&daddr="+destinationCoor+"\" target=\"_blank\" >View on Map</a><td>");
+											out.println("<td><a href=\"http://maps.google.com/maps?saddr="+originCoor+"&daddr="+destinationCoor+"\" target=\"_blank\" >View on Map</a></td>");
 											out.println("<td>");
 												out.println("<a href=\"/customerProfile/showFlightbookings?confirmationNumber="+ nextFlightbooking.getConfirmationNumber().getId() + "\">Show</a>");
 												if(!nextFlightbooking.getCheckedIn() ){
@@ -51,7 +55,7 @@
 												}
 											out.println("</td>");
 										out.println("</tr>");
-									}
+										}
 									}
 									%>
 								</tbody>

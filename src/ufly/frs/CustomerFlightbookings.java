@@ -25,6 +25,19 @@ public class CustomerFlightbookings extends UflyServlet {
 		String pageToInclude= getServletConfig().getInitParameter("action");
 		String confirmationNumberStr = (String) req.getParameter("confirmationNumber");
 		Long confirmNumber=null;
+		Customer loggedInCustomer=null;
+		try {
+			loggedInCustomer = (Customer)getLoggedInUser(req.getSession());
+		} catch (UserInactivityTimeout e) {
+			resp.sendRedirect("/?errorMsg=Sorry, you have been logged out because you have been inactive too long");
+			return;
+		} catch (ClassCastException e){
+		}finally{
+			if (loggedInCustomer== null){
+				resp.sendRedirect("/?errorMsg=Sorry, you don't have permission to access that page");
+				return;
+			}
+		}
 		if(confirmationNumberStr!= null){
 			confirmNumber= Long.valueOf(confirmationNumberStr);
 		}
@@ -35,12 +48,7 @@ public class CustomerFlightbookings extends UflyServlet {
 		
 		if(pageToInclude.equals("index") )
 		{
-			Customer loggedInCustomer=null;
-			try {
-				loggedInCustomer = Customer.getCustomer(getLoggedInUser(req.getSession()).getEmailAddr());
-			} catch (UserInactivityTimeout e) {
-				resp.sendRedirect("/?errorMsg=Sorry, you have been logged out because you have been inactive too long");
-			}
+			
 			Vector<Key> allFlightbookings = loggedInCustomer.getFlightBookings();
 			req.setAttribute("allFlightbookings", allFlightbookings);
 			req.getRequestDispatcher("/customerFlightbookings.jsp")

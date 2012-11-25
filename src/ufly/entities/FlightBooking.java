@@ -369,6 +369,13 @@ public class FlightBooking extends SuperEntity {
 	{
 		return this.confirmationNumber;
 	}
+	
+	public String getCreditCardNumber(){
+		if(this.creditCardNo.length()>4){
+			this.changeCreditCardNumber(this.creditCardNo.substring(this.creditCardNo.length()-4));
+		}
+		return this.creditCardNo;
+	}
 	public String getPassengerName()
 	{
 		return this.passengerName;

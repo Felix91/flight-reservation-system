@@ -818,7 +818,16 @@ public class Flight extends SuperEntity{
 	{
 		return priceInCents;
 	}
-
+	public String getPriceString()
+	{
+		Integer price = this.getPriceInCents();
+		String toRet= "$"+Integer.toString(price/100)+".";
+		if(price%100 <10){
+			toRet+="0";
+		}
+		toRet+=Integer.toString(price%100);
+		return toRet;
+	}
 
 	@SuppressWarnings("deprecation")
 	@Override

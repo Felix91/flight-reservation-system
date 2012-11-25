@@ -1,4 +1,5 @@
 <%@ page import="java.util.*, ufly.entities.FlightBooking" %>
+<%@ page import="java.text.SimpleDateFormat"%>
 
 <html>
 <head>	
@@ -9,46 +10,42 @@
 	<jsp:include page="/_navbar" />
 	<div class="container">
 		<div id="content"><!-- start content -->
-			<h3>Customer Flightbookings - show Flight 
-			</h3>
+			<h3>Customer Flightbookings - show Flight </h3>
+			<%FlightBooking showFlightbooking = (FlightBooking) request.getAttribute("showFlightbooking");
+			SimpleDateFormat dateFormat = new SimpleDateFormat("EEE, MMM d, yyyy HH:mm");%>
 			<div class="row-fluid">
     			<div class="span12">
         			<div class="row-fluid">
-	        			<%
-							if(request.getAttribute("showFlightbooking") != null){
-								FlightBooking showFlightbooking = (FlightBooking) request.getAttribute("showFlightbooking");
-								out.print("<div class=\"dl-horizontal\">");
-	        						out.print("<div class=\"control-group\">");
-		                    			out.print("<dt>flightNumber</dt>");
-										out.print("<dd>"+showFlightbooking.getConfirmationNumber().getId()+"</dd>");
-									out.print("</div>");
-									out.print("<div class=\"control-group\">");
-		                    			out.print("<dt>Passenger Name</dt>");
-										out.print("<dd>"+showFlightbooking.getPassengerName()+"</dd>");
-									out.print("</div>");
-									out.print("<div class=\"control-group\">");
-		                    			out.print("<dt>Travel Date</dt>");
-										out.print("<dd>"+showFlightbooking.getBookedFlight().getDeparture().toString()+"</dd>");
-									out.print("</div>");
-									out.print("<div class=\"control-group\">");
-		                    			out.print("<dt>Departure</dt>");
-										out.print("<dd>"+showFlightbooking.getBookedFlight().getOrigin().getCity()+"</dd>");
-									out.print("</div>");
-									out.print("<div class=\"control-group\">");
-		                    			out.print("<dt>Arrival</dt>");
-										out.print("<dd>"+showFlightbooking.getBookedFlight().getDestination().getCity()+"</dd>");
-									out.print("</div>");
-									out.print("<div class=\"control-group\">");
-		                    			out.print("<dt>Seat Number</dt>");
-										out.print("<dd>"+showFlightbooking.getBookedSeat().getRowNumber()+ showFlightbooking.getBookedSeat().getColumn()+"</dd>");
-									out.print("</div>");
-		                		out.print("</div>");
-							}
-						%>
+        				<dl class="dl-horizontal">
+        					<dt>Confirmation Number</dt>
+        					<dd><%=showFlightbooking.getConfirmationNumber().getId() %></dd>
+        					<dt>Flight Number</dt>
+        					<dd><%=showFlightbooking.getBookedFlight().getFlightNumber() %></dd>
+        					<dt>Departure Date</dt>
+        					<dd><%=dateFormat.format(showFlightbooking.getBookedFlight().getDeparture()) %></dd>
+        					<dt>Arrival Date</dt>
+        					<dd><%=dateFormat.format(showFlightbooking.getBookedFlight().getArrival()) %></dd>
+        					<dt>Origin</dt>
+        					<dd><%=showFlightbooking.getBookedFlight().getOrigin().getCity()+" ("+showFlightbooking.getBookedFlight().getOrigin().getCallSign()+")" %></dd>
+        					<dt>Destination</dt>
+        					<dd><%=showFlightbooking.getBookedFlight().getDestination().getCity()+" ("+showFlightbooking.getBookedFlight().getDestination().getCallSign()+")" %></dd>
+        					<dt>Passenger Name</dt>
+        					<dd><%=showFlightbooking.getPassengerName() %></dd>
+        					<dt>Flight Class</dt>
+        					<dd><%=showFlightbooking.getBookedFlightClass() %></dd>
+        					<dt>Seat</dt>
+        					<dd><%=showFlightbooking.getBookedSeat() %></dd>
+        					<dt>Meal</dt>
+        					<dd><%=showFlightbooking.getMealChoice() %></dd>
+        					<dt>Price In Dollars</dt>
+        					<dd><%=showFlightbooking.getBookedFlight().getPriceString() %></dd>
+        					<dt>Credit Card</dt>
+        					<dd>**** **** **** <%=showFlightbooking.getCreditCardNumber() %></dd>
+        				</dl>
 						<%
 						// if customer has not checked in yet
 						if(request.getAttribute("showFlightbooking") != null){
-							FlightBooking showFlightbooking = (FlightBooking) request.getAttribute("showFlightbooking");
+							showFlightbooking = (FlightBooking) request.getAttribute("showFlightbooking");
 							
 							if(!showFlightbooking.getCheckedIn() ){
 								out.print("<form action = \"/customerProfile/checkinFlightbookings\" method=\"post\">");
