@@ -13,12 +13,25 @@ Flight editFlight = (Flight) request.getAttribute("editFlight");
 	<jsp:include page="/_navbar" />
 	<div class="container">
 		<div id="content"><!-- start content -->
+			<% 
+        	if((String) request.getAttribute("errorMsg") != null){
+        		out.print("<div class=\"alert alert-error\">");
+        			out.print("<button data-dismiss=\"alert\" class=\"close\" type=\"button\">x</button>");
+        			out.print((String) request.getAttribute("errorMsg"));
+				out.print("</div>");
+			}else if((String) request.getAttribute("successMsg") != null ){
+				out.print("<div class=\"alert alert-success\">");
+        			out.print("<button data-dismiss=\"alert\" class=\"close\" type=\"button\">x</button>");
+        			out.print((String) request.getAttribute("successMsg"));
+				out.print("</div>");
+			}
+        	%>
 			<h3>Flight Management - Edit Flight <% out.print(editFlight.getFlightNumber()); %>
 			</h3>
 			<div class="row-fluid">
     			<div class="span12">
         			<div class="row-fluid">
-	        			<form action = "/flightTest" method="post">
+	        			<form action = "/flightManagerProfile/editFlights" method="post">
 	        				<div class="control-group">
 		                    	<label class="control-label span2" for="origin">origin</label>
 		                    	<input type="text" name="origin" value="<% out.print(editFlight.getOrigin().getCity()); %>">
@@ -39,6 +52,8 @@ Flight editFlight = (Flight) request.getAttribute("editFlight");
 		                    	<label class="control-label span3" for="allowableMealTypes">allowableMealTypes</label>
 		                    	<input type="text" name="allowableMealTypes" value="<% out.print(editFlight.getAllowableMeals()); %>">
 		                    </div>
+		                    <input type="hidden" id="flightKey"
+								value="<%=editFlight.getKey().getName()%>" name="flightKey">
 							<input type="submit" value="Submit">
 						</form>
 					</div><!--/span row-->
