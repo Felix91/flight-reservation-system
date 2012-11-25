@@ -34,7 +34,7 @@
         					<dt>Flight Class</dt>
         					<dd><%=showFlightbooking.getBookedFlightClass() %></dd>
         					<dt>Seat</dt>
-        					<dd><%=showFlightbooking.getBookedSeat() %></dd>
+        					<dd><%=showFlightbooking.getBookedSeat().getRowNumber() + "" + showFlightbooking.getBookedSeat().getColumn() %></dd>
         					<dt>Meal</dt>
         					<dd><%=showFlightbooking.getMealChoice() %></dd>
         					<dt>Price In Dollars</dt>
