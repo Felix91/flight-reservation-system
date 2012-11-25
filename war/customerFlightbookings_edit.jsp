@@ -1,116 +1,206 @@
-<%@ page import="java.util.*, ufly.entities.FlightBooking, ufly.entities.Flight, ufly.entities.Meal, ufly.entities.SeatingArrangement, ufly.entities.Seat" %>
+<%@ page import="java.util.*,ufly.entities.Airport"%>
 
 <html>
-<head>	
-	<jsp:include page="/_header" />
-<link rel="stylesheet"
-	href="http://code.jquery.com/ui/1.9.1/themes/base/jquery-ui.css" />
-<script src="http://code.jquery.com/jquery-1.8.2.js"></script>
-<script src="http://code.jquery.com/ui/1.9.1/jquery-ui.js"></script>
+<head>
+<jsp:include page="/_header" />
+<script type="text/javascript" src="/js/jquery.qrcode.min.js"></script>
 <script>
-
-		function openDialog(paxNo,flightNo){
-			$('#Flight'+paxNo+'_'+flightNo).dialog('open')
-		}
-		function seatSelect(seat,flight,pass){
-			seatName="Seat"+seat+"Flight"+flight
-			$('[name="'+seatName+'"]').addClass('disabled').attr("onclick","");
-			
-			seatInputId="Seat"+pass+"_"+flight
-			$('#'+seatInputId).val(seat)
-			$('label[for="'+seatInputId+'"]').html(seat);
-			$('#Flight'+pass+'_'+flight).dialog('close')
-			
-			$('[name="'+"SeatButton"+pass+"_"+flight+'"]').addClass('disabled')
-			.attr("onclick","");
-		}
-		function onFormSubmit()
-		{
-			var passengerNameFilled=true;
-			$("[name^=passengerName]").each(function(index){
-				if(passengerNameFilled){
-					passengerNameFilled=$(this).val()!=""
-				}
-			})
-			if(!passengerNameFilled){
-				$("#requiredError").html("Make sure all passengers are named")
-				return false
-			}
-			var seatSelected=true;
-			$('input[name^=Seat]').each(function(){
-				if(seatSelected){
-					seatSelected=$(this).val()!=""
-				}
-				
-			})
-			if(!seatSelected){
-				$("#requiredError").html("Select a seat for all flights")
-				return false
-			}
-			return true;
-		}
-		$(function(){
-			$('form').submit(onFormSubmit)
-			$('.disabled').attr("onclick","")
-			//for safety:
-			$('input[name^=Seat]').val("")
-	
+	$(function() {
+		$("#editMeal").click(function() {
+			$('#mealEditDialog').dialog()
 		})
-	</script>	
+		$("#editSeat").click(function() {
+			$('#seatEditDialog').dialog({
+				modal : true,
+				minWidth : 1000,
+				minHeight : 500
+			})
+		})
+		$('#mealSelect').change(
+				function() {
+					$.ajax(
+							{
+								url : '/doAjax?ajaxCall=modifyMeal&meal='
+										+ $('#mealSelect').val()
+										+ "&bookingNumber="
+										+ $('#confirmNo').val()
+							}).done(function() {
+						$("#mealName").html($('#mealSelect').val())
+						$('#mealEditDialog').dialog('close')
+					})
+
+				})
+
+	})
+	function seatSelect(row, col) {
+		$.ajax(
+				{
+					url : '/doAjax?ajaxCall=modifySeat&' + 'seat=' + row + col
+							+ '&bookingNumber=' + $('#confirmNo').val()
+				}).done(function() {
+			$('#seatName').html(row + col);
+			$('#seatEditDialog').dialog('close')
+		})
+	}
+</script>
 </head>
 <body>
 	<jsp:include page="/_navbar" />
 	<div class="container">
-		<div id="content"><!-- start content -->
-			<h3>Customer Flightbookings - edit Flightbookings 
-			</h3>
+		<div id="content">
+			<!-- start content -->
+			<h3>Customer Flightbookings - show Flight</h3>
 			<div class="row-fluid">
-    			<div class="span12">
-        			<div class="row-fluid">
-	        			<%
-							if(request.getAttribute("editFlightbooking") != null){
-								FlightBooking editFlightbooking = (FlightBooking) request.getAttribute("editFlightbooking");
-								out.print("<div class=\"dl-horizontal\">");
-								out.print("<form action = \"/customerProfile/editFlightbookings\" method=\"post\">");
-									out.print("<div class=\"control-group\">");
-		                    			out.print("<label class=\"control-label span2\" for=\"flightNumber\">flightNumber</label>");
-										out.print("<input type=\"text\" name=\"flightNumber\">");
-									out.print("</div>");
-									
-		    						out.print("<div class=\"control-group\">");
-		    							out.print("<label class=\"control-label span2\" for=\"mealPreference\">mealPreference</label>");
-										
-		    							out.print("<select name=\"meal\">");
-						    				Vector<Meal> allowableMeals = editFlightbooking.getBookedFlight().getAllowableMeals();	
-						    				for(int j=0;j<allowableMeals.size();j++)
-						    				{
-						    					if(allowableMeals.elementAt(j).toString().equals(editFlightbooking.getMealChoice().toString())){
-						    						out.print("<option value=\""+ allowableMeals.elementAt(j).toString() +"\" selected=\"selected\">"+ allowableMeals.elementAt(j).toString() + "</option>");
-						    					}else{
-						    						out.print("<option value=\""+ allowableMeals.elementAt(j).toString() +"\">"+ allowableMeals.elementAt(j).toString() + "</option>");
-						    					}
-						    				}
-						    			out.print("</select>");
-		    						out.print("</div>");
-		    						out.print("<div class=\"control-group\">");
-										SeatingArrangement currentSeatingArrangement = editFlightbooking.getBookedFlight().getSeatingArrangement();
-										Vector<Seat> availableSeats = currentSeatingArrangement.getAvailableSeats();
-									out.print("</div>");
-									out.print("<input type=\"hidden\" name=\"confirmationNumber\" value=\"" + editFlightbooking.getConfirmationNumber().getId() +  "\">");
-									out.print("<input type=\"submit\" value=\"Modify\">");
-		                		out.print("</form>");
-		                		out.print("</div>");
-							}
+				<div class="span12">
+					<div class="row-fluid">
+						<%
+							HashMap<String, Object> booking = (HashMap) request
+									.getAttribute("editFlightbooking");
 						%>
-					</div><!--/span row-->
-				</div><!--/span12-->
-			</div><!--/row-->
-    	</div><!-- end content -->
-		    
-    	<div id="footer"><!-- start footer -->
-    		<jsp:include page="/_footer" />
-    	</div><!-- end footer -->
+						<dl class="dl-horizontal control-group">
+							<dt>Flight Number</dt>
+							<dd><%=booking.get("confirmNo")%></dd>
+							<input type="hidden" id="confirmNo"
+								value="<%=booking.get("confirmNo")%>">
+						</dl>
+						<dl class="dl-horizontal control-group">
+							<dt>Passenger Name</dt>
+							<dd><%=booking.get("passengerName")%></dd>
+						</dl>
+						<dl class="dl-horizontal control-group">
+							<dt>TravelDate</dt>
+							<dd><%=booking.get("flightClass")%></dd>
+						</dl>
+						<dl class="dl-horizontal control-group">
+							<dt>Departure</dt>
+							<dd><%=((Airport) booking.get("origin")).getCity()%>
+								(<%=((Airport) booking.get("origin")).getCallSign()%>)
+							</dd>
+						</dl>
+						<dl class="dl-horizontal control-group">
+							<dt>Arrival</dt>
+							<dd><%=((Airport) booking.get("destination")).getCity()%>
+								(<%=((Airport) booking.get("destination")).getCallSign()%>)
+							</dd>
+						</dl>
+						<dl class="dl-horizontal control-group">
+							<dt>Meal</dt>
+							<dd>
+								<span id="mealName"><%=booking.get("meal")%> </span><a href=#
+									id="editMeal"> edit</a>
+							</dd>
+						</dl>
+						<dl class="dl-horizontal control-group">
+							<dt>Seat Number</dt>
+							<dd>
+								<span id="seatName"><%=booking.get("seat")%></span> <a href=#
+									id="editSeat"> edit</a>
+							</dd>
+						</dl>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div id="mealEditDialog" style="display: none">
+			<h3>Select Meal</h3>
+			<select id="mealSelect">
+				<option></option>
+				<%
+					for (Object m : (Vector) request.getAttribute("meals")) {
+				%>
+				<option><%=m%></option>
+				<%
+					}
+				%>
+			</select>
+		</div>
+		<div id="seatEditDialog" style="display: none">
+			<div class="row-fluid">
+				<div class="span12">
+					<h2>Seat Selections</h2>
+					<button class="btn btn-mini " type="button">&nbsp;</button>
+					Current Seat
+					<button class="btn btn-mini btn-primary" type="button">&nbsp;</button>
+					First Class
+					<button class="btn btn-mini btn-info" type="button">&nbsp;</button>
+					Business Class
+					<button class="btn btn-mini btn-success" type="button">&nbsp;</button>
+					Economy Class
+					<button class="btn btn-mini btn-success disabled" type="button">&nbsp;</button>
+					Unavailable Seat
+					<hr />
+					<table class="table table-bordered table-condensed">
+						<%
+							HashMap<String, Object> flight = (HashMap) request
+									.getAttribute("flight");
+							int numRows = (Integer) ((HashMap) flight.get("seatingArrangement"))
+									.get("numRows");
+							int numCols = (Integer) ((HashMap) flight.get("seatingArrangement"))
+									.get("numColumns");
+							int numFirstClass = (Integer) ((HashMap) flight
+									.get("seatingArrangement")).get("numRowsFirstClass");
+							int numBusinessClass = (Integer) ((HashMap) flight
+									.get("seatingArrangement")).get("numRowsBusinessClass");
+							int numEconomyClass = (Integer) ((HashMap) flight
+									.get("seatingArrangement")).get("numRowsEconomyClass");
+							List availableSeats = Arrays.asList((String[]) flight
+									.get("availableSeats"));
+						%>
+						<thead>
+							<tr>
+								<th>#</th>
+								<%
+									for (int row = 1; row <= numRows; row++) {
+								%>
+								<th><%=row%></th>
+								<%
+									}
+								%>
+							</tr>
+						</thead>
+						<tbody>
+							<%
+								char a = (char) numCols;
+								a += 'A';
+								for (Character Col = 'A'; Col < a; Col++) {
+							%>
+							<tr>
+								<th><%=Col%></th>
+								<%
+									for (Integer row = 1; row <= numRows; row++) {
+											String flightClass;
+											if (row <= numFirstClass) {
+												flightClass = "btn-primary";
+											} else if (row <= (numFirstClass + numBusinessClass)) {
+												flightClass = "btn-info";
+											} else {
+												flightClass = "btn-success";
+											}
+											if (booking.get("seat").equals(row.toString() + Col)) {
+												flightClass = "";
+											}
+								%>
+								<td>
+									<button
+										class="btn btn-mini <%=flightClass%>
+												  		<%if (availableSeats.indexOf(row.toString() + " " + Col) < 0
+							&& !booking.get("seat")
+									.equals(row.toString() + Col)) {%>disabled<%}%>"
+										type="button" onclick="seatSelect('<%=row%>','<%=Col%>')"
+										value="<%=row%> <%=Col%>">&nbsp;</button>
+								</td>
+								<%
+									}
+								%>
+							</tr>
+							<%
+								}
+							%>
+						</tbody>
+					</table>
+				</div>
+			</div>
+		</div>
 	</div>
-	<!-- page generated at: <% //out.print(request.getAttribute("date")); %>-->
 </body>
 </html>

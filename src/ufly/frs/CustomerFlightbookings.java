@@ -22,13 +22,14 @@ public class CustomerFlightbookings extends UflyServlet {
 		throws IOException,ServletException
 	{	
 		
-		//if (getLoggedInUser(req.getSession())!=null)
-		//{
-		//	Customer loggedInCustomer = Customer.getCustomer(getLoggedInUser(req.getSession()).getEmailAddr());
-		//	req.setAttribute("customerFirstName", loggedInCustomer.getFirstName());
-		//	req.setAttribute("customerLastName", loggedInCustomer.getLastName());
-		
 		String pageToInclude= getServletConfig().getInitParameter("action");
+		String confirmationNumberStr = (String) req.getParameter("confirmationNumber");
+		Long confirmNumber = Long.valueOf(confirmationNumberStr);
+		FlightBooking editFlightbooking=null;
+		if(confirmNumber != null){
+			editFlightbooking = FlightBooking.getFlightBooking(confirmNumber);
+		}
+		
 		if(pageToInclude.equals("index") )
 		{
 			Customer loggedInCustomer=null;
@@ -43,20 +44,15 @@ public class CustomerFlightbookings extends UflyServlet {
 			.forward(req,resp);
 		}else if (pageToInclude.equals("edit") )
 		{
-			String confirmationNumber = (String) req.getParameter("confirmationNumber");
-			Long confirmNumber = Long.valueOf(confirmationNumber);
-			if(confirmNumber != null){
-				FlightBooking editFlightbooking = FlightBooking.getFlightBooking(confirmNumber);
-				if(editFlightbooking != null){
-					req.setAttribute("editFlightbooking", editFlightbooking);
-					req.getRequestDispatcher("/customerFlightbookings_edit.jsp")
-					.forward(req,resp);
-				}
+			if(editFlightbooking != null){
+				req.setAttribute("editFlightbooking", editFlightbooking.getHashMap());
+				req.setAttribute("meals", editFlightbooking.getBookedFlight().getAllowableMeals());
+				req.setAttribute("flight",editFlightbooking.getBookedFlight().getHashMap());
+				req.getRequestDispatcher("/customerFlightbookings_edit.jsp")
+				.forward(req,resp);
 			}
 		}else if (pageToInclude.equals("delete") )
 		{
-			String confirmationNumber = (String) req.getParameter("confirmationNumber");
-			Long confirmNumber = Long.valueOf(confirmationNumber);
 			if(confirmNumber != null){
 				FlightBooking deleteFlightbooking = FlightBooking.getFlightBooking(confirmNumber);
 				if(deleteFlightbooking != null){
@@ -68,12 +64,11 @@ public class CustomerFlightbookings extends UflyServlet {
 		}
 		else if (pageToInclude.equals("show") )
 		{
-			String confirmationNumber = (String) req.getParameter("confirmationNumber");
-			Long confirmNumber = Long.valueOf(confirmationNumber);
 			if(confirmNumber != null){
 				FlightBooking showFlightbooking = FlightBooking.getFlightBooking(confirmNumber);
 				if(showFlightbooking != null){
 					req.setAttribute("showFlightbooking", showFlightbooking);
+
 					req.getRequestDispatcher("/customerFlightbookings_show.jsp")
 					.forward(req,resp);
 				}

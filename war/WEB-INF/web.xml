@@ -2,6 +2,16 @@
 	<welcome-file-list>
 		<welcome-file>index.jsp</welcome-file>
 	</welcome-file-list>
+	<!-- AjaxServer -->
+	<servlet>
+		<servlet-name>AjaxServer</servlet-name>
+		<servlet-class>ufly.frs.AjaxServer</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>AjaxServer</servlet-name>
+		<url-pattern>/doAjax</url-pattern>
+	</servlet-mapping>
+	
 	<servlet>
 		<servlet-name>Ufly</servlet-name>
 		<servlet-class>ufly.frs.Servlet</servlet-class>

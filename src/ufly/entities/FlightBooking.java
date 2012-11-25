@@ -358,7 +358,7 @@ public class FlightBooking extends SuperEntity {
 		}
 		toRet.put("creditCardNumber", creditCard);
 		toRet.put("origin", this.getBookedFlight().getOrigin());
-		toRet.put("origin", this.getBookedFlight().getDestination());
+		toRet.put("destination", this.getBookedFlight().getDestination());
 		return toRet;
 	}
 	
