@@ -39,7 +39,6 @@
 					</div>
 					<div id="flightbookings" class="tab-pane fade">				
 						<jsp:include page="/_adminFlightbookings" />
-						<a href="/flightManagerProfile/addFlightbookings"><button class="btn btn-primary">Add Flightbookings</button></a>
 					</div>
 					<div id="airports" class="tab-pane fade">				
 						<jsp:include page="/_adminAirports" />

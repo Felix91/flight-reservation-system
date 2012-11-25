@@ -14,7 +14,6 @@
 							<th>Flight Number</th>
 							<th>Flight Class</th>
 							<th>Seat</th>
-							<th>Action</th>
 						</tr>
 					</thead>
 					<tbody>
@@ -30,7 +29,6 @@
 							out.println("<td>"+nextFlightbooking.getBookedFlight().getFlightNumber()+"</td>");
 							out.println("<td>"+nextFlightbooking.getBookedFlightClass().toString()+"</td>");
 							out.println("<td>"+nextFlightbooking.getBookedSeat().getRowNumber()+nextFlightbooking.getBookedSeat().getColumn() +"</td>");
-							out.println("<td><a href=\"/flightManagerProfile/editFlightbookings?confirmationNumber="+ nextFlightbooking.getConfirmationNumber().getId() + "\">Edit</a></td>");
 							out.println("</tr>");
 						}
 						%>
