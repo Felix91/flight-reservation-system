@@ -50,7 +50,7 @@
 	<div class="container">
 		<div id="content">
 			<!-- start content -->
-			<h3>Customer Flightbookings - show Flight</h3>
+			<h3>Customer Flightbookings - modify Flightbooking</h3>
 			<div class="row-fluid">
 				<div class="span12">
 					<div class="row-fluid">
@@ -59,7 +59,7 @@
 									.getAttribute("editFlightbooking");
 						%>
 						<dl class="dl-horizontal control-group">
-							<dt>Flight Number</dt>
+							<dt>Confirmation Number</dt>
 							<dd><%=booking.get("confirmNo")%></dd>
 							<input type="hidden" id="confirmNo"
 								value="<%=booking.get("confirmNo")%>">
@@ -69,7 +69,7 @@
 							<dd><%=booking.get("passengerName")%></dd>
 						</dl>
 						<dl class="dl-horizontal control-group">
-							<dt>TravelDate</dt>
+							<dt>Flight Class</dt>
 							<dd><%=booking.get("flightClass")%></dd>
 						</dl>
 						<dl class="dl-horizontal control-group">
