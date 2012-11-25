@@ -11,9 +11,9 @@
 			
 			<div class="row-fluid">
    				<div class="span12">
-              		<div class="hero-unit" style="background-color:whiteSmoke">
+              		<div class="hero-unit" style="color:white; background-image:url('/img/Background.jpg'); background-position:center;">                		
                 		<h1>Canada Airlines</h1>
-                		<p>Flying at its best</p>
+                		<p>"Flying at its best"</p>                		
               		</div>
               		<%
               			String error=request.getParameter("errorMsg")!=null?request.getParameter("errorMsg") :(String)request.getAttribute("errorMsg");
@@ -107,9 +107,10 @@
 	                                	<label class="radio">
 	                                    	<input name="oneWayOrReturn" type="radio" name="flightOpt" value="return" <%defVal=(String)request.getAttribute("oneWayOrReturn");if(!(defVal!=null && defVal.equals("oneWay"))){ %> checked<%} %>>Return
 	                                	<br>
-	                                	<button type="submit" class="btn">Search for Flights</button>
+	                                	
 	                            	</div>
 	                        	</div>
+	                        	<button type="submit" class="btn btn-primary offset3">Search for Flights</button>
                     	</form> <!-- Close the form -->
 
 						</div>
@@ -120,11 +121,12 @@
 								<li class="span12">
 									<div class="thumbnails">
 										<a href="#" class="thumbnail"> <img
-											src="http://placehold.it/300x200" alt="">
+											src="/img/Promotions.jpg" alt="">
 										</a>
 										<div class="captions">
 											<h3>Promotions This Month</h3>
-											<p>This month fly to Antartica one way trip for free</p>
+											<p>Stay in a beach resort for 3 nights for only $299!</p>
+											<p>Price includes accommodation and a round-trip flight.</p>
 										</div>
 										<!--captions-->
 									</div> <!--thumbnails-->

@@ -11,3 +11,9 @@
 	<link rel="stylesheet"
 	href="http://code.jquery.com/ui/1.9.1/themes/base/jquery-ui.css" />
 	<script src="/js/common.js"></script>
+	<style>
+	body{
+		background-image:url('/img/Background2.jpg'); 
+		background-position:center;
+	}
+	</style>
