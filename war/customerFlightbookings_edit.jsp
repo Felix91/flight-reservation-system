@@ -26,6 +26,7 @@
 										+ $('#confirmNo').val()
 							}).done(function() {
 						$("#mealName").html($('#mealSelect').val())
+						$("#mealSelect").val("")
 						$('#mealEditDialog').dialog('close')
 					})
 
@@ -185,8 +186,9 @@
 										class="btn btn-mini <%=flightClass%>
 												  		<%if (availableSeats.indexOf(row.toString() + " " + Col) < 0
 							&& !booking.get("seat")
-									.equals(row.toString() + Col)) {%>disabled<%}%>"
-										type="button" onclick="seatSelect('<%=row%>','<%=Col%>')"
+									.equals(row.toString() + Col)) {%>disabled"
+										<%}else{ %>" onclick="seatSelect('<%=row%>','<%=Col%>')" <%} %>
+										type="button" 
 										value="<%=row%> <%=Col%>">&nbsp;</button>
 								</td>
 								<%
