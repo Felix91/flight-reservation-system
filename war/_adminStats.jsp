@@ -23,7 +23,7 @@
 							Airport nextAirport = it.next();
 								out.println("<tr>");
 								out.println("<td>"+nextAirport.getCity()+"</td>");
-								//out.println("<td>"+nextAirport.getnumPassengersDeparting()+"</td>");
+								out.println("<td>"+nextAirport.getnumPassengersDeparting()+"</td>");
 								out.println("<td>"+nextAirport.getnumPassengersArriving()+"</td>");
 								out.println("</tr>");
 						}
