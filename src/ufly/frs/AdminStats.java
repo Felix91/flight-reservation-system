@@ -17,12 +17,20 @@ public class AdminStats extends UflyServlet {
 	public void doGet(HttpServletRequest req, HttpServletResponse resp)
 		throws IOException,ServletException
 	{	
-		
+		String pageToInclude= getServletConfig().getInitParameter("action");
+		if(pageToInclude.equals("index") )
+		{
 			List<Airport> la = Airport.getAllAirports();
 			req.setAttribute("allAirports", la);
 			req.getRequestDispatcher("/_adminStats.jsp")
 				.include(req,resp);
-		
+		}
+		else if(pageToInclude.equals("graph") ){
+			List<Airport> la = Airport.getAllAirports();
+			req.setAttribute("allAirports", la);
+			req.getRequestDispatcher("/adminAirportStats.jsp")
+				.forward(req,resp);
+		}
 	}
 
 	public void doPost(HttpServletRequest req, HttpServletResponse resp)

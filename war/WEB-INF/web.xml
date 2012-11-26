@@ -312,23 +312,57 @@
 		<servlet-name>adminAirports_create</servlet-name>
 		<url-pattern>/flightManagerProfile/addAirports</url-pattern>
 	</servlet-mapping>
-		<!-- ADMIN STATS PAGE -->
+	<!-- ADMIN STATS PAGE -->
 	<servlet>
 		<servlet-name>adminStats</servlet-name>
 		<servlet-class>ufly.frs.AdminStats</servlet-class>
+		<init-param>
+	            <param-name>action</param-name>
+	            <param-value>index</param-value>
+	    </init-param>
 	</servlet>
 	<servlet-mapping>
 		<servlet-name>adminStats</servlet-name>
 		<url-pattern>/_adminStats</url-pattern>
 	</servlet-mapping>
+	<!-- ADMIN STATS GRAPH PAGE -->
+	<servlet>
+		<servlet-name>adminStats</servlet-name>
+		<servlet-class>ufly.frs.AdminStats</servlet-class>
+		<init-param>
+	            <param-name>action</param-name>
+	            <param-value>graph</param-value>
+	    </init-param>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>adminStats</servlet-name>
+		<url-pattern>/airportStatsGraph</url-pattern>
+	</servlet-mapping>
 	<!-- FLIGHT STATS PAGE -->
 	<servlet>
     	<servlet-name>flightStats</servlet-name>
     	<servlet-class>ufly.frs.FlightStats</servlet-class>
+    	<init-param>
+	            <param-name>action</param-name>
+	            <param-value>index</param-value>
+	    </init-param>
 	</servlet>
      <servlet-mapping>
     	<servlet-name>flightStats</servlet-name>
     	<url-pattern>/_flightStats</url-pattern>
+	</servlet-mapping>
+	<!-- FLIGHT STATS GRAPH PAGE -->
+	<servlet>
+    	<servlet-name>flightStats</servlet-name>
+    	<servlet-class>ufly.frs.FlightStats</servlet-class>
+    	<init-param>
+	            <param-name>action</param-name>
+	            <param-value>graph</param-value>
+	    </init-param>
+	</servlet>
+     <servlet-mapping>
+    	<servlet-name>flightStats</servlet-name>
+    	<url-pattern>/flightStatsGraph</url-pattern>
 	</servlet-mapping>
 	<!-- HEADER -->
 	<servlet>

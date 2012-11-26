@@ -67,7 +67,7 @@
 						%>
 					</tbody>
 				</table>
-				
+				<BR><a href="/flightStatsGraph" target="_blank">View Graph</a>
 				
 				<div id ="example" class= "modal hide fade in" style="display: none; ">
 							<div class="modal-header">
