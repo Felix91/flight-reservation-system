@@ -30,7 +30,7 @@
 						%>
 					</tbody>
 				</table>
-				<BR><a href="/airportStatsGraph" target="_blank">View Graph</a>
+				<BR><a href="/adminAirportStats.jsp" target="_blank">View Graph</a>
         	</div><!-- span10 -->
 		</div><!--/span row-->
 	</div><!--/span12-->
