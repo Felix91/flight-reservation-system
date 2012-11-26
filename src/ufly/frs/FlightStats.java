@@ -45,7 +45,7 @@ public class FlightStats extends UflyServlet {
 				fn.add(flightnum);
 			}
 			req.setAttribute("flightnumber", fn);
-			req.getRequestDispatcher("/flightStatsGraph.jsp")
+			req.getRequestDispatcher("/adminFlightStats.jsp")
 				.forward(req,resp);
 			
 		}
