@@ -17,7 +17,9 @@ public class FlightStats extends UflyServlet {
 	public void doGet(HttpServletRequest req, HttpServletResponse resp)
 		throws IOException,ServletException
 	{	
-		
+		String pageToInclude= getServletConfig().getInitParameter("action");
+		if(pageToInclude.equals("index") )
+		{
 			List<Flight> la = Flight.getAllFlights();
 			Iterator<Flight> it = la.iterator();
 			Set<String> fn = new HashSet<String>();
@@ -31,6 +33,22 @@ public class FlightStats extends UflyServlet {
 			req.setAttribute("flightnumber", fn);
 			req.getRequestDispatcher("/_flightStats.jsp")
 				.include(req,resp);
+		}else if(pageToInclude.equals("graph") ){
+			List<Flight> la = Flight.getAllFlights();
+			Iterator<Flight> it = la.iterator();
+			Set<String> fn = new HashSet<String>();
+			Flight ff;
+			while(it.hasNext())
+			{
+				ff=it.next();
+				String flightnum =ff.getFlightNumber();
+				fn.add(flightnum);
+			}
+			req.setAttribute("flightnumber", fn);
+			req.getRequestDispatcher("/flightStatsGraph.jsp")
+				.forward(req,resp);
+			
+		}
 	}
 
 	public void doPost(HttpServletRequest req, HttpServletResponse resp)
