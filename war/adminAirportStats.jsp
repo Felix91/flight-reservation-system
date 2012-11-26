@@ -77,7 +77,6 @@
 			    // first graph
 			    var graph = new AmCharts.AmGraph();
 			    graph.type = "line";
-			    graph.hidden = true;
 			    graph.title = "passengersArriving";
 			    graph.valueField = "passengersArriving";
 			    graph.lineAlpha = 1;

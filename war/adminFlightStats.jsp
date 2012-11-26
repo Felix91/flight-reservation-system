@@ -78,7 +78,6 @@
 			    // first graph
 			    var graph = new AmCharts.AmGraph();
 			    graph.type = "line";
-			    graph.hidden = true;
 			    graph.title = "Average bookings";
 			    graph.valueField = "avg";
 			    graph.lineAlpha = 1;
