@@ -33,7 +33,7 @@
 									Airport nextAirport = it.next();
 										out.println("{");
 										out.println("airports: \""+nextAirport.getCity() + "\",");
-										//out.println("passengersDeparting: "+nextAirport.getnumPassengersDeparting() + ",");
+										out.println("passengersDeparting: "+nextAirport.getnumPassengersDeparting() + ",");
 										out.println("passengersArriving: "+nextAirport.getnumPassengersArriving());
 										out.println("},");
 								}
@@ -87,8 +87,8 @@
 			    // second graph
 			    graph = new AmCharts.AmGraph();
 			    graph.type = "line";
-			    graph.title = "passengersArriving";
-			    graph.valueField = "passengersArriving";
+			    graph.title = "passengersDeparting";
+			    graph.valueField = "passengersDeparting";
 			    graph.lineAlpha = 1;
 			    graph.fillAlphas = 0.6;
 			    chart.addGraph(graph);
