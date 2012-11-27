@@ -65,7 +65,7 @@
 	                        	<div class="control-group" id="returnDate">
 	                            	<label class="control-label" for="in_return">Date of Return *</label>
 	                            	<div class="controls">
-	                                	<input name="returnDate" class="required" type="text" id="in_return" placeholder="Enter Date of Return"
+	                                	<input name="returnDate" <%defVal=(String)request.getAttribute("oneWayOrReturn");if(defVal!=null && defVal.equals("return")){ %> class="required"<%}%> type="text" id="in_return" placeholder="Enter Date of Return"
 	                                	<%defVal=(String)request.getAttribute("returnDate");%>
 	                                	value="<%=defVal!=null?defVal:""%>"
 	                                	>
