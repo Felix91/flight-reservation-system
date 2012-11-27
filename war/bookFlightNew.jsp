@@ -222,7 +222,7 @@
 
 					</div>
 					<div class="control-group">
-						<label class="control-label" for="secNum">Expiration Date:</label>
+						<label class="control-label" for="secNum">Security Number:</label>
 						<div class="controls">
 							<input type="text" name="ccSecNum" placeholder="3 digit security number" id="secNum">
 						</div>
