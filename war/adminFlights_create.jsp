@@ -9,6 +9,19 @@
 	<jsp:include page="/_navbar" />
 	<div class="container">
 		<div id="content"><!-- start content -->
+			<% 
+        	if((String) request.getAttribute("errorMsg") != null){
+        		out.print("<div class=\"alert alert-error\">");
+        			out.print("<button data-dismiss=\"alert\" class=\"close\" type=\"button\">x</button>");
+        			out.print((String) request.getAttribute("errorMsg"));
+				out.print("</div>");
+			}else if((String) request.getAttribute("successMsg") != null ){
+				out.print("<div class=\"alert alert-success\">");
+        			out.print("<button data-dismiss=\"alert\" class=\"close\" type=\"button\">x</button>");
+        			out.print((String) request.getAttribute("successMsg"));
+				out.print("</div>");
+			}
+        	%>
 			<h3>Flight Management - Add Flights</h3>
 			<div class="row-fluid">
     			<div class="span12">
@@ -33,6 +46,10 @@
 							<div class="control-group">
 		                    	<label class="control-label span2" for="arrival">arrival</label>
 		                    	<input type="text" name="arrival">
+		                    </div>
+		                    <div class="control-group">
+		                    	<label class="control-label span2" for="price">Price in cents</label>
+		                    	<input type="text" name="price">
 		                    </div>
 							<div class="control-group">
 		                    	<label class="control-label span3" for="allowableMealTypes">allowableMealTypes</label>

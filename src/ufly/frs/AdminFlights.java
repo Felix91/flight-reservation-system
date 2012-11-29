@@ -72,14 +72,16 @@ public class AdminFlights extends UflyServlet {
 				String origin = req.getParameter("origin");
 				String destination = req.getParameter("destination");
 				String departure = req.getParameter("departure");
-				String arrival = req.getParameter("arrival"); 
+				String arrival = req.getParameter("arrival");
+				String price = req.getParameter("price"); 
 				String allowableMealTypes = req.getParameter("allowableMealTypes"); 
-					if(origin != null && destination != null && departure != null && arrival != null && allowableMealTypes != null )
+					if(origin != null && destination != null && departure != null && arrival != null && price != null && allowableMealTypes != null )
 					{
 						req.setAttribute("origin", origin);
 						req.setAttribute("destination", destination);
 						req.setAttribute("departure", departure);
 						req.setAttribute("arrival", arrival);
+						req.setAttribute("price", price);
 						req.setAttribute("allowableMealTypes", allowableMealTypes);
 						
 						// To Do Change flight
@@ -101,7 +103,8 @@ public class AdminFlights extends UflyServlet {
 						//Arrival
 						editFlight.changeArrival(convertToDate.parse(arrival, new ParsePosition(0)));
 
-						
+						// Change price
+						editFlight.changePrice(Integer.valueOf(price));
 						
 						//Format of the allowMeal vector input string: "CK-BF-PK"
 						StringTokenizer st = new StringTokenizer(allowableMealTypes, "-");
