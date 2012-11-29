@@ -76,7 +76,18 @@ public class CustomerProfile extends UflyServlet {
 				String newPw = req.getParameter("newpassword");
 				String confirmPw = req.getParameter("confirmnewpass"); // TO-DO: verify that newPw == confirmPw
 				
-					if((newPw == null) || (confirmPw == null) || newPw.equals("") || !newPw.equals(confirmPw) )
+					
+					if((firstName == null) || (lastName == null) || firstName.equals("") || lastName.equals("") )
+					{
+						req.setAttribute("customerEmail", loggedInUser.getEmailAddr());
+						req.setAttribute("customerFirstName", firstName);
+						req.setAttribute("customerLastName", lastName);
+						req.setAttribute("errorMsg", "First/Last Name cannot be empty!");
+						req.getRequestDispatcher("/customerProfile_edit.jsp")
+							.forward(req,resp);
+						return;
+					}
+					else if((newPw == null) || (confirmPw == null) || newPw.equals("") || !newPw.equals(confirmPw) )
 					{
 						req.setAttribute("customerEmail", loggedInUser.getEmailAddr());
 						req.setAttribute("customerFirstName", firstName);
