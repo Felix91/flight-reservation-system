@@ -25,13 +25,15 @@
 						<dt>Felix Tang</dt>
 						<dd>Dev</dd>
 						<dt>Joel Vandergriendt</dt>
-						<dd>Dev</dd>
-						<dt>Joel Chuah</dt>
-						<dd>Dev</dd>
+						<dd>Dev</dd>						
 						<dt>Edward Budiman</dt>
 						<dd>Designer</dd>
 						<dt>Hason Ton</dt>
 						<dd>Designer</dd>
+						<dt>Joey Liu</dt>
+						<dd>Tester</dd>
+						<dt>Joel Chuah</dt>
+						<dd>Tester</dd>
 						<dt>Yolanda Qian</dt>
 						<dd>Librarian</dd>
 					</dl>
