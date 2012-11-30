@@ -56,10 +56,11 @@ public class Search extends UflyServlet {
 			returnDate = convertToDate.parse(req.getParameter("returnDate"),
 					new ParsePosition(0));
 		}
-		if (returnDate == null) {
+		if (returnDate == null ||
+				req.getParameter("oneWayOrReturn").equals("return")) {
 		//if there is no return date, pretend there is
 			returnDate = (Date) departureDate.clone();
-		}else if (returnDate.before(departureDate)){
+		}else if (req.getParameter("oneWayOrReturn").equals("return") && returnDate.before(departureDate)){
 			errorMessage = "Return date must be after departure date";
 		}
 		

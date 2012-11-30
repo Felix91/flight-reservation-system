@@ -48,6 +48,10 @@ Flight editFlight = (Flight) request.getAttribute("editFlight");
 		                    	<label class="control-label span2" for="arrival">arrival</label>
 		                    	<input type="text" name="arrival" value="<% out.print(editFlight.getArrival()); %>">
 		                    </div>
+		                    <div class="control-group">
+		                    	<label class="control-label span2" for="price">Price in cents</label>
+		                    	<input type="text" name="price" value="<% out.print(editFlight.getPriceInCents()); %>">
+		                    </div>
 							<div class="control-group">
 		                    	<label class="control-label span3" for="allowableMealTypes">allowableMealTypes</label>
 		                    	<input type="text" name="allowableMealTypes" value="<% out.print(editFlight.getAllowableMeals()); %>">

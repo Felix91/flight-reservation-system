@@ -25,19 +25,34 @@ public class FlightTest extends HttpServlet {
 		String arrival = req.getParameter("arrival");
 		String allowableMealTypes = req.getParameter("allowableMealTypes");
 		String seatingArrangementLayout = req.getParameter("seatingArrangementLayout");		
+		String price = req.getParameter("price");
 		
-		new Flight(flightNumber, origin,destination,departure,arrival,allowableMealTypes,seatingArrangementLayout,37500); // TODO: create Customer once User has proven to work
-		// Flight's constructor will automaticallly make object persistent
-		/*PersistenceManager pm = PMF.get().getPersistenceManager();
-		try {
-            pm.makePersistent(newFlight);
+		if(flightNumber.equals("") || origin.equals("") || destination.equals("") || departure.equals("") || arrival.equals("") || price.equals("") || allowableMealTypes.equals("") || seatingArrangementLayout.equals("") )
+		{
+			req.setAttribute("errorMsg", "Flight was not added - Missing Fields!");
+			req.getRequestDispatcher("/adminFlights_create.jsp")
+				.forward(req,resp);
+		}
+		else{
+			
+			new Flight(flightNumber, origin,destination,departure,arrival,allowableMealTypes,seatingArrangementLayout,Integer.valueOf(price)); // TODO: create Customer once User has proven to work
+			// Flight's constructor will automaticallly make object persistent
+			/*PersistenceManager pm = PMF.get().getPersistenceManager();
+			try {
+            	pm.makePersistent(newFlight);
             
-        } finally {
-            pm.close();
-        }*/
+        	} finally {
+            	pm.close();
+        	}*/
 		
-		//resp.setContentType("text/plain");
-		//resp.getWriter().println("City: "+city+" your callsign is "+ callsign);
-		resp.sendRedirect("/entityTest?test=Flight");
+			//resp.setContentType("text/plain");
+			//resp.getWriter().println("City: "+city+" your callsign is "+ callsign);
+			req.setAttribute("successMsg", "Successfully added Flight!");
+			req.getRequestDispatcher("/adminFlights_create.jsp")
+				.forward(req,resp);
+			//resp.sendRedirect("/flightManagerProfile");
+			
+			
+		}
 	}
 }
