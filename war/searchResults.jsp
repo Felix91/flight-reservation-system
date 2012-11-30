@@ -137,11 +137,7 @@
 													<%
 														}
 													%>
-												</tr>
-
-
-											</tbody>
-										</table>
+												
 										<%
 											}
 												if (trips.size() == 0) {
@@ -150,6 +146,11 @@
 										<%
 											}
 										%>
+										</tr>
+
+
+											</tbody>
+										</table>
 									</div>
 									<!-- span10 -->
 								</div>
@@ -256,11 +257,7 @@
 													<%
 														}
 													%>
-												</tr>
-
-
-											</tbody>
-										</table>
+												
 										<%
 											}
 												if (trips.size() == 0) {
@@ -269,6 +266,9 @@
 										<%
 											}
 										%>
+												</tr>
+											</tbody>
+										</table>
 									</div>
 									<!-- span10 -->
 								</div>
