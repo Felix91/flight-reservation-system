@@ -51,13 +51,13 @@ public class Search extends UflyServlet {
 		if(departureDate == null){
 			errorMessage="Please provide a valid departure date";
 		}
-		
-		if (req.getParameter("returnDate") != null) {
+		String s1=req.getParameter("returnDate");
+		if (s1 != null) {
 			returnDate = convertToDate.parse(req.getParameter("returnDate"),
 					new ParsePosition(0));
 		}
 		if (returnDate == null ||
-				req.getParameter("oneWayOrReturn").equals("return")) {
+				req.getParameter("oneWayOrReturn").equals("oneWay")) {
 		//if there is no return date, pretend there is
 			returnDate = (Date) departureDate.clone();
 		}else if (req.getParameter("oneWayOrReturn").equals("return") && returnDate.before(departureDate)){
