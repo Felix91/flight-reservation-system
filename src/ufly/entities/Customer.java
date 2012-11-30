@@ -1,5 +1,6 @@
 package ufly.entities;
 
+import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Vector;
@@ -18,10 +19,15 @@ public class Customer extends User {
 	
 	/*------------ CONSTRUCTORS ------------*/
 	public Customer(String emailAddr, String password, String firstName, String lastName)
-	{
+	{		
 		super(emailAddr, password);
 		this.firstName = firstName;
 		this.lastName = lastName;
+		// Leave gender set as male, address and dob unset
+		// Customer can change these in the profile page
+		this.male = true;
+		this.address = null;
+		this.dob = null;
 		this.loyaltyPoints = 0; // Every Customer starts with 0 loyalty points
 		this.flightBookings = new Vector<Key>();
 		
@@ -144,6 +150,63 @@ public class Customer extends User {
 	}
 	
 	/**
+	 * @param newMale	: whether Customer is male
+	 */
+	public void changeGender(boolean newMale)
+	{
+		PersistenceManager pm= PMF.get().getPersistenceManager();
+		try
+		{
+			// Apparently, the above 2 lines do not update the object in the datastore
+			// But getting a fresh copy and making that fresh copy persistent works. Oh well...
+			Customer c = (Customer)pm.getObjectById(Customer.class, this.getEmailAddr());
+			this.male = newMale;
+			pm.makePersistent(c);
+		}finally
+		{
+			pm.close();
+		}
+	}
+	
+	/**
+	 * @param newDob	: DOB to change to
+	 */
+	public void changeDob(Date newDob)
+	{
+		PersistenceManager pm= PMF.get().getPersistenceManager();
+		try
+		{
+			// Apparently, the above 2 lines do not update the object in the datastore
+			// But getting a fresh copy and making that fresh copy persistent works. Oh well...
+			Customer c = (Customer)pm.getObjectById(Customer.class, this.getEmailAddr());
+			this.dob = newDob;
+			pm.makePersistent(c);
+		}finally
+		{
+			pm.close();
+		}
+	}
+	
+	/**
+	 * @param newAddress	: address to change to
+	 */
+	public void changeAddress(String newAddress)
+	{
+		PersistenceManager pm= PMF.get().getPersistenceManager();
+		try
+		{
+			// Apparently, the above 2 lines do not update the object in the datastore
+			// But getting a fresh copy and making that fresh copy persistent works. Oh well...
+			Customer c = (Customer)pm.getObjectById(Customer.class, this.getEmailAddr());
+			this.address = newAddress;
+			pm.makePersistent(c);
+		}finally
+		{
+			pm.close();
+		}
+	}
+	
+	/**
 	 * @param fb	: add fb into flightbooking vector
 	 */
 	public void addFlightBooking(Key fbKey)
@@ -252,6 +315,12 @@ public class Customer extends User {
 	String firstName;
 	@Persistent
 	String lastName;
+	@Persistent
+	boolean male;			// Gender. true for male, false for female. I know, I know...
+	@Persistent
+	String address;
+	@Persistent
+	Date dob;
 	@Persistent
 	int loyaltyPoints;
 	@Persistent(defaultFetchGroup = "true")
