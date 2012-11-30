@@ -75,7 +75,51 @@ public class AdminFlights extends UflyServlet {
 				String arrival = req.getParameter("arrival");
 				String price = req.getParameter("price"); 
 				String allowableMealTypes = req.getParameter("allowableMealTypes"); 
-					if(origin != null && destination != null && departure != null && arrival != null && price != null && allowableMealTypes != null )
+				
+				// Set departure date and arrival date 
+				SimpleDateFormat convertToDate = new SimpleDateFormat("yyyy.MM.dd.HH.mm");
+
+				//Format of the allowMeal vector input string: "CK-BF-PK"
+				StringTokenizer st = new StringTokenizer(allowableMealTypes, "-");
+				Vector<Meal> thisFlightMeals = new Vector<Meal>();
+				while (st.hasMoreTokens())
+				{
+			         String mealType = st.nextToken();
+			         if (mealType.equalsIgnoreCase("ck")) {
+							thisFlightMeals.add(Meal.chicken);
+						}
+						else if (mealType.equalsIgnoreCase("bf")) {
+							thisFlightMeals.add(Meal.beef);
+
+						}
+						else if (mealType.equalsIgnoreCase("pk")) {
+							thisFlightMeals.add(Meal.pork);
+						}
+						else if (mealType.equalsIgnoreCase("FH")) {
+							thisFlightMeals.add(Meal.fish);
+
+						}
+						else if (mealType.equalsIgnoreCase("VG")) {
+							thisFlightMeals.add(Meal.veggie);
+						}
+			     }
+				
+					if(convertToDate.parse(departure, new ParsePosition(0)) == null || convertToDate.parse(arrival, new ParsePosition(0)) == null){
+						req.setAttribute("editFlight", editFlight);
+						req.setAttribute("errorMsg", "Invalid date format!");
+						req.getRequestDispatcher("/adminFlights_edit.jsp")
+							.forward(req,resp);
+					}else if(thisFlightMeals.size() == 0){
+						req.setAttribute("editFlight", editFlight);
+						req.setAttribute("errorMsg", "Invalid Flight Meals Field!");
+						req.getRequestDispatcher("/adminFlights_edit.jsp")
+							.forward(req,resp);
+					}else if(origin.equals("") || destination.equals("") || departure.equals("") || arrival.equals("") || price.equals("") || allowableMealTypes.equals("") ) {
+						req.setAttribute("editFlight", editFlight);
+						req.setAttribute("errorMsg", "Missing Fields!");
+						req.getRequestDispatcher("/adminFlights_edit.jsp")
+							.forward(req,resp);
+					}else
 					{
 						req.setAttribute("origin", origin);
 						req.setAttribute("destination", destination);
@@ -96,8 +140,6 @@ public class AdminFlights extends UflyServlet {
 						Key destinationKey = b.getKey();
 						editFlight.changeDestination(destinationKey);
 						
-						// Set departure date and arrival date 
-						SimpleDateFormat convertToDate = new SimpleDateFormat("yyyy.MM.dd.HH.mm");
 						//Departure
 						editFlight.changeDeparture(convertToDate.parse(departure, new ParsePosition(0)));
 						//Arrival
@@ -106,42 +148,13 @@ public class AdminFlights extends UflyServlet {
 						// Change price
 						editFlight.changePrice(Integer.valueOf(price));
 						
-						//Format of the allowMeal vector input string: "CK-BF-PK"
-						StringTokenizer st = new StringTokenizer(allowableMealTypes, "-");
-						Vector<Meal> thisFlightMeals = new Vector<Meal>();
-						while (st.hasMoreTokens())
-						{
-					         String mealType = st.nextToken();
-					         if (mealType.equalsIgnoreCase("ck")) {
-									thisFlightMeals.add(Meal.chicken);
-								}
-								else if (mealType.equalsIgnoreCase("bf")) {
-									thisFlightMeals.add(Meal.beef);
-
-								}
-								else if (mealType.equalsIgnoreCase("pk")) {
-									thisFlightMeals.add(Meal.pork);
-								}
-								else if (mealType.equalsIgnoreCase("FH")) {
-									thisFlightMeals.add(Meal.fish);
-
-								}
-								else if (mealType.equalsIgnoreCase("VG")) {
-									thisFlightMeals.add(Meal.veggie);
-								}
-					     }
-						
 						editFlight.changeAllowableMeals(thisFlightMeals);
 						req.setAttribute("editFlight", editFlight);
 						req.setAttribute("successMsg", "Successfully Updated!");
 						req.getRequestDispatcher("/adminFlights_edit.jsp")
 							.forward(req,resp);
 					}
-					else{
-						req.setAttribute("errorMsg", "Missing Fields!");
-						req.getRequestDispatcher("/adminFlights_edit.jsp")
-							.forward(req,resp);
-					}
+					
 			}
 		}
 		
