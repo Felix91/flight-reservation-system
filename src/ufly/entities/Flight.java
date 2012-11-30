@@ -437,10 +437,9 @@ public class Flight extends SuperEntity{
 		while (it.hasNext())
 		{
 			Flight f=it.next();
-
-			if(f.getDestination().equals(destination) &&
-					f.getArrival().before(new Date(dayTime.getTime()+MAX_STOPOVER_HOURS*HOUR_IN_MILLIS)) &&
-					f.getDeparture().after(dayTime))
+			if(f.getDestination().equals(destination) &&//goes where we want
+					f.getDeparture().before(new Date(dayTime.getTime()+MAX_STOPOVER_HOURS*HOUR_IN_MILLIS)) &&//stopover less than six hours
+					f.getDeparture().after(dayTime))// leaves after first leg lands
 			{
 				toRet.add(f);
 			}
