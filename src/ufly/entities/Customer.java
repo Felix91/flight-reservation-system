@@ -291,6 +291,31 @@ public class Customer extends User {
 	}
 	
 	/**
+	 * @return male
+	 */
+	public boolean getMale()
+	{
+		return this.male;
+	}
+	
+	/**
+	 * @return dob
+	 */
+	public Date getDob()
+	{
+		return this.dob;
+	}
+	
+	
+	/**
+	 * @return address
+	 */
+	public String getAddress()
+	{
+		return this.address;
+	}
+	
+	/**
 	 * @return the flight bookings
 	 */
 	public Vector<Key> getFlightBookings()
